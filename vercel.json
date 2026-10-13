@@ -1,5 +1,6 @@
 {
-  "projectId": "",
-  "orgId": "",
-  "name": "nibbs"
+  "framework": "nextjs",
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "devCommand": "pnpm dev"
 }
