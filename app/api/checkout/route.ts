@@ -1,30 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe";
+import { createAsaasPaymentLink } from "@/lib/asaas";
 
 const CheckoutSchema = z.object({
-  priceId: z.string().startsWith("price_"),
   plano: z.string(),
+  valor: z.number().positive(),
+  ciclo: z.enum(["MONTHLY", "QUARTERLY", "YEARLY"]).default("MONTHLY"),
 });
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { priceId, plano } = CheckoutSchema.parse(body);
+    const { plano, valor, ciclo } = CheckoutSchema.parse(body);
 
-    const origin = request.headers.get("origin") ?? "https://assine.nibbs.com";
-
-    const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
-      payment_method_types: ["card"],
-      line_items: [{ price: priceId, quantity: 1 }],
-      metadata: { plano },
-      success_url: `${origin}/sucesso?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}`,
-      locale: "pt-BR",
+    const link = await createAsaasPaymentLink({
+      name: `Nibbs — ${plano}`,
+      description: `Clube de assinatura Nibbs · Plano ${plano}`,
+      value: valor,
+      billingType: "UNDEFINED", // deixa o cliente escolher (PIX, cartão, boleto)
+      chargeType: "RECURRENT",
+      subscriptionCycle: ciclo,
+      externalReference: plano,
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: link.url });
   } catch (err) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });

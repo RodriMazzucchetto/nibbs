@@ -1,52 +1,61 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
 import { createServerClient } from "@/lib/supabase/server";
 import { sendSubscriptionWelcome } from "@/lib/resend";
 
-// Necessário: desabilitar body parsing do Next.js para validar assinatura Stripe
 export const runtime = "nodejs";
 
+// Asaas envia webhooks via POST com JSON — sem assinatura por padrão
+// Para segurança: validar IP de origem (opcional) ou usar token no header
 export async function POST(request: NextRequest) {
-  const body = await request.text();
-  const sig = request.headers.get("stripe-signature")!;
-
-  let event;
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
-  } catch (err) {
-    console.error("[webhook] Assinatura inválida:", err);
-    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
-  }
+    const event = await request.json();
 
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
+    // Eventos de assinatura confirmada
+    if (
+      event.event === "PAYMENT_CONFIRMED" ||
+      event.event === "PAYMENT_RECEIVED"
+    ) {
+      const payment = event.payment;
 
-    if (session.mode !== "subscription") return NextResponse.json({ ok: true });
+      // Só processa pagamentos de assinaturas recorrentes
+      if (!payment?.subscription) return NextResponse.json({ ok: true });
 
-    const customerId = session.customer as string;
-    const subscriptionId = session.subscription as string;
-    const email = session.customer_details?.email ?? "";
-    const nome = session.customer_details?.name ?? "";
-    const plano = session.metadata?.plano ?? "";
+      const supabase = createServerClient();
 
-    const supabase = createServerClient();
-    await supabase.from("assinaturas").insert({
-      stripe_customer_id: customerId,
-      stripe_subscription_id: subscriptionId,
-      plano,
-      email,
-      nome,
-      status: "active",
-    });
+      // Evita duplicatas
+      const { data: existing } = await supabase
+        .from("assinaturas")
+        .select("id")
+        .eq("asaas_subscription_id", payment.subscription)
+        .single();
 
-    if (email && nome) {
-      await sendSubscriptionWelcome({ nome, email, plano });
+      if (!existing) {
+        const { data: customer } = await supabase
+          .from("assinaturas")
+          .insert({
+            asaas_customer_id: payment.customer,
+            asaas_subscription_id: payment.subscription,
+            plano: payment.externalReference ?? "desconhecido",
+            email: payment.billingInfo?.email ?? "",
+            nome: payment.billingInfo?.name ?? "",
+            status: "active",
+          })
+          .select()
+          .single();
+
+        if (customer?.email && customer?.nome) {
+          await sendSubscriptionWelcome({
+            nome: customer.nome,
+            email: customer.email,
+            plano: customer.plano,
+          });
+        }
+      }
     }
-  }
 
-  return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("[webhook asaas]", err);
+    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
+  }
 }
