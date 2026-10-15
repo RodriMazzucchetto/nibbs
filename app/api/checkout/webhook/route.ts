@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
 import { createServerClient } from "@/lib/supabase/server";
 import { sendSubscriptionWelcome } from "@/lib/resend";
-import { getAsaasCustomer, getAsaasPaymentLink } from "@/lib/asaas";
+import { getAsaasCustomer, getAsaasPaymentLink, getAsaasSubscription, redact } from "@/lib/asaas";
 import { PLANOS } from "@/lib/planos";
 
 export const runtime = "nodejs";
@@ -42,6 +42,9 @@ export async function POST(request: NextRequest) {
     if (existing) return NextResponse.json({ ok: true });
 
     let slug: string | undefined = payment.externalReference;
+    if (!slug && payment.subscription) {
+      slug = (await getAsaasSubscription(payment.subscription)).externalReference;
+    }
     if (!slug && payment.paymentLink) {
       slug = (await getAsaasPaymentLink(payment.paymentLink)).externalReference;
     }
@@ -81,7 +84,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("[webhook asaas]", err);
+    console.error("[webhook asaas]", redact(err instanceof Error ? err.message : JSON.stringify(err)));
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }

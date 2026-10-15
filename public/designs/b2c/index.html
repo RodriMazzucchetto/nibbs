@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="/designs/b2c/support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Hedvig+Letters+Serif:opsz@12..24&display=swap" rel="stylesheet">
-<script src="./image-slot.js"></script>
+<script src="/designs/b2c/image-slot.js"></script>
 <style>
 html{scroll-behavior:smooth}
 body{margin:0;background:#F6F3F1;color:#261714;-webkit-font-smoothing:antialiased}
@@ -67,7 +67,7 @@ input,select,button{font-family:inherit}
 
 <section data-screen-label="03 Visual" style="width:100%;max-width:1120px;box-sizing:border-box;padding:0 20px">
   <div style="position:relative;aspect-ratio:16/9;min-height:280px;background:#EDE7E3">
-    <img src="img/caixa-aberta.webp" alt="Caixa Nibbs aberta com três barras de chocolate bean-to-bar de origens diferentes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    <img src="/designs/b2c/img/caixa-aberta.webp" alt="Caixa Nibbs aberta com três barras de chocolate bean-to-bar de origens diferentes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
   </div>
 </section>
 
@@ -188,8 +188,6 @@ input,select,button{font-family:inherit}
 
     <span style="font-size:15px;line-height:1.5;max-width:60ch">{{ included }}</span>
     <button onClick="{{ subscribe }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:56px;width:100%;max-width:420px;padding:0 22px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:space-between" style-hover="background:#6B1220" style-focus="outline:3px solid #261714;outline-offset:3px">{{ ctaLabel }} <span>→</span></button>
-    <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size:15px;font-weight:700;color:#2E6B45">Abrindo o pagamento seguro…</span></sc-if>
-    <sc-if value="{{ payErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:15px;font-weight:700;color:#9E2A0B">Não deu pra abrir o pagamento agora. Tenta de novo em instantes.</span></sc-if>
     <span style="font-size:13px;line-height:1.5;color:#5E4B46;max-width:60ch">{{ payNote }}</span>
   </div>
 </section>
@@ -212,17 +210,264 @@ input,select,button{font-family:inherit}
   </div>
 </footer>
 
+<sc-if value="{{ coVisivel }}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-label="Pagamento" style="position:fixed;inset:0;z-index:100;background:rgba(38,23,20,.62);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 12px;box-sizing:border-box">
+  <div style="width:100%;max-width:580px;background:#F6F3F1;color:#261714;padding:clamp(20px,4vw,32px);box-sizing:border-box;display:flex;flex-direction:column;gap:20px;text-align:left">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4B46">{{ coTipo }}</span>
+        <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(28px,4vw,36px);line-height:.95;text-transform:uppercase">{{ coResumo }}</span>
+      </div>
+      <button type="button" onClick="{{ coFechar }}" aria-label="Fechar" style="all:unset;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid #261714;box-sizing:border-box;flex:none" style-hover="background:#261714;color:#F6F3F1">×</button>
+    </div>
+
+    <sc-if value="{{ coStepForm }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ coEnviar }}" noValidate="{{ true }}" autoComplete="on" style="display:flex;flex-direction:column;gap:20px;position:relative">
+        <input type="text" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" value="{{ coHp }}" onChange="{{ coHpSet }}" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <b style="font-size:13px;letter-spacing:.08em;text-transform:uppercase">Seus dados</b>
+          <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px">
+            <sc-for list="{{ coDados }}" as="f" hint-placeholder-count="4">
+              <label style="display:flex;flex-direction:column;gap:6px;min-width:0;grid-column:{{ f.col }}">
+                <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5E4B46">{{ f.label }}</span>
+                <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" autoComplete="{{ f.ac }}" inputMode="{{ f.im }}" placeholder="{{ f.ph }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 12px;font-size:16px;background:#FFFFFF;color:#261714;border-radius:0;outline:none;border:solid {{ f.border }}" style-focus="outline:3px solid #261714;outline-offset:2px">
+                <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="color:#9E2A0B;font-size:13px;font-weight:700">{{ f.err }}</span></sc-if>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <b style="font-size:13px;letter-spacing:.08em;text-transform:uppercase">Endereço de entrega</b>
+          <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px">
+            <sc-for list="{{ coEndereco }}" as="f" hint-placeholder-count="7">
+              <label style="display:flex;flex-direction:column;gap:6px;min-width:0;grid-column:{{ f.col }}">
+                <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5E4B46">{{ f.label }}</span>
+                <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" autoComplete="{{ f.ac }}" inputMode="{{ f.im }}" placeholder="{{ f.ph }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 12px;font-size:16px;background:#FFFFFF;color:#261714;border-radius:0;outline:none;border:solid {{ f.border }}" style-focus="outline:3px solid #261714;outline-offset:2px">
+                <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="color:#9E2A0B;font-size:13px;font-weight:700">{{ f.err }}</span></sc-if>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <b style="font-size:13px;letter-spacing:.08em;text-transform:uppercase">Pagamento</b>
+          <div role="tablist" style="display:flex;border:2px solid #261714">
+            <button type="button" role="tab" aria-selected="{{ coCartaoSel }}" onClick="{{ coEscolheCartao }}" style="all:unset;cursor:pointer;flex:1;text-align:center;box-sizing:border-box;height:46px;font-weight:700;font-size:15px;background:{{ coTabCBg }};color:{{ coTabCFg }}">Cartão de crédito</button>
+            <button type="button" role="tab" aria-selected="{{ coPixSel }}" onClick="{{ coEscolhePix }}" style="all:unset;cursor:pointer;flex:1;text-align:center;box-sizing:border-box;height:46px;font-weight:700;font-size:15px;background:{{ coTabPBg }};color:{{ coTabPFg }}">PIX</button>
+          </div>
+          <sc-if value="{{ coMetodoCartao }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px">
+              <sc-for list="{{ coCartao }}" as="f" hint-placeholder-count="4">
+                <label style="display:flex;flex-direction:column;gap:6px;min-width:0;grid-column:{{ f.col }}">
+                  <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5E4B46">{{ f.label }}</span>
+                  <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" autoComplete="{{ f.ac }}" inputMode="{{ f.im }}" placeholder="{{ f.ph }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 12px;font-size:16px;background:#FFFFFF;color:#261714;border-radius:0;outline:none;border:solid {{ f.border }}" style-focus="outline:3px solid #261714;outline-offset:2px">
+                  <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="color:#9E2A0B;font-size:13px;font-weight:700">{{ f.err }}</span></sc-if>
+                </label>
+              </sc-for>
+            </div>
+          </sc-if>
+          <span style="font-size:14px;line-height:1.5;color:#4A3430">{{ coMetodoNota }}</span>
+        </div>
+
+        <sc-if value="{{ coErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="border:3px solid #9E2A0B;color:#9E2A0B;padding:12px 14px;font-size:15px;font-weight:700">{{ coErr }}</div></sc-if>
+
+        <button type="submit" disabled="{{ coEnviando }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:56px;width:100%;padding:0 22px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:space-between;opacity:{{ coBtnOp }}" style-hover="background:#6B1220" style-focus="outline:3px solid #261714;outline-offset:3px">{{ coBtnLabel }} <span>→</span></button>
+        <span style="font-size:13px;line-height:1.5;color:#5E4B46">Pagamento processado pelo Asaas, com conexão criptografada. A Nibbs não guarda os dados do seu cartão.</span>
+      </form>
+    </sc-if>
+
+    <sc-if value="{{ coStepPix }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+        <b style="font-size:20px">Pague com PIX para concluir</b>
+        <img src="{{ coPixImg }}" alt="QR Code do PIX" style="width:220px;height:220px;background:#FFFFFF;padding:8px">
+        <span style="font-size:14px;line-height:1.5;color:#4A3430">Abra o app do seu banco, escolha PIX e escaneie o código. Ou copie o código abaixo.</span>
+        <textarea readOnly="{{ true }}" value="{{ coPixPayload }}" rows="3" aria-label="Código PIX copia e cola" style="width:100%;box-sizing:border-box;font-size:12px;padding:8px;border:2px solid #261714;border-radius:0;resize:none;font-family:monospace;background:#FFFFFF;color:#261714"></textarea>
+        <button type="button" onClick="{{ coCopiar }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:48px;padding:0 20px;background:#261714;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center" style-hover="background:#B3202F">{{ coCopiarLabel }}</button>
+        <span role="status" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700"><span style="width:8px;height:8px;border-radius:50%;background:#B3202F;animation:nb-pulse 1.8s ease-in-out infinite"></span>Aguardando o pagamento…</span>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ coStepOk }}" hint-placeholder-val="{{ false }}">
+      <div role="status" style="display:flex;flex-direction:column;gap:14px">
+        <div style="width:52px;height:52px;border-radius:50%;background:#E3EFE6;color:#2E6B45;display:flex;align-items:center;justify-content:center;font-size:26px">✓</div>
+        <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:40px;line-height:.92;text-transform:uppercase">Pagamento confirmado!</span>
+        <p style="margin:0;line-height:1.55;color:#4A3430">{{ coOkMsg }}</p>
+        <button type="button" onClick="{{ coFechar }}" style="all:unset;cursor:pointer;align-self:flex-start;font-size:15px;font-weight:700;padding:8px 0;border-bottom:2px solid #261714" style-hover="color:#B3202F;border-color:#B3202F">Voltar para o site</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ coStepAnalise }}" hint-placeholder-val="{{ false }}">
+      <div role="status" style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:36px;line-height:.92;text-transform:uppercase">Pagamento em análise</span>
+        <p style="margin:0;line-height:1.55;color:#4A3430">Recebemos seu pedido. O pagamento está passando pela análise de segurança, que costuma levar poucos minutos. Assim que for aprovado, você recebe a confirmação por e-mail.</p>
+        <button type="button" onClick="{{ coFechar }}" style="all:unset;cursor:pointer;align-self:flex-start;font-size:15px;font-weight:700;padding:8px 0;border-bottom:2px solid #261714" style-hover="color:#B3202F;border-color:#B3202F">Voltar para o site</button>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;diaCorte&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:31,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;regiao&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sul da Bahia&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;mes&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;novembro&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;}}">
+const CO_VAZIO = { nome: "", email: "", cpf: "", celular: "", cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", uf: "", ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "", website: "" };
+const CO_CARTAO_VAZIO = { ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "" };
+const SLUGS_M = ["entrada", "melhor-valor", "ultimate"];
+const SLUGS_G = ["presente-3m", "presente-6m"];
+const dig = v => v.replace(/\D/g, "");
+const MASKS = {
+  cpf: v => dig(v).slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2"),
+  celular: v => { const d = dig(v).slice(0, 11); if (d.length <= 2) return d.length ? "(" + d : ""; if (d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`; if (d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`; return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`; },
+  cep: v => { const d = dig(v).slice(0, 8); return d.length > 5 ? d.slice(0, 5) + "-" + d.slice(5) : d; },
+  uf: v => v.replace(/[^a-zA-Z]/g, "").slice(0, 2).toUpperCase(),
+  ccNumero: v => dig(v).slice(0, 19).replace(/(\d{4})(?=\d)/g, "$1 "),
+  ccValidade: v => { const d = dig(v).slice(0, 4); return d.length > 2 ? d.slice(0, 2) + "/" + d.slice(2) : d; },
+  ccCvv: v => dig(v).slice(0, 4),
+};
+const cpfOk = v => { const c = dig(v); if (c.length !== 11 || /^(\d)\1{10}$/.test(c)) return false; for (const t of [9, 10]) { let s = 0; for (let i = 0; i < t; i++) s += +c[i] * (t + 1 - i); if (((s * 10) % 11) % 10 !== +c[t]) return false; } return true; };
+const luhnOk = v => { const n = dig(v); if (n.length < 13 || n.length > 19) return false; let s = 0; for (let i = 0; i < n.length; i++) { let d = +n[n.length - 1 - i]; if (i % 2) { d *= 2; if (d > 9) d -= 9; } s += d; } return s % 10 === 0; };
+const validadeOk = v => { const m = /^(\d{2})\/(\d{2})$/.exec(v); if (!m) return false; const mm = +m[1], aa = 2000 + +m[2], h = new Date(); return mm >= 1 && mm <= 12 && (aa > h.getFullYear() || (aa === h.getFullYear() && mm >= h.getMonth() + 1)); };
 class Component extends DCLogic {
-  state = { mode: "m", plan: 1, giftIdx: 0, done: false, payErr: false, w: typeof window !== "undefined" ? window.innerWidth : 1280, revStart: true, revEnd: false };
-  componentDidMount() { this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener("resize", this.onR); this._bindSlider(); }
+  state = { mode: "m", plan: 1, giftIdx: 0, w: typeof window !== "undefined" ? window.innerWidth : 1280, revStart: true, revEnd: false,
+    co: false, coStep: "form", coMetodo: "cartao", coF: { ...CO_VAZIO }, coErrs: {}, coEnviando: false, coErr: "", coPix: null, coCopiado: false };
+  componentDidMount() {
+    this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener("resize", this.onR); this._bindSlider();
+    this.onKey = e => { if (e.key === "Escape" && this.state.co && !this.state.coEnviando) this.coFechar(); }; window.addEventListener("keydown", this.onKey);
+  }
   componentDidUpdate() { this._bindSlider(); }
   _bindSlider() { const el = document.getElementById("nb-rev-slider"); if (el && !el._bound) { el._bound = true; el.addEventListener("scroll", () => { this.setState({ revStart: el.scrollLeft < 8, revEnd: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8 }); }, { passive: true }); } }
-  componentWillUnmount() { window.removeEventListener("resize", this.onR); }
+  componentWillUnmount() { window.removeEventListener("resize", this.onR); window.removeEventListener("keydown", this.onKey); clearInterval(this.pixT); }
+  coAbrir() { this.setState({ co: true, coStep: "form", coErr: "", coErrs: {} }); document.body.style.overflow = "hidden"; }
+  coFechar() { clearInterval(this.pixT); this.setState(s => ({ co: false, coPix: null, coEnviando: false, coF: { ...s.coF, ...CO_CARTAO_VAZIO } })); document.body.style.overflow = ""; }
+  coValidar(f, metodo) {
+    const e = {};
+    if (f.nome.trim().split(/\s+/).length < 2) e.nome = "Escreva nome e sobrenome";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) e.email = "Confira o e-mail";
+    if (!cpfOk(f.cpf)) e.cpf = "CPF inválido";
+    if (![10, 11].includes(dig(f.celular).length)) e.celular = "Celular com DDD";
+    if (dig(f.cep).length !== 8) e.cep = "CEP com 8 dígitos";
+    if (!f.rua.trim()) e.rua = "Informe a rua";
+    if (!f.numero.trim()) e.numero = "Informe o número";
+    if (!f.bairro.trim()) e.bairro = "Informe o bairro";
+    if (!f.cidade.trim()) e.cidade = "Informe a cidade";
+    if (f.uf.trim().length !== 2) e.uf = "UF";
+    if (metodo === "cartao") {
+      if (!f.ccNome.trim()) e.ccNome = "Nome como está no cartão";
+      if (!luhnOk(f.ccNumero)) e.ccNumero = "Número do cartão inválido";
+      if (!validadeOk(f.ccValidade)) e.ccValidade = "Use MM/AA";
+      if (!/^\d{3,4}$/.test(f.ccCvv)) e.ccCvv = "CVV inválido";
+    }
+    return e;
+  }
+  coSet(k) {
+    return e => {
+      const v = MASKS[k] ? MASKS[k](e.target.value) : e.target.value;
+      this.setState(s => { const nf = { ...s.coF, [k]: v }; const ne = { ...s.coErrs }; if (ne[k] && !this.coValidar(nf, s.coMetodo)[k]) delete ne[k]; return { coF: nf, coErrs: ne }; });
+      if (k === "cep" && dig(v).length === 8) this.coBuscaCep(dig(v));
+    };
+  }
+  coBuscaCep(cep) {
+    fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json()).then(d => {
+      if (!d || d.erro) return;
+      this.setState(s => ({ coF: { ...s.coF, rua: d.logradouro || s.coF.rua, bairro: d.bairro || s.coF.bairro, cidade: d.localidade || s.coF.cidade, uf: d.uf || s.coF.uf } }));
+    }).catch(() => {});
+  }
+  async coEnviar(ev) {
+    if (ev && ev.preventDefault) ev.preventDefault();
+    const { coF: f, coMetodo, coEnviando, mode, plan, giftIdx } = this.state;
+    if (coEnviando) return;
+    const errs = this.coValidar(f, coMetodo);
+    if (Object.keys(errs).length) { this.setState({ coErrs: errs, coErr: "Confira os campos destacados." }); return; }
+    const payload = {
+      plano: mode === "m" ? SLUGS_M[plan] : SLUGS_G[giftIdx], metodo: coMetodo, website: f.website,
+      cliente: { nome: f.nome.trim(), email: f.email.trim(), cpf: f.cpf, celular: f.celular },
+      endereco: { cep: f.cep, rua: f.rua.trim(), numero: f.numero.trim(), complemento: f.complemento.trim(), bairro: f.bairro.trim(), cidade: f.cidade.trim(), uf: f.uf },
+      cartao: coMetodo === "cartao" ? { nome: f.ccNome.trim(), numero: f.ccNumero, validade: f.ccValidade, cvv: f.ccCvv } : undefined,
+    };
+    this.setState({ coEnviando: true, coErr: "", coErrs: {} });
+    let ok = false, data = {};
+    try {
+      const r = await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin", body: JSON.stringify(payload) });
+      ok = r.ok; data = await r.json().catch(() => ({}));
+    } catch (_) { data = { error: "Sem conexão. Confira sua internet e tente de novo." }; }
+    payload.cartao = undefined;
+    this.setState(s => ({ coEnviando: false, coF: { ...s.coF, ...(ok ? CO_CARTAO_VAZIO : { ccCvv: "" }) } }));
+    if (!ok) { this.setState({ coErr: data.error || "Não foi possível concluir o pagamento." }); return; }
+    if (data.status === "pago") this.setState({ coStep: "ok" });
+    else if (data.status === "analise") this.setState({ coStep: "analise" });
+    else if (data.status === "pix") { this.setState({ coStep: "pix", coPix: data.pix }); this.coAcompanharPix(data.paymentId); }
+  }
+  coAcompanharPix(id) {
+    clearInterval(this.pixT);
+    this.pixT = setInterval(() => {
+      fetch(`/api/checkout/status?id=${encodeURIComponent(id)}`).then(r => r.json()).then(d => { if (d.pago) { clearInterval(this.pixT); this.setState({ coStep: "ok" }); } }).catch(() => {});
+    }, 4000);
+  }
+  coCopiar() {
+    const p = this.state.coPix && this.state.coPix.payload;
+    if (!p || !navigator.clipboard) return;
+    navigator.clipboard.writeText(p).then(() => { this.setState({ coCopiado: true }); setTimeout(() => this.setState({ coCopiado: false }), 2000); });
+  }
+  coVals({ m, P, G, plan, giftIdx, w, co, coStep, coMetodo, coF, coErrs, coEnviando, coErr, coPix, coCopiado }) {
+    const estreito = w < 560;
+    const span = n => estreito ? "1 / -1" : (n === 6 ? "1 / -1" : "span " + n);
+    const fld = (k, label, n, o = {}) => ({ label, value: coF[k], onChange: this.coSet(k), err: coErrs[k] || "", type: o.type || "text", ac: o.ac || "off", im: o.im || "text", ph: o.ph || "", col: span(n), border: coErrs[k] ? "3px #9E2A0B" : "2px #261714" });
+    const cartao = coMetodo === "cartao";
+    const preco = m ? P[plan].price : G[giftIdx].price;
+    const okMsg = m
+      ? "Sua assinatura está ativa. Você recebe o comprovante por e-mail e a gente avisa quando a primeira caixa sair pra entrega."
+      : "Seu presente está garantido. Você recebe o comprovante por e-mail e a gente entra em contato pra combinar o bilhete e a entrega.";
+    return {
+      coVisivel: co,
+      coTipo: m ? "Assinatura mensal" : "Presente · pagamento único",
+      coResumo: m ? `${P[plan].name} · ${P[plan].price}/mês` : `Presente ${G[giftIdx].name} · ${G[giftIdx].price}`,
+      coFechar: () => this.coFechar(),
+      coStepForm: coStep === "form", coStepPix: coStep === "pix", coStepOk: coStep === "ok", coStepAnalise: coStep === "analise",
+      coEnviar: e => this.coEnviar(e),
+      coHp: coF.website, coHpSet: this.coSet("website"),
+      coDados: [
+        fld("nome", "Nome completo", 6, { ac: "name" }),
+        fld("email", "E-mail", 6, { type: "email", ac: "email", im: "email", ph: "voce@email.com" }),
+        fld("cpf", "CPF", 3, { im: "numeric", ph: "000.000.000-00" }),
+        fld("celular", "Celular", 3, { type: "tel", ac: "tel", im: "tel", ph: "(11) 98765-4321" }),
+      ],
+      coEndereco: [
+        fld("cep", "CEP", 2, { ac: "postal-code", im: "numeric", ph: "00000-000" }),
+        fld("rua", "Rua", 4, { ac: "address-line1" }),
+        fld("numero", "Número", 2, { im: "numeric" }),
+        fld("complemento", "Complemento", 4, { ac: "address-line2", ph: "Apto, bloco (opcional)" }),
+        fld("bairro", "Bairro", 3, { ac: "address-level3" }),
+        fld("cidade", "Cidade", 2, { ac: "address-level2" }),
+        fld("uf", "UF", 1, { ac: "address-level1", ph: "SP" }),
+      ],
+      coCartao: [
+        fld("ccNumero", "Número do cartão", 6, { ac: "cc-number", im: "numeric", ph: "0000 0000 0000 0000" }),
+        fld("ccNome", "Nome impresso no cartão", 6, { ac: "cc-name" }),
+        fld("ccValidade", "Validade", 3, { ac: "cc-exp", im: "numeric", ph: "MM/AA" }),
+        fld("ccCvv", "CVV", 3, { type: "password", ac: "cc-csc", im: "numeric", ph: "123" }),
+      ],
+      coMetodoCartao: cartao,
+      coCartaoSel: cartao ? "true" : "false", coPixSel: cartao ? "false" : "true",
+      coEscolheCartao: () => this.setState({ coMetodo: "cartao", coErr: "", coErrs: {} }),
+      coEscolhePix: () => this.setState(s => ({ coMetodo: "pix", coErr: "", coErrs: {}, coF: { ...s.coF, ...CO_CARTAO_VAZIO } })),
+      coTabCBg: cartao ? "#261714" : "transparent", coTabCFg: cartao ? "#F6F3F1" : "#261714",
+      coTabPBg: cartao ? "transparent" : "#261714", coTabPFg: cartao ? "#261714" : "#F6F3F1",
+      coMetodoNota: cartao
+        ? (m ? "A cobrança se repete todo mês no mesmo cartão. Cancela quando quiser." : "Cobrança única, sem renovação.")
+        : (m ? "Você paga o primeiro mês agora pelo PIX. Nos próximos meses, o PIX chega por e-mail pra você pagar." : "Pagamento único pelo PIX, sem renovação."),
+      coErr,
+      coEnviando: coEnviando, coBtnOp: coEnviando ? 0.6 : 1,
+      coBtnLabel: coEnviando ? "Processando…" : (cartao ? `Pagar ${preco}` : "Gerar PIX"),
+      coPixImg: coPix ? "data:image/png;base64," + coPix.img : "",
+      coPixPayload: coPix ? coPix.payload : "",
+      coCopiar: () => this.coCopiar(), coCopiarLabel: coCopiado ? "Código copiado!" : "Copiar código PIX",
+      coOkMsg: okMsg,
+    };
+  }
   renderVals() {
-    const { mode, plan, giftIdx, done, payErr, w, revStart, revEnd } = this.state;
+    const { mode, plan, giftIdx, w, revStart, revEnd, co, coStep, coMetodo, coF, coErrs, coEnviando, coErr, coPix, coCopiado } = this.state;
     const corte = this.props.diaCorte ?? 20;
     const regiao = this.props.regiao ?? "Sul da Bahia";
     const mes = this.props.mes ?? "novembro";
@@ -236,59 +481,45 @@ class Component extends DCLogic {
     const m = mode === "m";
     return {
       corte, regiao, mes, wide: w >= 820,
-      monthly: m, gift: !m, done,
+      monthly: m, gift: !m,
       revAtStart: revStart ? "true" : "false", revAtEnd: revEnd ? "true" : "false",
       scrollRev: (dir) => () => { const el = document.getElementById("nb-rev-slider"); if (el) { const card = el.querySelector(":scope > *"); if (card) el.scrollBy({ left: dir * (card.offsetWidth + 16), behavior: "smooth" }); } },
-      pickMonthly: () => this.setState({ mode: "m", done: false }),
-      pickGift: () => this.setState({ mode: "g", done: false }),
+      pickMonthly: () => this.setState({ mode: "m" }),
+      pickGift: () => this.setState({ mode: "g" }),
       tabMBg: m ? "#261714" : "transparent", tabMFg: m ? "#F6F3F1" : "#261714",
       tabGBg: m ? "transparent" : "#261714", tabGFg: m ? "#261714" : "#F6F3F1",
-      plans: P.map((p, i) => ({ ...p, best: i === 1, ...on(plan === i), pick: () => this.setState({ plan: i, done: false }) })),
-      gifts: G.map((g, i) => ({ ...g, ...on(giftIdx === i), pick: () => this.setState({ giftIdx: i, done: false }) })),
+      plans: P.map((p, i) => ({ ...p, best: i === 1, ...on(plan === i), pick: () => this.setState({ plan: i }) })),
+      gifts: G.map((g, i) => ({ ...g, ...on(giftIdx === i), pick: () => this.setState({ giftIdx: i }) })),
       ctaLabel: m ? `Assinar ${P[plan].name} · ${P[plan].price}/mês` : `Presentear ${G[giftIdx].name} · ${G[giftIdx].price}`,
-      subscribe: async () => {
-        const { mode, plan, giftIdx, done } = this.state;
-        if (done) return;
-        const slug = mode === "m" ? ["entrada", "melhor-valor", "ultimate"][plan] : ["presente-3m", "presente-6m"][giftIdx];
-        this.setState({ done: true, payErr: false });
-        try {
-          const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plano: slug }) });
-          const data = await res.json();
-          if (!res.ok || !data.url) throw new Error(data.error || 'sem url');
-          window.location.href = data.url;
-        } catch(err) {
-          console.error('[checkout]', err);
-          this.setState({ done: false, payErr: true });
-        }
-      },
-      payErr,
+      subscribe: () => this.coAbrir(),
+      ...this.coVals({ m, P, G, plan, giftIdx, w, co, coStep, coMetodo, coF, coErrs, coEnviando, coErr, coPix, coCopiado }),
       included: "Em toda caixa vem um cartão contando de onde é o chocolate, quem fez e o que tem dentro, mais o vídeo do produtor e um link pra você dar nota nas barras. Frete incluso.",
-      payNote: m ? "Cobra no cartão todo mês. Cancela quando quiser, num clique, sem ninguém te ligar pra te convencer a ficar." : "PIX ou cartão, pago de uma vez. Não renova sozinho.",
+      payNote: m ? "Cartão ou PIX, todo mês. Cancela quando quiser, num clique, sem ninguém te ligar pra te convencer a ficar." : "PIX ou cartão, pago de uma vez. Não renova sozinho.",
       makers: [
-        { n: "Baianí", src: "logos/baiani.svg" },
-        { n: "Kalapa", src: "logos/kalapa.png" },
-        { n: "MOA", src: "logos/moa.png" },
-        { n: "Nugali", src: "logos/nugali.webp" },
-        { n: "Dengo", src: "logos/dengo.svg" },
+        { n: "Baianí", src: "/designs/b2c/logos/baiani.svg" },
+        { n: "Kalapa", src: "/designs/b2c/logos/kalapa.png" },
+        { n: "MOA", src: "/designs/b2c/logos/moa.png" },
+        { n: "Nugali", src: "/designs/b2c/logos/nugali.webp" },
+        { n: "Dengo", src: "/designs/b2c/logos/dengo.svg" },
       ],
       makersDouble: [
-        { n: "Baianí", src: "logos/baiani.svg" },
-        { n: "Kalapa", src: "logos/kalapa.png" },
-        { n: "MOA", src: "logos/moa.png" },
-        { n: "Nugali", src: "logos/nugali.webp" },
-        { n: "Dengo", src: "logos/dengo.svg" },
-        { n: "Baianí", src: "logos/baiani.svg" },
-        { n: "Kalapa", src: "logos/kalapa.png" },
-        { n: "MOA", src: "logos/moa.png" },
-        { n: "Nugali", src: "logos/nugali.webp" },
-        { n: "Dengo", src: "logos/dengo.svg" },
+        { n: "Baianí", src: "/designs/b2c/logos/baiani.svg" },
+        { n: "Kalapa", src: "/designs/b2c/logos/kalapa.png" },
+        { n: "MOA", src: "/designs/b2c/logos/moa.png" },
+        { n: "Nugali", src: "/designs/b2c/logos/nugali.webp" },
+        { n: "Dengo", src: "/designs/b2c/logos/dengo.svg" },
+        { n: "Baianí", src: "/designs/b2c/logos/baiani.svg" },
+        { n: "Kalapa", src: "/designs/b2c/logos/kalapa.png" },
+        { n: "MOA", src: "/designs/b2c/logos/moa.png" },
+        { n: "Nugali", src: "/designs/b2c/logos/nugali.webp" },
+        { n: "Dengo", src: "/designs/b2c/logos/dengo.svg" },
       ],
       values: [
-        { n: "01", tag: "Uma região por mês", dir: "row", img: "img/cacau-arvore.webp", alt: "Cacaueiro com frutos coloridos na Mata Atlântica",
+        { n: "01", tag: "Uma região por mês", dir: "row", img: "/designs/b2c/img/cacau-arvore.webp", alt: "Cacaueiro com frutos coloridos na Mata Atlântica",
           t: "Brasil num dia, outra região no outro", d: "O gosto muda, a sua saúde não, produtos que não se repetem, gostosos e saudáveis.", b: "Por isso a caixa de um mês nunca repete a do outro." },
-        { n: "02", tag: "Três barras por mês, que se complementam", dir: "row-reverse", img: "img/caixa-fechada.webp", alt: "Caixa Nibbs fechada com lacre e fita vermelha",
+        { n: "02", tag: "Três barras por mês, que se complementam", dir: "row-reverse", img: "/designs/b2c/img/caixa-fechada.webp", alt: "Caixa Nibbs fechada com lacre e fita vermelha",
           t: "Uma suave, uma intensa, uma diferente", d: "Eu escolho as barras do mês pensando no conjunto, pra você não receber três vezes a mesma coisa. E a cada caixa você dá nota, pra próxima vir mais do seu jeito.", b: "Não precisa entender de chocolate. Só provar." },
-        { n: "03", tag: "Quem fez", dir: "row", img: "img/cacau-colheita.webp", alt: "Frutos de cacau colhidos na fazenda",
+        { n: "03", tag: "Quem fez", dir: "row", img: "/designs/b2c/img/cacau-colheita.webp", alt: "Frutos de cacau colhidos na fazenda",
           t: "Você sabe de quem está comprando", d: "Cada barra vem com informações detalhadas do produtor e como melhor degustar cada um dos chocolates, com indicação direta do produtor.", b: "Chocolate com nome e endereço." },
       ],
       reviews: [
