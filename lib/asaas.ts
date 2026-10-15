@@ -1,15 +1,20 @@
-const ASAAS_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://api.asaas.com/v3"
-    : "https://sandbox.asaas.com/api/v3";
+const ASAAS_API_KEY = (process.env.ASAAS_API_KEY ?? "").trim();
 
-const ASAAS_API_KEY = process.env.ASAAS_API_KEY!;
+// Chaves de produção começam com $aact_prod_, as de sandbox com $aact_hmlg_
+export const ASAAS_IS_PRODUCTION = ASAAS_API_KEY.startsWith("$aact_prod_");
+
+const ASAAS_BASE_URL = ASAAS_IS_PRODUCTION
+  ? "https://api.asaas.com/v3"
+  : "https://sandbox.asaas.com/api/v3";
 
 async function asaasFetch(path: string, options: RequestInit = {}) {
+  if (!ASAAS_API_KEY) throw new Error("ASAAS_API_KEY não configurada");
+
   const res = await fetch(`${ASAAS_BASE_URL}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
+      "User-Agent": "nibbs",
       access_token: ASAAS_API_KEY,
       ...options.headers,
     },
@@ -32,6 +37,10 @@ export async function createAsaasCustomer(data: {
     method: "POST",
     body: JSON.stringify(data),
   });
+}
+
+export async function getAsaasCustomer(id: string): Promise<{ name?: string; email?: string }> {
+  return asaasFetch(`/customers/${id}`);
 }
 
 export async function createAsaasSubscription(data: {
@@ -57,10 +66,16 @@ export async function createAsaasPaymentLink(data: {
   billingType: "UNDEFINED" | "CREDIT_CARD" | "PIX" | "BOLETO";
   chargeType: "RECURRENT" | "INSTALLMENT" | "DETACHED";
   subscriptionCycle?: "MONTHLY" | "QUARTERLY" | "YEARLY";
+  dueDateLimitDays?: number;
+  isAddressRequired?: boolean;
   externalReference?: string;
 }) {
   return asaasFetch("/paymentLinks", {
     method: "POST",
     body: JSON.stringify({ ...data, endDate: null }),
   });
+}
+
+export async function getAsaasPaymentLink(id: string): Promise<{ externalReference?: string }> {
+  return asaasFetch(`/paymentLinks/${id}`);
 }

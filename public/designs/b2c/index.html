@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Hedvig+Letters+Serif:opsz@12..24&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F6F3F1;color:#261714;-webkit-font-smoothing:antialiased}
+a{color:#261714;text-decoration:none}
+a:hover{color:#B3202F}
+input,select,button{font-family:inherit}
+@keyframes nb-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.35}}
+@keyframes nb-reel{0%,10%{transform:translateY(0);filter:blur(0);opacity:1}14%{filter:blur(4px);opacity:.4}18%,26%{transform:translateY(-1.22em);filter:blur(0);opacity:1}30%{filter:blur(4px);opacity:.4}34%{transform:translateY(-2.54em);filter:blur(0)}37%,72%{transform:translateY(-2.44em);filter:blur(0);opacity:1}77%{filter:blur(4px);opacity:.4}83%,100%{transform:translateY(-3.66em);filter:blur(0);opacity:1}}
+[data-reel]{animation:nb-reel 7s ease-in-out 1s infinite}
+@media (prefers-reduced-motion:reduce){[data-reel]{animation:none!important;transform:translateY(-2.44em)}}
+.nb-slider{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 4px 4px}
+.nb-slider::-webkit-scrollbar{display:none}
+.nb-slider>*{scroll-snap-align:start;flex:0 0 min(85vw,340px)}
+.nb-arrow{all:unset;cursor:pointer;position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;background:rgba(38,23,20,.85);color:#F6F3F1;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:2;transition:opacity .2s}
+.nb-arrow:hover{background:#B3202F}
+.nb-arrow[disabled]{opacity:0;pointer-events:none}
+.nb-arrow--l{left:-12px}
+.nb-arrow--r{right:-12px}
+@media(max-width:640px){.nb-arrow{display:none}}
+@keyframes nb-logo-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.nb-slider-logos::-webkit-scrollbar{display:none}
+.nb-slider-logos{overflow:hidden!important}
+@media(prefers-reduced-motion:reduce){.nb-slider-logos div{animation:none!important}}
+</style>
+</helmet>
+
+<div style="font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 100;display:flex;flex-direction:column;align-items:center;overflow-x:hidden">
+
+<nav data-screen-label="01 Navegação" style="width:100%;position:sticky;top:0;z-index:30;background:rgba(246,243,241,.96);backdrop-filter:blur(8px);border-bottom:1px solid #EDE7E3;box-sizing:border-box;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+  <dc-import name="NibbsLogo" variant="lockup" size="28" ink="#261714" accent="#B3202F" hint-size="104px,28px"></dc-import>
+  <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;gap:28px;font-size:15px">
+      <a href="#metodo" style="text-decoration:none" style-hover="color:#B3202F">Produtores</a>
+      <a href="#planos" style="text-decoration:none" style-hover="color:#B3202F">Planos</a>
+      <a href="#planos" onClick="{{ pickGift }}" style="text-decoration:none" style-hover="color:#B3202F">Presente</a>
+      <a href="#assinantes" style="text-decoration:none" style-hover="color:#B3202F">Assinantes</a>
+    </div>
+  </sc-if>
+  <a href="#planos" style="box-sizing:border-box;height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;text-decoration:none;flex:none" style-hover="background:#6B1220;color:#F6F3F1">Assinar</a>
+</nav>
+
+<header data-screen-label="02 Header" style="width:100%;max-width:880px;box-sizing:border-box;padding:72px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">
+  <span style="display:inline-flex;align-items:center;gap:10px;font-size:14px;color:#6B1220;border:1px solid #261714;padding:6px 14px 6px 12px;font-weight:700"><span style="width:8px;height:8px;border-radius:50%;background:#B3202F;flex:none;animation:nb-pulse 1.8s ease-in-out infinite"></span>Clube de chocolate 70% ou mais</span>
+  <h1 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(44px,6vw,76px);line-height:.92;text-transform:uppercase;text-wrap:balance">Chocolate bom e saudável na sua gaveta. <span style="display:inline-block;vertical-align:bottom;height:.92em;padding-top:.22em;margin-top:-.22em;overflow:hidden;text-align:left"><span data-reel style="display:flex;flex-direction:column;gap:.3em"><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Hoje.</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Amanhã.</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Sempre!</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Hoje.</span></span></span></h1>
+  <p style="margin:0;font-size:clamp(18px,1.6vw,20px);line-height:1.55;color:#4A3430;max-width:46ch">Sem correria no mercado. Sem ficar sem. Só chocolate bom, 70% ou mais, pouco ou nenhum açúcar, sempre disponível.</p>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding-top:4px">
+    <a href="#planos" style="box-sizing:border-box;height:52px;padding:0 24px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none" style-hover="background:#6B1220;color:#F6F3F1">Escolher meu plano <span>→</span></a>
+    <a href="#planos" onClick="{{ pickGift }}" style="box-sizing:border-box;height:52px;padding:0 22px;border:2px solid #261714;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;text-decoration:none" style-hover="background:#261714;color:#F6F3F1">Dar de presente</a>
+  </div>
+  <span style="font-size:15px;line-height:1.4">Ou você ama, ou devolvemos sua grana! Frete incluso.</span>
+</header>
+
+<section data-screen-label="03 Visual" style="width:100%;max-width:1120px;box-sizing:border-box;padding:0 20px">
+  <div style="position:relative;aspect-ratio:16/9;min-height:280px;background:#EDE7E3">
+    <img src="img/caixa-aberta.webp" alt="Caixa Nibbs aberta com três barras de chocolate bean-to-bar de origens diferentes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+  </div>
+</section>
+
+<section data-screen-label="04 Produtores" style="width:100%;max-width:880px;box-sizing:border-box;padding:56px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:18px">
+  <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#5E4B46">Chocolate real de produtores locais</span>
+  <div style="width:100%;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none" class="nb-slider-logos">
+    <div style="display:flex;gap:32px;padding:0 20px;width:max-content;animation:nb-logo-scroll 12s linear infinite">
+      <sc-for list="{{ makersDouble }}" as="m" hint-placeholder-count="10">
+        <div style="width:120px;height:56px;display:flex;align-items:center;justify-content:center;padding:6px 12px;box-sizing:border-box;flex:none">
+          <img src="{{ m.src }}" alt="{{ m.n }}" style="max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(1) brightness(.2);opacity:.7">
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="metodo" data-screen-label="05 Produtores" style="width:100%;max-width:1120px;box-sizing:border-box;padding:96px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:72px">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;max-width:760px">
+    <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(40px,5vw,72px);line-height:.9;text-transform:uppercase;text-wrap:balance">De onde vem o seu chocolate</h2>
+    <p style="margin:0;font-size:clamp(17px,1.3vw,19px);line-height:1.55;max-width:56ch">O chocolate que você encontra no mercado é realmente chocolate? Menos cacau, mais açúcar e gordura vegetal no lugar... Na Nibbs nós selecionamos apenas quem vende chocolate de verdade. É o seu doce todo dia garantido gerando mais saúde e não tirando dias da sua vida!</p>
+  </div>
+
+  <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+    <div style="width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:40px 64px;flex-direction:{{ v.dir }}">
+      <div style="position:relative;flex:1 1 360px;max-width:520px;aspect-ratio:1;background:#EDE7E3">
+        <img src="{{ v.img }}" alt="{{ v.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      </div>
+      <div style="flex:1 1 340px;display:flex;flex-direction:column;gap:16px;max-width:480px">
+        <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#B3202F">{{ v.n }} · {{ v.tag }}</span>
+        <h3 style="margin:0;font-weight:800;font-variation-settings:'wdth' 75;font-size:clamp(30px,3.2vw,44px);line-height:.95;text-transform:uppercase">{{ v.t }}</h3>
+        <p style="margin:0;font-size:clamp(17px,1.3vw,18px);line-height:1.6">{{ v.d }}</p>
+        <p style="margin:0;font-family:'Newsreader',serif;font-style:italic;font-size:20px;line-height:1.4">{{ v.b }}</p>
+        <a href="#planos" style="align-self:flex-start;box-sizing:border-box;height:48px;padding:0 20px;background:#261714;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;text-decoration:none" style-hover="background:#B3202F;color:#F6F3F1">Ver os planos <span>→</span></a>
+      </div>
+    </div>
+  </sc-for>
+</section>
+
+<section data-screen-label="06 CTA" style="width:100%;max-width:960px;box-sizing:border-box;padding:56px 20px">
+  <div style="background:#B3202F;color:#F6F3F1;padding:28px 28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 32px">
+    <div style="display:flex;flex-direction:column;gap:6px;flex:1 1 380px">
+      <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(32px,3.6vw,48px);line-height:.92;text-transform:uppercase">Ou você ama, ou devolvemos sua grana!</span>
+      <span style="font-size:15px;line-height:1.5">Provou a primeira caixa e não curtiu? Me avisa em até 7 dias que eu devolvo tudo. Não precisa mandar nada de volta, nem explicar.</span>
+    </div>
+    <a href="#planos" style="box-sizing:border-box;height:52px;padding:0 22px;background:#F6F3F1;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none;flex:none" style-hover="background:#261714;color:#F6F3F1">Assinar sem risco <span>→</span></a>
+  </div>
+</section>
+
+<section id="assinantes" data-screen-label="07 Assinantes" style="width:100%;max-width:960px;box-sizing:border-box;padding:56px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:32px">
+  <h2 style="margin:0;font-weight:800;font-variation-settings:'wdth' 75;font-size:clamp(30px,3.4vw,48px);line-height:.95;text-transform:uppercase;text-align:center">Quem já provou</h2>
+  <div style="width:100%;position:relative">
+    <button class="nb-arrow nb-arrow--l" onClick="{{ scrollRev(-1) }}" disabled="{{ revAtStart }}">←</button>
+    <button class="nb-arrow nb-arrow--r" onClick="{{ scrollRev(1) }}" disabled="{{ revAtEnd }}">→</button>
+    <div class="nb-slider" id="nb-rev-slider">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="4">
+        <div style="outline:1px solid #DDD3CE;outline-offset:-1px;background:#FFFFFF;padding:20px;display:flex;flex-direction:column;gap:14px;min-height:260px">
+          <span style="align-self:flex-start;background:#261714;color:#F6F3F1;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px">{{ r.tag }}</span>
+          <b style="font-size:18px;line-height:1.3">{{ r.t }}</b>
+          <p style="margin:0;flex:1;font-family:'Newsreader',serif;font-style:italic;font-size:18px;line-height:1.45;color:#5E4B46">{{ r.q }}</p>
+          <div style="display:flex;align-items:center;gap:10px;border-top:1px solid #DDD3CE;padding-top:12px">
+            <div style="position:relative;width:40px;height:40px;border-radius:50%;overflow:hidden;background:#EDE7E3;flex:none">
+              <image-slot id="{{ r.slot }}" shape="circle" placeholder="Foto" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:1.3"><b>{{ r.n }}</b><span style="color:#5E4B46">{{ r.p }}</span></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="08 Prova social" style="width:100%;max-width:880px;box-sizing:border-box;padding:24px 20px 72px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:24px;text-align:center">
+  <sc-for list="{{ proofs }}" as="p" hint-placeholder-count="3">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(44px,4.4vw,60px);line-height:1;font-variant-numeric:tabular-nums">{{ p.v }}</span>
+      <span style="font-size:15px;line-height:1.4;max-width:22ch">{{ p.l }}</span>
+    </div>
+  </sc-for>
+</section>
+
+<section id="planos" data-screen-label="09 CTA final e planos" style="width:100%;max-width:960px;box-sizing:border-box;padding:0 20px 96px">
+  <div style="background:#EDE7E3;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;max-width:640px">
+      <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(40px,5vw,68px);line-height:.9;text-transform:uppercase;text-wrap:balance">Por que assinar agora?</h2>
+      <p style="margin:0;font-size:17px;line-height:1.55">Os 100 primeiros assinantes pagam o mesmo preço por 12 meses, mesmo se o chocolate subir. E ele vive subindo. Assine agora e garanta o seu lugar.</p>
+    </div>
+
+    <div role="tablist" style="display:flex;border:2px solid #261714">
+      <button onClick="{{ pickMonthly }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:44px;padding:0 20px;font-weight:700;font-size:15px;background:{{ tabMBg }};color:{{ tabMFg }}">Assinatura mensal</button>
+      <button onClick="{{ pickGift }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:44px;padding:0 20px;font-weight:700;font-size:15px;background:{{ tabGBg }};color:{{ tabGFg }}">Presente</button>
+    </div>
+
+    <sc-if value="{{ monthly }}" hint-placeholder-val="{{ true }}">
+      <div style="width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px;text-align:left">
+        <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+          <button onClick="{{ p.pick }}" aria-pressed="{{ p.pressed }}" style="all:unset;cursor:pointer;box-sizing:border-box;padding:20px;display:flex;flex-direction:column;gap:12px;background:{{ p.bg }};color:{{ p.fg }};outline:2px solid #261714;outline-offset:-2px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:24px">
+              <span style="font-weight:800;font-variation-settings:'wdth' 75;font-size:24px;text-transform:uppercase;line-height:1">{{ p.name }}</span>
+              <sc-if value="{{ p.best }}" hint-placeholder-val="{{ false }}"><span style="background:#261714;color:#F6F3F1;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;flex:none">Mais escolhido</span></sc-if>
+            </div>
+            <span style="font-size:15px"><b style="font-weight:900;font-variation-settings:'wdth' 62;font-size:48px;line-height:1;font-variant-numeric:tabular-nums">{{ p.price }}</b> /mês</span>
+            <span style="font-size:15px;line-height:1.45">{{ p.what }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ gift }}" hint-placeholder-val="{{ false }}">
+      <div style="width:100%;max-width:640px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:4px;text-align:left">
+        <sc-for list="{{ gifts }}" as="g" hint-placeholder-count="2">
+          <button onClick="{{ g.pick }}" aria-pressed="{{ g.pressed }}" style="all:unset;cursor:pointer;box-sizing:border-box;padding:20px;display:flex;flex-direction:column;gap:12px;background:{{ g.bg }};color:{{ g.fg }};outline:2px solid #261714;outline-offset:-2px">
+            <span style="font-weight:800;font-variation-settings:'wdth' 75;font-size:24px;text-transform:uppercase;line-height:1">{{ g.name }}</span>
+            <b style="font-weight:900;font-variation-settings:'wdth' 62;font-size:48px;line-height:1;font-variant-numeric:tabular-nums">{{ g.price }}</b>
+            <span style="font-size:15px;line-height:1.45">Plano Melhor valor, pago de uma vez, sem renovação, com bilhete.</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <span style="font-size:15px;line-height:1.5;max-width:60ch">{{ included }}</span>
+    <button onClick="{{ subscribe }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:56px;width:100%;max-width:420px;padding:0 22px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:space-between" style-hover="background:#6B1220" style-focus="outline:3px solid #261714;outline-offset:3px">{{ ctaLabel }} <span>→</span></button>
+    <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size:15px;font-weight:700;color:#2E6B45">Abrindo o pagamento seguro…</span></sc-if>
+    <sc-if value="{{ payErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:15px;font-weight:700;color:#9E2A0B">Não deu pra abrir o pagamento agora. Tenta de novo em instantes.</span></sc-if>
+    <span style="font-size:13px;line-height:1.5;color:#5E4B46;max-width:60ch">{{ payNote }}</span>
+  </div>
+</section>
+
+<footer data-screen-label="10 Rodapé" style="width:100%;border-top:2px solid #261714">
+  <div style="max-width:1120px;margin:0 auto;box-sizing:border-box;padding:40px 20px 56px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:14px;font-size:14px;line-height:1.5">
+      <dc-import name="NibbsLogo" variant="lockup" size="28" ink="#261714" accent="#B3202F" hint-size="104px,28px"></dc-import>
+      <div style="display:flex;gap:16px"><a href="#">Instagram</a><a href="#">WhatsApp</a></div>
+      <span style="color:#5E4B46">contato@nibbs.com.br</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:24px 48px;font-size:14px;flex:0 1 560px">
+      <sc-for list="{{ footCols }}" as="c" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <b style="font-size:13px;text-transform:uppercase;letter-spacing:.08em">{{ c.t }}</b>
+          <sc-for list="{{ c.l }}" as="l" hint-placeholder-count="3"><a href="{{ l.h }}" style="text-decoration:none" style-hover="color:#B3202F">{{ l.t }}</a></sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;diaCorte&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:31,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;regiao&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sul da Bahia&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;mes&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;novembro&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;}}">
+class Component extends DCLogic {
+  state = { mode: "m", plan: 1, giftIdx: 0, done: false, payErr: false, w: typeof window !== "undefined" ? window.innerWidth : 1280, revStart: true, revEnd: false };
+  componentDidMount() { this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener("resize", this.onR); this._bindSlider(); }
+  componentDidUpdate() { this._bindSlider(); }
+  _bindSlider() { const el = document.getElementById("nb-rev-slider"); if (el && !el._bound) { el._bound = true; el.addEventListener("scroll", () => { this.setState({ revStart: el.scrollLeft < 8, revEnd: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8 }); }, { passive: true }); } }
+  componentWillUnmount() { window.removeEventListener("resize", this.onR); }
+  renderVals() {
+    const { mode, plan, giftIdx, done, payErr, w, revStart, revEnd } = this.state;
+    const corte = this.props.diaCorte ?? 20;
+    const regiao = this.props.regiao ?? "Sul da Bahia";
+    const mes = this.props.mes ?? "novembro";
+    const P = [
+      { name: "Entrada", price: "R$ 99", what: "2 barras de 80 g. Dá um pedaço pequeno por dia." },
+      { name: "Melhor valor", price: "R$ 159", what: "3 barras de 80 g. Um pedaço depois de cada almoço, o mês inteiro. Se você é como eu, é esse." },
+      { name: "Ultimate", price: "R$ 219", what: "3 barras dos melhores produtores que eu encontrar, uma caixa por ano pra dar de presente pra alguém e 15% de desconto em barra avulsa." },
+    ];
+    const G = [{ name: "3 meses", price: "R$ 477" }, { name: "6 meses", price: "R$ 954" }];
+    const on = (a) => ({ bg: a ? "#B3202F" : "#F6F3F1", fg: a ? "#F6F3F1" : "#261714", pressed: a ? "true" : "false" });
+    const m = mode === "m";
+    return {
+      corte, regiao, mes, wide: w >= 820,
+      monthly: m, gift: !m, done,
+      revAtStart: revStart ? "true" : "false", revAtEnd: revEnd ? "true" : "false",
+      scrollRev: (dir) => () => { const el = document.getElementById("nb-rev-slider"); if (el) { const card = el.querySelector(":scope > *"); if (card) el.scrollBy({ left: dir * (card.offsetWidth + 16), behavior: "smooth" }); } },
+      pickMonthly: () => this.setState({ mode: "m", done: false }),
+      pickGift: () => this.setState({ mode: "g", done: false }),
+      tabMBg: m ? "#261714" : "transparent", tabMFg: m ? "#F6F3F1" : "#261714",
+      tabGBg: m ? "transparent" : "#261714", tabGFg: m ? "#261714" : "#F6F3F1",
+      plans: P.map((p, i) => ({ ...p, best: i === 1, ...on(plan === i), pick: () => this.setState({ plan: i, done: false }) })),
+      gifts: G.map((g, i) => ({ ...g, ...on(giftIdx === i), pick: () => this.setState({ giftIdx: i, done: false }) })),
+      ctaLabel: m ? `Assinar ${P[plan].name} · ${P[plan].price}/mês` : `Presentear ${G[giftIdx].name} · ${G[giftIdx].price}`,
+      subscribe: async () => {
+        const { mode, plan, giftIdx, done } = this.state;
+        if (done) return;
+        const slug = mode === "m" ? ["entrada", "melhor-valor", "ultimate"][plan] : ["presente-3m", "presente-6m"][giftIdx];
+        this.setState({ done: true, payErr: false });
+        try {
+          const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plano: slug }) });
+          const data = await res.json();
+          if (!res.ok || !data.url) throw new Error(data.error || 'sem url');
+          window.location.href = data.url;
+        } catch(err) {
+          console.error('[checkout]', err);
+          this.setState({ done: false, payErr: true });
+        }
+      },
+      payErr,
+      included: "Em toda caixa vem um cartão contando de onde é o chocolate, quem fez e o que tem dentro, mais o vídeo do produtor e um link pra você dar nota nas barras. Frete incluso.",
+      payNote: m ? "Cobra no cartão todo mês. Cancela quando quiser, num clique, sem ninguém te ligar pra te convencer a ficar." : "PIX ou cartão, pago de uma vez. Não renova sozinho.",
+      makers: [
+        { n: "Baianí", src: "logos/baiani.svg" },
+        { n: "Kalapa", src: "logos/kalapa.png" },
+        { n: "MOA", src: "logos/moa.png" },
+        { n: "Nugali", src: "logos/nugali.webp" },
+        { n: "Dengo", src: "logos/dengo.svg" },
+      ],
+      makersDouble: [
+        { n: "Baianí", src: "logos/baiani.svg" },
+        { n: "Kalapa", src: "logos/kalapa.png" },
+        { n: "MOA", src: "logos/moa.png" },
+        { n: "Nugali", src: "logos/nugali.webp" },
+        { n: "Dengo", src: "logos/dengo.svg" },
+        { n: "Baianí", src: "logos/baiani.svg" },
+        { n: "Kalapa", src: "logos/kalapa.png" },
+        { n: "MOA", src: "logos/moa.png" },
+        { n: "Nugali", src: "logos/nugali.webp" },
+        { n: "Dengo", src: "logos/dengo.svg" },
+      ],
+      values: [
+        { n: "01", tag: "Uma região por mês", dir: "row", img: "img/cacau-arvore.webp", alt: "Cacaueiro com frutos coloridos na Mata Atlântica",
+          t: "Brasil num dia, outra região no outro", d: "O gosto muda, a sua saúde não, produtos que não se repetem, gostosos e saudáveis.", b: "Por isso a caixa de um mês nunca repete a do outro." },
+        { n: "02", tag: "Três barras por mês, que se complementam", dir: "row-reverse", img: "img/caixa-fechada.webp", alt: "Caixa Nibbs fechada com lacre e fita vermelha",
+          t: "Uma suave, uma intensa, uma diferente", d: "Eu escolho as barras do mês pensando no conjunto, pra você não receber três vezes a mesma coisa. E a cada caixa você dá nota, pra próxima vir mais do seu jeito.", b: "Não precisa entender de chocolate. Só provar." },
+        { n: "03", tag: "Quem fez", dir: "row", img: "img/cacau-colheita.webp", alt: "Frutos de cacau colhidos na fazenda",
+          t: "Você sabe de quem está comprando", d: "Cada barra vem com informações detalhadas do produtor e como melhor degustar cada um dos chocolates, com indicação direta do produtor.", b: "Chocolate com nome e endereço." },
+      ],
+      reviews: [
+        { tag: "Assinante", t: "Nunca mais abri a gaveta vazia.", q: "Eu não consigo terminar uma refeição sem um pedaço de chocolate. Só que no mercado ou é doce demais, ou é bom e caro pra caramba. E nos últimos anos, até os melhorzinhos já não têm muita cara de chocolate. Quando a semana aperta, eu ainda esqueço de comprar. A Nibbs é o que eu queria pra mim.", n: "Rodrigo", p: "primeiro cliente da Nibbs", slot: "clube-rev-1" },
+        { tag: "Assinante", t: "Meu pós-almoço virou sagrado.", q: "Sempre fui de comer um docinho depois do almoço, mas me sentia culpada. Quando descobri que dava pra ter chocolate 70% gostoso, sem aquele amargo que trava, mudou tudo. Agora é meu ritual, todo dia, sem peso na consciência.", n: "Amanda", p: "plano Melhor valor", slot: "clube-rev-2" },
+        { tag: "Assinante", t: "Cancelei a ida ao mercado.", q: "Eu perdia tempo toda semana procurando chocolate decente no mercado e sempre voltava com o mesmo de sempre. Agora chega na porta, sempre diferente, e eu ainda aprendi a diferença entre um cacau do Pará e um da Bahia. Não volto mais.", n: "Cesar", p: "plano Ultimate", slot: "clube-rev-3" },
+        { tag: "Presente", t: "Melhor presente que já dei.", q: "Dei de aniversário pra minha esposa sem saber se ela ia gostar. No segundo mês ela já estava me mostrando o cartão da região e explicando de onde vinha cada barra. Agora assinei pra mim também.", n: "Orlando", p: "presente de 3 meses", slot: "clube-rev-4" },
+      ],
+      proofs: [
+        { v: "100", l: "primeiros pagam o mesmo preço por 12 meses" },
+        { v: "70%+", l: "de cacau em todas as barras. Sempre." },
+        { v: "7 dias", l: "pra pedir sua grana de volta" },
+      ],
+      footCols: [
+        { t: "Clube", l: [{ t: "Produtores", h: "#metodo" }, { t: "Planos", h: "#planos" }, { t: "Presente", h: "#planos" }] },
+        { t: "Ajuda", l: [{ t: "Garantia", h: "#" }, { t: "Cancelamento", h: "#" }, { t: "Contato", h: "#" }] },
+        { t: "Legal", l: [{ t: "Termos de uso", h: "#" }, { t: "Privacidade", h: "#" }] },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

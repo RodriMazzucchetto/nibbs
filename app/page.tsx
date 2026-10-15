@@ -2,12 +2,10 @@ export default function Home() {
   return (
     <main>
       <h1>Nibbs</h1>
-      <p>Welcome to your Nibbs project.</p>
-      <p>Connected with:</p>
+      <p>Ambiente de testes.</p>
       <ul>
-        <li>✅ Supabase</li>
-        <li>✅ Vercel</li>
-        <li>✅ GitHub</li>
+        <li><a href="/assinatura">Assinatura (B2C)</a></li>
+        <li><a href="/business">Business (B2B)</a></li>
       </ul>
     </main>
   );

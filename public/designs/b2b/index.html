@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Hedvig+Letters+Serif:opsz@12..24&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F6F3F1;color:#261714;-webkit-font-smoothing:antialiased}
+a{color:#261714;text-decoration:none}
+a:hover{color:#B3202F}
+input,button{font-family:inherit}
+@keyframes nb-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.35}}
+</style>
+</helmet>
+
+<div style="font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 100;font-size:17px;line-height:1.6;display:flex;flex-direction:column;overflow-x:clip">
+
+<nav data-screen-label="01 Navegação" style="position:sticky;top:0;z-index:30;background:rgba(246,243,241,.96);backdrop-filter:blur(8px);border-bottom:1px solid {{ navBorder }}">
+  <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+    <a href="#topo" aria-label="Nibbs, início"><dc-import name="NibbsLogo" variant="lockup" size="26" ink="#261714" accent="#B3202F" hint-size="96px,26px"></dc-import></a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:28px;font-size:15px">
+        <a href="#como-funciona" style="padding:6px 0" style-hover="color:#B3202F">Como funciona</a>
+        <a href="#ciencia" style="padding:6px 0" style-hover="color:#B3202F">A ciência</a>
+        <a href="#pacotes" style="padding:6px 0" style-hover="color:#B3202F">Pacotes</a>
+        <a href="#perguntas" style="padding:6px 0" style-hover="color:#B3202F">Perguntas</a>
+      </div>
+    </sc-if>
+    <a href="#reservar" style="height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:inline-flex;align-items:center;transition:background .2s,transform .2s" style-hover="background:#6B1220;color:#F6F3F1;transform:translateY(-1px)">Reservar minha data</a>
+  </div>
+</nav>
+
+<header id="topo" data-screen-label="02 Header" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(56px,8vw,96px) 20px 0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px">
+  <span style="display:inline-flex;align-items:center;gap:10px;font-size:14px;color:#6B1220;border:1px solid #261714;padding:6px 14px 6px 12px;font-weight:700">
+    <span style="width:8px;height:8px;border-radius:50%;background:#B3202F;animation:nb-pulse 1.8s ease-in-out infinite"></span>Apenas 10 datas até o fim do ano, com condição de cliente fundador.
+  </span>
+  <h1 style="margin:0;max-width:17ch;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(44px,6vw,76px);line-height:.92;text-transform:uppercase;text-wrap:balance">Torne seu time mais forte através da <span style="color:#B3202F">ciência do chocolate!</span></h1>
+  <p style="margin:0;max-width:46ch;font-size:clamp(18px,1.6vw,20px);line-height:1.55;color:#4A3430">O team building mais delicioso e inesquecível da sua vida. Um time mais forte e conectado em 45 minutos ou seu dinheiro de volta!</p>
+  <form onSubmit="{{ heroSubmit }}" noValidate="{{ true }}" aria-label="Reservar minha data" style="width:100%;max-width:720px;margin-top:10px;background:#B3202F;color:#F6F3F1;padding:clamp(20px,3vw,28px);box-sizing:border-box;display:flex;flex-direction:column;gap:16px;text-align:left">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap">
+      <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(28px,3.4vw,38px);line-height:.95;text-transform:uppercase">Garanta a data do seu time</span>
+      <span style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase"><span style="width:8px;height:8px;border-radius:50%;background:#F6F3F1;animation:nb-pulse 1.8s ease-in-out infinite"></span>10 datas abertas</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <label style="flex:2 1 260px;min-width:0;background:#FFFFFF;color:#261714;padding:9px 14px 7px;display:flex;flex-direction:column;gap:2px;cursor:text;outline:{{ heroEmailOutline }};outline-offset:-3px">
+        <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4B46">E-mail de trabalho</span>
+        <input type="email" value="{{ heroEmail }}" onChange="{{ onHeroEmail }}" autoComplete="email" inputMode="email" placeholder="nome@empresa.com.br" style="all:unset;box-sizing:border-box;width:100%;height:30px;font-size:17px;color:#261714">
+      </label>
+      <div style="flex:1 1 170px;background:#FFFFFF;color:#261714;padding:9px 10px 7px 14px;display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4B46">Pessoas no time</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:30px">
+          <span style="font-size:17px;font-weight:700;font-variant-numeric:tabular-nums" aria-live="polite">{{ heroTime }}</span>
+          <div style="display:flex;gap:4px">
+            <button type="button" onClick="{{ heroDec }}" aria-label="Menos pessoas" style="all:unset;cursor:pointer;width:30px;height:30px;border:2px solid #261714;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;transition:background .15s,color .15s" style-hover="background:#261714;color:#F6F3F1">–</button>
+            <button type="button" onClick="{{ heroInc }}" aria-label="Mais pessoas" style="all:unset;cursor:pointer;width:30px;height:30px;border:2px solid #261714;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;transition:background .15s,color .15s" style-hover="background:#261714;color:#F6F3F1">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;height:60px;padding:0 24px;background:#261714;color:#F6F3F1;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .2s,color .2s,padding .2s" style-hover="background:#F6F3F1;color:#261714;padding:0 18px 0 24px" style-focus="outline:3px solid #F6F3F1;outline-offset:3px">Reservar minha data <span style="font-size:22px">→</span></button>
+    <sc-if value="{{ heroErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="background:#F6F3F1;color:#9E2A0B;font-size:15px;font-weight:700;padding:8px 12px">Erro: {{ heroErr }}</span></sc-if>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;font-size:14px">
+      <span>{{ heroEstimate }}</span>
+      <span>Garantia de 100% do valor</span>
+    </div>
+  </form>
+  <a href="#como-funciona" style="font-size:15px;font-weight:700;padding:6px 0;border-bottom:2px solid #261714" style-hover="color:#B3202F;border-color:#B3202F">Ver como funciona ↓</a>
+  <div style="display:none">
+    <a href="#reservar" style="height:52px;padding:0 24px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:inline-flex;align-items:center;gap:12px;transition:background .2s,transform .2s,gap .2s" style-hover="background:#6B1220;color:#FFFFFF;transform:translateY(-2px);gap:18px">Reservar minha data <span>→</span></a>
+    <a href="#como-funciona" style="height:52px;padding:0 22px;border:2px solid #261714;box-sizing:border-box;font-weight:700;font-size:17px;display:inline-flex;align-items:center;transition:background .2s,color .2s" style-hover="background:#261714;color:#FFFFFF">Ver como funciona</a>
+  </div>
+  <div data-reveal="" style="width:100%;margin-top:clamp(32px,5vw,56px);position:relative">
+    <div style="position:relative;width:100%;aspect-ratio:16/9;min-height:280px;background:#EDE7E3">
+      <image-slot id="lp2-hero" shape="rect" placeholder="Hero: mãos de várias pessoas quebrando a mesma barra, luz lateral suave. Pode ser vídeo curto." style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+    </div>
+    <div style="position:absolute;left:clamp(12px,3vw,32px);bottom:clamp(12px,3vw,32px);background:#FFFFFF;padding:12px 16px;display:flex;align-items:center;gap:12px;text-align:left;pointer-events:none;outline:2px solid #261714;outline-offset:-2px">
+      <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:34px;color:#B3202F;line-height:1">45</span>
+      <span style="font-size:13px;line-height:1.35">minutos ao vivo<br>com facilitador</span>
+    </div>
+  </div>
+</header>
+
+<section data-screen-label="03 Baseado em" style="max-width:1120px;width:100%;margin:0 auto;padding:44px 20px 0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:16px">
+  <span style="font-size:13px;color:#5E4B46">Método baseado em pesquisas de</span>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
+    <sc-for list="{{ trust }}" as="t" hint-placeholder-count="5">
+      <a href="#ciencia" style="height:48px;padding:0 20px;border:1px solid #DDD3CE;display:flex;align-items:center;font-family:'Newsreader',serif;font-size:19px;color:#4A3430;transition:border-color .2s,color .2s,transform .2s" style-hover="border-color:#B3202F;color:#B3202F;transform:translateY(-2px)">{{ t }}</a>
+    </sc-for>
+  </div>
+</section>
+
+<section data-screen-label="04 Problema" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(88px,10vw,128px) 20px 0;box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px 72px;align-items:center">
+  <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;max-width:520px">
+    <h2 style="margin:0;font-family:'Newsreader',serif;font-style:italic;font-weight:400;font-size:clamp(28px,3vw,38px);line-height:1.2">Pense no último chocolate que você dividiu com alguém.</h2>
+    <p style="margin:0;color:#4A3430">Talvez tenha sido na infância, quebrando uma barra em pedaços desiguais com um irmão. Talvez no meio de um dia difícil, quando um colega apareceu na sua mesa com um tablete e disse "toma, você precisa disso". Você provavelmente não lembra o que comeu no almoço daquele dia. Mas lembra de quem estava com você.</p>
+    <p style="margin:0;font-weight:600">Chocolate tem esse poder. Ele não marca o momento. Ele marca as pessoas do momento.</p>
+    <p style="margin:12px 0 0;font-weight:800;font-variation-settings:'wdth' 75;font-size:26px;line-height:1;text-transform:uppercase">Agora pense no seu time.</p>
+    <p style="margin:0;color:#4A3430">Vocês se falam todo dia. Reunião de alinhamento, reunião de status, reunião para marcar reunião. Câmeras desligadas, nomes em quadradinhos, conversas que começam e terminam na pauta. Tem gente no seu time que trabalha lado a lado há meses e nunca dividiu nada além de uma planilha.</p>
+    <p style="margin:0;color:#4A3430">O trabalho remoto levou o cafezinho, o almoço em grupo, o bolo de aniversário na copa. Levou os pequenos momentos em que um time deixa de ser um grupo de pessoas e passa a ser um time. E ninguém colocou nada no lugar.</p>
+  </div>
+  <div data-reveal="" ref="{{ callRef }}" style="display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:14px;color:#5E4B46">{{ callLabel }}</span>
+      <button onClick="{{ toggleCam }}" role="switch" aria-checked="{{ camAria }}" style="all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:600;padding:8px 0">
+        <span style="width:44px;height:24px;background:{{ swBg }};position:relative;transition:background .25s;flex:none"><span style="position:absolute;top:3px;left:3px;width:18px;height:18px;background:#F6F3F1;transition:transform .25s;transform:{{ swX }}"></span></span>
+        {{ camBtn }}
+      </button>
+    </div>
+    <div style="background:{{ gridBg }};padding:5px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;transition:background .4s">
+      <sc-for list="{{ people }}" as="p" hint-placeholder-count="9">
+        <div style="aspect-ratio:16/11;position:relative;background:#4A3430;min-width:0;overflow:hidden">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .35s;opacity:{{ p.offOp }}">
+            <span style="width:38px;height:38px;border-radius:50%;background:#5E4B46;color:#DDD3CE;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ p.ini }}</span>
+          </div>
+          <div style="position:absolute;inset:0;transition:opacity .45s,transform .45s;opacity:{{ p.onOp }};transform:{{ p.onT }};transition-delay:{{ p.delay }}">
+            <image-slot id="{{ p.slot }}" shape="rect" placeholder="{{ p.ph }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+          </div>
+          <span style="position:absolute;left:5px;bottom:4px;pointer-events:none;font-size:10px;background:rgba(38,23,20,.75);color:#F6F3F1;padding:1px 5px;max-width:85%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="05 Até agora" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(72px,8vw,104px) 20px 0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px">
+  <h2 data-reveal="" style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(38px,4.6vw,58px);line-height:.94;text-transform:uppercase">Até agora<span style="color:#B3202F">.</span></h2>
+  <p data-reveal="" style="margin:0;font-family:'Newsreader',serif;font-style:italic;font-size:clamp(21px,2vw,26px);line-height:1.4">Imagine o mesmo time, no mesmo horário, abrindo a mesma caixa.</p>
+  <p data-reveal="" style="margin:0;max-width:60ch;color:#4A3430">O silêncio de quando todo mundo coloca o primeiro pedaço na boca ao mesmo tempo. A careta de alguém no 85%. O analista mais quieto do time jurando que sentiu gosto de maracujá, e todo mundo provando de novo para conferir. A risada que começa num quadradinho e se espalha pela tela inteira.</p>
+  <p data-reveal="" style="margin:0;max-width:56ch;font-weight:600">Em 45 minutos, o time que se via como nomes numa tela volta a se ver como gente. E sai de lá com uma memória que é de todos.</p>
+</section>
+
+<section id="ciencia" data-screen-label="06 Valores" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(96px,11vw,144px) 20px 0;box-sizing:border-box;display:flex;flex-direction:column;gap:clamp(48px,6vw,80px)">
+  <div data-reveal="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+    <h2 style="margin:0;max-width:22ch;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(38px,4.6vw,58px);line-height:.94;text-transform:uppercase">Isso é o que acontece quando seu time prova junto:</h2>
+    <p style="margin:0;max-width:52ch;color:#4A3430"><b style="color:#261714;font-weight:600">Parece mágica. Mas é ciência.</b> Tudo o que você acabou de imaginar tem explicação. E ela vem de algumas das instituições mais respeitadas do mundo.</p>
+  </div>
+
+  <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:32px 64px;align-items:center;flex-direction:{{ v.dir }}">
+      <div style="flex:1 1 400px;min-width:0;position:relative;aspect-ratio:5/4;background:#EDE7E3;overflow:hidden">
+        <image-slot id="{{ v.slot }}" shape="rect" placeholder="{{ v.ph }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+      </div>
+      <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#B3202F">{{ v.tag }}</span>
+        <h3 style="margin:0;font-weight:700;font-size:clamp(22px,2.2vw,28px);line-height:1.15">{{ v.t }}</h3>
+        <p style="margin:0;color:#4A3430">{{ v.d }}</p>
+        <button onClick="{{ v.toggle }}" aria-expanded="{{ v.exp }}" style="all:unset;cursor:pointer;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;padding:8px 0;border-bottom:2px solid #261714;transition:color .2s,border-color .2s" style-hover="color:#B3202F;border-color:#B3202F">{{ v.btn }} <span style="display:inline-block;transition:transform .25s;transform:{{ v.rot }}">↓</span></button>
+        <sc-if value="{{ v.open }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#EDE7E3;border-left:0;padding:18px 20px;display:flex;flex-direction:column;gap:10px">
+            <b style="font-family:'Newsreader',serif;font-weight:500;font-size:20px;line-height:1.3">{{ v.st }}</b>
+            <span style="font-size:16px;color:#4A3430">{{ v.sd }}</span>
+            <sc-if value="{{ v.hasNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:16px;font-weight:600">{{ v.note }}</span></sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-for>
+</section>
+
+<section data-screen-label="07 CTA intermediário" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(80px,9vw,112px) 20px 0;box-sizing:border-box">
+  <div data-reveal="" style="background:#B3202F;color:#F6F3F1;padding:clamp(28px,4vw,40px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 40px">
+    <p style="margin:0;flex:1 1 420px;font-family:'Newsreader',serif;font-style:italic;font-size:clamp(21px,2vw,26px);line-height:1.4;color:#F6F3F1">Juntamos as três coisas num único método. Provar junto, para criar sintonia. Repetir à mesa, para criar vínculo. Reconhecer, para fazer as pessoas quererem ficar. Com o ingrediente que quase todo mundo ama.</p>
+    <a href="#reservar" style="height:52px;padding:0 24px;background:#F6F3F1;color:#261714;font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:10px;flex:none;transition:background .2s,gap .2s" style-hover="background:#261714;color:#F6F3F1;gap:16px">Reservar minha data <span>→</span></a>
+  </div>
+</section>
+
+<section id="como-funciona" data-screen-label="08 Como funciona" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(96px,11vw,144px) 20px 0;box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px 72px;align-items:center">
+  <div data-reveal="" style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(36px,4.2vw,54px);line-height:.94;text-transform:uppercase">Como são os 45 minutos que vão mudar o seu time:</h2>
+    <p style="margin:0;color:#4A3430">A caixa chega na casa de cada pessoa dias antes, fechada, com a instrução de não abrir. No dia, todo mundo liga a câmera, porque todo mundo quer ver a cara dos outros quando a caixa abrir. Um facilitador conduz o time pelos 8 chocolates, um de cada vez, do mais suave ao mais intenso. Notas de sabor, apostas, surpresas, risadas. E no fim, o momento de reconhecimento, em que o time diz em voz alta o que nunca disse numa reunião.</p>
+  </div>
+  <div data-reveal="" style="display:flex;flex-direction:column;gap:14px">
+    <div style="position:relative;aspect-ratio:4/3;background:#EDE7E3">
+      <image-slot id="lp2-caixa" shape="rect" placeholder="Caixa Nibbs aberta vista de cima, 8 quadrados do claro ao escuro." style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px" role="group" aria-label="Os 8 chocolates, do mais suave ao mais intenso">
+      <sc-for list="{{ ramp }}" as="r" hint-placeholder-count="8">
+        <button onClick="{{ r.pick }}" onMouseEnter="{{ r.pick }}" aria-pressed="{{ r.on }}" aria-label="{{ r.aria }}" style="all:unset;cursor:pointer;height:{{ r.h }};background:{{ r.c }};transition:height .25s ease"></button>
+      </sc-for>
+    </div>
+    <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;min-height:22px">
+      <span style="color:#5E4B46">mais suave</span>
+      <span style="font-weight:600">{{ rampLabel }}</span>
+      <span style="color:#5E4B46">mais intenso</span>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="09 Por que chocolate" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(96px,11vw,144px) 20px 0;box-sizing:border-box;display:flex;flex-direction:column;gap:36px">
+  <h2 data-reveal="" style="margin:0;max-width:24ch;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(36px,4.2vw,54px);line-height:.94;text-transform:uppercase">Por que chocolate, e não vinho, pizza ou um jogo online?</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px">
+    <sc-for list="{{ whys }}" as="w" hint-placeholder-count="4">
+      <div data-reveal="" style="padding:22px 0 0;border-top:2px solid #261714;display:flex;flex-direction:column;gap:8px;transition:border-color .25s" style-hover="border-color:#B3202F">
+        <b style="font-weight:600;font-size:18px;line-height:1.3">{{ w.t }}</b>
+        <span style="font-size:16px;color:#4A3430">{{ w.d }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px 56px;align-items:center;padding-top:24px">
+    <div style="position:relative;aspect-ratio:3/2;background:#EDE7E3"><image-slot id="lp2-origem" shape="rect" placeholder="Produtor abrindo um fruto de cacau na roça." style="position:absolute;inset:0;width:100%;height:100%"></image-slot></div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h3 style="margin:0;font-weight:700;font-size:clamp(22px,2.2vw,28px);line-height:1.15">E não é qualquer chocolate.</h3>
+      <p style="margin:0;color:#4A3430">Cada chocolate da caixa vem de um chocolate maker brasileiro que faz tudo do grão à barra. Cacau da Amazônia, da Bahia, do Espírito Santo. Produtores que conhecem cada árvore. Quando o seu time prova, ele não prova um produto: prova a história de quem fez. E isso também vira conversa.</p>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="10 Prova social" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(96px,11vw,144px) 20px 0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:32px">
+  <div data-reveal="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px">
+    <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(36px,4.2vw,54px);line-height:.94;text-transform:uppercase">As primeiras 10 empresas vão escrever esta parte.</h2>
+    <p style="margin:0;max-width:58ch;color:#4A3430">Ainda não temos depoimentos para mostrar aqui, porque estamos abrindo as primeiras datas agora. Quem entrar como cliente fundador ganha condição especial e uma única responsabilidade: contar para o mundo como foi.</p>
+  </div>
+  <div data-reveal="" style="width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+    <sc-for list="{{ testi }}" as="t" hint-placeholder-count="3">
+      <div style="border:1px dashed #5E4B46;padding:22px;display:flex;flex-direction:column;gap:16px;min-height:200px;transition:border-color .25s,background .25s" style-hover="border-color:#B3202F;background:#F6F3F1">
+        <span style="align-self:flex-start;font-size:12px;font-weight:600;color:#F6F3F1;background:#261714;padding:3px 8px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-size:11px">Vaga de fundador {{ t.n }}</span>
+        <span style="font-family:'Newsreader',serif;font-style:italic;font-size:19px;line-height:1.4;color:#5E4B46;flex:1">{{ t.q }}</span>
+        <div style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;border:1px dashed #5E4B46"></span><span style="font-size:13px;color:#5E4B46">Sua empresa aqui</span></div>
+      </div>
+    </sc-for>
+  </div>
+  <div data-reveal="" style="width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:16px 56px;padding-top:12px">
+    <sc-for list="{{ proof }}" as="p" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center">
+        <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:48px;line-height:1;font-variant-numeric:tabular-nums">{{ p.n }}</span>
+        <span style="font-size:14px;color:#5E4B46">{{ p.l }}</span>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="pacotes" data-screen-label="11 Pacotes" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(96px,11vw,144px) 20px 0;box-sizing:border-box;display:flex;flex-direction:column;gap:32px">
+  <div data-reveal="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px">
+    <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(36px,4.2vw,54px);line-height:.94;text-transform:uppercase">Escolha como o seu time vai provar junto</h2>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;font-size:15px">
+      <span style="color:#4A3430">Tamanho do time</span>
+      <div style="display:flex;align-items:center;border:1px solid #DDD3CE">
+        <button onClick="{{ dec }}" aria-label="Menos pessoas" style="all:unset;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .15s" style-hover="background:#EDE7E3">–</button>
+        <span style="min-width:96px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums">{{ teamLabel }}</span>
+        <button onClick="{{ inc }}" aria-label="Mais pessoas" style="all:unset;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .15s" style-hover="background:#EDE7E3">+</button>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:16px;align-items:stretch">
+    <article data-reveal="" style="border:2px solid #261714;padding:29px 25px;display:flex;flex-direction:column;gap:22px;transition:transform .25s,border-color .25s" style-hover="transform:translateY(-4px);border-color:#261714">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <h3 style="margin:0;font-weight:800;font-variation-settings:'wdth' 75;font-size:28px;line-height:1">DEGUSTAÇÃO SINTONIA</h3>
+        <span style="font-family:'Newsreader',serif;font-style:italic;font-size:21px;line-height:1.35">Um encontro que o seu time não vai esquecer.</span>
+      </div>
+      <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.5">
+        <sc-for list="{{ pkgA }}" as="i" hint-placeholder-count="4"><li style="display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px"><span style="color:#B3202F;font-weight:700">✓</span><span>{{ i }}</span></li></sc-for>
+      </ul>
+      <div style="margin-top:auto;padding-top:18px;border-top:1px solid #DDD3CE;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:15px"><b style="font-weight:900;font-variation-settings:'wdth' 62;font-size:48px;line-height:1;font-variant-numeric:tabular-nums">R$ 1.390</b> por evento + R$ 119 por pessoa</span>
+        <span style="font-size:14px;color:#5E4B46">{{ priceA }}</span>
+      </div>
+      <a href="#reservar" style="height:52px;border:2px solid #261714;box-sizing:border-box;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s" style-hover="background:#261714;color:#FFFFFF">Reservar minha data</a>
+    </article>
+    <article data-reveal="" style="background:#B3202F;color:#F6F3F1;padding:31px 27px;display:flex;flex-direction:column;gap:22px;position:relative;transition:transform .25s" style-hover="transform:translateY(-4px)">
+      <span style="align-self:flex-start;background:#261714;color:#F6F3F1;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;margin-bottom:-8px">Mais completo</span>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <h3 style="margin:0;font-weight:800;font-variation-settings:'wdth' 75;font-size:28px;line-height:1">RITUAL SINTONIA</h3>
+        <span style="font-family:'Newsreader',serif;font-style:italic;font-size:21px;line-height:1.35">Para quem quer que a conexão vire hábito.</span>
+      </div>
+      <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.5">
+        <li style="font-weight:600">Tudo da Degustação Sintonia, e depois:</li>
+        <sc-for list="{{ pkgB }}" as="i" hint-placeholder-count="3"><li style="display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px"><span style="color:#F6F3F1;font-weight:700">✓</span><span>{{ i }}</span></li></sc-for>
+      </ul>
+      <div style="margin-top:auto;padding-top:18px;border-top:1px solid #F6F3F1;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:15px">Degustação Sintonia + <b style="font-weight:900;font-variation-settings:'wdth' 62;font-size:48px;line-height:1;font-variant-numeric:tabular-nums">R$ 149</b> por pessoa por caixa (a partir de 10 pessoas)</span>
+        <span style="font-size:14px">{{ priceB }}</span>
+      </div>
+      <a href="#reservar" style="height:52px;background:#F6F3F1;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s" style-hover="background:#261714;color:#F6F3F1">Reservar minha data</a>
+    </article>
+  </div>
+  <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px 40px;background:#EDE7E3;padding:26px">
+    <span style="grid-column:1 / -1;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4B46">Incluso nos dois pacotes</span>
+    <sc-for list="{{ included }}" as="c" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:4px"><b style="font-weight:600">{{ c.t }}</b><span style="font-size:16px;color:#4A3430">{{ c.d }}</span></div>
+    </sc-for>
+  </div>
+</section>
+
+<section data-screen-label="12 Garantia" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(80px,9vw,112px) 20px 0;box-sizing:border-box">
+  <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:32px 64px;align-items:start;border-top:1px solid #DDD3CE;padding-top:48px">
+    <div style="display:flex;align-items:center;gap:20px">
+      <div style="width:84px;height:84px;flex:none;border-radius:50%;border:1.5px solid #B3202F;display:flex;align-items:center;justify-content:center"><dc-import name="NibbsLogo" variant="symbol" size="38" ink="#261714" accent="#B3202F" hint-size="38px,38px"></dc-import></div>
+      <h2 style="margin:0;font-weight:800;font-variation-settings:'wdth' 75;font-size:clamp(28px,3vw,40px);line-height:.95;text-transform:uppercase">Você não arrisca nada. O risco é todo nosso.</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;color:#4A3430">
+      <p style="margin:0">Sabemos o que acontece quando um time prova junto. Por isso colocamos o nosso dinheiro em jogo, não o seu.</p>
+      <p style="margin:0">No fim da degustação, cada pessoa do seu time responde duas perguntas rápidas. Se o time não sair mais conectado do que entrou, devolvemos 100% do valor. Sem formulário, sem negociação, sem letras miúdas.</p>
+      <p style="margin:0;font-family:'Newsreader',serif;font-style:italic;font-size:19px;color:#261714">E tem mais duas promessas:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px">
+        <div style="display:flex;flex-direction:column;gap:2px;font-size:16px"><b style="font-weight:600;color:#261714">A caixa chega antes do evento.</b><span>Se a caixa de alguém não chegar a tempo, a degustação é por nossa conta.</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-size:16px"><b style="font-weight:600;color:#261714">A caixa chega perfeita.</b><span>Derreteu ou chegou danificada, mandamos outra na hora.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="perguntas" data-screen-label="13 FAQ" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(96px,11vw,144px) 20px 0;box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:28px 72px;align-items:start">
+  <div style="display:flex;flex-direction:column;gap:28px">
+    <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(36px,4.2vw,54px);line-height:.94;text-transform:uppercase">Perguntas frequentes</h2>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:15px;font-weight:600">Como funciona a contratação</span>
+      <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <li style="display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;font-size:15px;line-height:1.5;color:#4A3430"><span style="width:24px;height:24px;border-radius:50%;background:#B3202F;color:#F6F3F1;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ s.n }}</span><span>{{ s.t }}</span></li>
+        </sc-for>
+      </ol>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;border-bottom:1px solid #DDD3CE">
+    <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
+      <div style="border-top:1px solid #DDD3CE">
+        <button onClick="{{ f.toggle }}" aria-expanded="{{ f.expanded }}" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;min-height:60px;padding:16px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;font-weight:600;font-size:17px;line-height:1.4;transition:color .2s" style-hover="color:#B3202F">
+          <span>{{ f.q }}</span><span style="font-size:22px;font-weight:400;color:#B3202F;flex:none;display:inline-block;transition:transform .25s;transform:{{ f.rot }}">+</span>
+        </button>
+        <div style="display:grid;grid-template-rows:{{ f.rows }};transition:grid-template-rows .3s ease">
+          <div style="overflow:hidden"><p style="margin:0;padding:0 36px 20px 0;color:#4A3430">{{ f.a }}</p></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="reservar" data-screen-label="14 Formulário" style="padding:clamp(96px,11vw,144px) 20px 0;box-sizing:border-box">
+  <div style="max-width:1120px;margin:0 auto;background:#261714;color:#F6F3F1;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))">
+    <div style="padding:clamp(32px,5vw,56px);display:flex;flex-direction:column;gap:20px">
+      <span style="display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#D9434F"><span style="width:8px;height:8px;border-radius:50%;background:#D9434F;animation:nb-pulse 1.8s ease-in-out infinite"></span>Condição de cliente fundador</span>
+      <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(36px,4.2vw,54px);line-height:.94;text-transform:uppercase">Apenas 10 datas até o fim do ano.</h2>
+      <p style="margin:0;color:#DDD3CE">Estamos abrindo agora, e as primeiras 10 empresas vão construir isso com a gente. Quem entrar nesta leva ganha o direito de <b style="color:#F6F3F1;font-weight:600">renovar por mais 3 meses de caixas pelo preço de custo</b>: R$ 82 por pessoa por caixa, em vez de R$ 149. Sem margem nossa. Só o que custa o chocolate, a caixa e a entrega.</p>
+      <p style="margin:0;font-family:'Newsreader',serif;font-style:italic;font-size:20px">Em troca, pedimos uma coisa: que o seu time conte como foi.</p>
+      <p style="margin:0;font-size:15px;color:#C9BDB8">Cada degustação tem um facilitador ao vivo, e a agenda tem limite de verdade. Quando as datas acabarem, a condição de fundador acaba junto.</p>
+      <div style="display:flex;gap:6px;margin-top:auto;padding-top:8px" aria-hidden="true">
+        <sc-for list="{{ dates }}" as="d" hint-placeholder-count="10"><span style="flex:1;height:6px;background:#B3202F"></span></sc-for>
+      </div>
+      <span style="font-size:13px;color:#C9BDB8">10 de 10 datas disponíveis</span>
+    </div>
+    <div style="background:#FFFFFF;color:#261714;padding:clamp(28px,4vw,48px);margin:8px;display:flex;flex-direction:column">
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex;flex-direction:column;gap:14px;justify-content:center;flex:1;min-height:360px">
+          <div style="width:52px;height:52px;border-radius:50%;background:#E3EFE6;color:#2E6B45;display:flex;align-items:center;justify-content:center;font-size:26px">✓</div>
+          <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:44px;line-height:.92;text-transform:uppercase">Recebemos sua reserva!</span>
+          <p style="margin:0;color:#4A3430">Em até 1 dia útil, entramos em contato para confirmar a data e o prazo de entrega das caixas.</p>
+          <button onClick="{{ resetForm }}" style="all:unset;cursor:pointer;align-self:flex-start;font-size:15px;font-weight:600;padding:8px 0;border-bottom:2px solid #261714" style-hover="color:#B3202F;border-color:#B3202F">Fazer outra reserva</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+              <span style="font-weight:800;font-variation-settings:'wdth' 75;font-size:28px;line-height:1;text-transform:uppercase">Reservar minha data</span>
+              <span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4B46">{{ progressLabel }}</span>
+            </div>
+            <div style="height:4px;background:#EDE7E3"><div style="height:4px;background:#B3202F;transition:width .35s ease;width:{{ progressPct }}"></div></div>
+            <span style="font-size:14px;color:#5E4B46">{{ formHint }}</span>
+          </div>
+          <sc-if value="{{ hasErrors }}" hint-placeholder-val="{{ false }}">
+            <div role="alert" style="border:3px solid #9E2A0B;color:#9E2A0B;padding:12px 14px;font-size:15px;display:flex;flex-direction:column;gap:2px">
+              <b style="font-weight:700">Erro: confira {{ errorCount }}</b>
+              <sc-for list="{{ errorList }}" as="e" hint-placeholder-count="0"><span style="text-decoration:underline">{{ e }}</span></sc-for>
+            </div>
+          </sc-if>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:16px 12px">
+          <sc-for list="{{ fields }}" as="f" hint-placeholder-count="5">
+            <label style="display:flex;flex-direction:column;gap:6px;grid-column:{{ f.col }}">
+              <span style="font-weight:600;font-size:15px;display:flex;justify-content:space-between;gap:8px">{{ f.label }}<span style="font-weight:400;color:#2E6B45;transition:opacity .2s;opacity:{{ f.okOp }}">✓</span></span>
+              <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" onBlur="{{ f.onBlur }}" autoComplete="{{ f.ac }}" inputMode="{{ f.im }}" min="{{ f.min }}" placeholder="{{ f.ph }}" style="box-sizing:border-box;width:100%;height:50px;padding:0 14px;font-size:16px;background:#FFFFFF;color:#261714;border-radius:0;outline:none;border:solid {{ f.border }};transition:border-color .2s" style-focus="outline:3px solid #261714;outline-offset:3px">
+              <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="color:#9E2A0B;font-size:15px;font-weight:700">Erro: {{ f.err }}</span></sc-if>
+            </label>
+          </sc-for>
+          </div>
+          <sc-if value="{{ hasEstimate }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:14px;color:#4A3430;background:#EDE7E3;padding:10px 12px">{{ estimate }}</span>
+          </sc-if>
+          <button type="submit" style="all:unset;cursor:pointer;box-sizing:border-box;height:56px;width:100%;margin-top:4px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,gap .2s" style-hover="background:#6B1220;gap:16px" style-focus="outline:3px solid #261714;outline-offset:3px">{{ submitLabel }}</button>
+          <span style="font-size:13px;color:#5E4B46;text-align:center">Resposta em até 1 dia útil. Garantia de 100% do valor.</span>
+        </form>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="15 Rodapé" style="max-width:1120px;width:100%;margin:0 auto;padding:clamp(64px,7vw,88px) 20px 104px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:12px;max-width:280px">
+      <dc-import name="NibbsLogo" variant="lockup" size="26" ink="#261714" accent="#B3202F" hint-size="96px,26px"></dc-import>
+      <span style="font-size:14px;color:#5E4B46">Degustações guiadas de chocolate brasileiro para times.</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px 56px;font-size:14px">
+      <div style="display:flex;flex-direction:column;gap:8px"><b style="font-weight:600">Experiência</b><a href="#como-funciona" style-hover="color:#B3202F">Como funciona</a><a href="#ciencia" style-hover="color:#B3202F">A ciência</a><a href="#pacotes" style-hover="color:#B3202F">Pacotes</a></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><b style="font-weight:600">Empresa</b><a href="#perguntas" style-hover="color:#B3202F">Perguntas</a><a href="#reservar" style-hover="color:#B3202F">Contato</a></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><b style="font-weight:600">Legal</b><a href="#topo" style-hover="color:#B3202F">Privacidade</a><a href="#topo" style-hover="color:#B3202F">Termos</a></div>
+    </div>
+  </div>
+  <span style="font-size:13px;color:#5E4B46;border-top:1px solid #DDD3CE;padding-top:16px">© Nibbs</span>
+</footer>
+
+<sc-if value="{{ showBar }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:0;right:0;bottom:0;z-index:20;background:#FFFFFF;border-top:1px solid #DDD3CE;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px">
+    <span style="font-size:13px;line-height:1.3;flex:1;min-width:0;color:#4A3430">Apenas 10 datas até o fim do ano.</span>
+    <a href="#reservar" style="height:48px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;flex:none">Reservar minha data</a>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const EMPTY = { empresa: "", nome: "", email: "", whatsapp: "", time: "", data: "" };
+const maskWa = v => { const d = v.replace(/\D/g, "").slice(0, 11); if (d.length <= 2) return d.length ? "(" + d : ""; if (d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`; if (d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`; return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`; };
+const brl = n => "R$ " + n.toLocaleString("pt-BR");
+class Component extends DCLogic {
+  state = { form: { ...EMPTY }, errors: {}, touched: {}, sent: false, sending: false, faq: 0, val: -1, cam: false, ramp: 0, team: 10, scrolled: false, w: typeof window !== "undefined" ? window.innerWidth : 1280 };
+  callEl = null;
+  componentDidMount() {
+    this.onScroll = () => { const s = window.scrollY > 600; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("resize", this.onResize);
+    this.onScroll();
+    if ("IntersectionObserver" in window) {
+      this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = "1"; e.target.style.transform = "none"; this.io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+      this.armReveal();
+      this.camIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !this.camDone) { this.camDone = true; this.camT = setTimeout(() => this.setState({ cam: true }), 1400); } }), { threshold: 0.5 });
+      if (this.callEl) this.camIO.observe(this.callEl);
+    }
+  }
+  componentDidUpdate() { this.armReveal(); }
+  armReveal() {
+    if (!this.io) return;
+    document.querySelectorAll("[data-reveal]:not([data-armed])").forEach(el => {
+      el.setAttribute("data-armed", "");
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9) return;
+      el.style.opacity = "0"; el.style.transform = "translateY(18px)"; el.style.transition = "opacity .7s ease, transform .7s ease";
+      this.io.observe(el);
+    });
+  }
+  componentWillUnmount() { window.removeEventListener("scroll", this.onScroll); window.removeEventListener("resize", this.onResize); this.io && this.io.disconnect(); this.camIO && this.camIO.disconnect(); clearTimeout(this.camT); clearTimeout(this.sendT); }
+  validate(f) {
+    const e = {};
+    if (!f.empresa.trim()) e.empresa = "Escreva o nome da empresa";
+    if (!f.nome.trim()) e.nome = "Escreva seu nome";
+    if (!f.email.trim()) e.email = "Escreva seu e-mail";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) e.email = "Use o formato nome@empresa.com.br";
+    const wd = f.whatsapp.replace(/\D/g, "");
+    if (!wd) e.whatsapp = "Informe seu WhatsApp com DDD";
+    else if (wd.length < 10) e.whatsapp = "O número precisa ter DDD e 8 ou 9 dígitos";
+    const n = parseInt(f.time, 10);
+    if (!f.time) e.time = "Informe quantas pessoas tem o time";
+    else if (!(n >= 2)) e.time = "O time precisa ter pelo menos 2 pessoas";
+    if (!f.data) e.data = "Escolha a data desejada";
+    return e;
+  }
+  renderVals() {
+    const { form, errors, touched, sent, sending, faq, val, cam, ramp, team, scrolled, w } = this.state;
+    const live = this.validate(form);
+    const set = k => e => { const v = k === "whatsapp" ? maskWa(e.target.value) : e.target.value; this.setState(s => { const nf = { ...s.form, [k]: v }; const ne = { ...s.errors }; if (ne[k] && !this.validate(nf)[k]) delete ne[k]; return { form: nf, errors: ne }; }); };
+    const blur = k => () => this.setState(s => ({ touched: { ...s.touched, [k]: true } }));
+    const d = new Date(); d.setDate(d.getDate() + 7);
+    const fdef = [
+      ["empresa", "Nome da empresa", "text", "organization", "text", "", ""],
+      ["nome", "Seu nome", "text", "name", "text", "", ""],
+      ["email", "E-mail", "email", "email", "email", "", "nome@empresa.com.br"],
+      ["whatsapp", "WhatsApp", "tel", "tel", "tel", "", "(11) 98765-4321"],
+      ["time", "Tamanho do time", "number", "off", "numeric", "2", "Ex.: 12"],
+      ["data", "Data desejada", "date", "off", "none", d.toISOString().slice(0, 10), ""],
+    ];
+    const fields = fdef.map(([k, label, type, ac, im, min, ph]) => ({
+      col: w < 900 ? "1 / -1" : "auto",
+      label, type, ac, im, min, ph, value: form[k], onChange: set(k), onBlur: blur(k), err: errors[k] || "",
+      okOp: (form[k] && !live[k] && (touched[k] || k === "time" || k === "data")) ? 1 : 0,
+      border: errors[k] ? "3px #9E2A0B" : "2px #261714",
+    }));
+    const errorList = fdef.map(x => x[0]).filter(k => errors[k]).map(k => errors[k]);
+    const tn = parseInt(form.time, 10);
+    const people = ["Ana Lima", "Bruno Sá", "Carla Reis", "Diego Matos", "Elisa Vaz", "Fábio Nunes", "Gabi Rocha", "Hugo Prado", "Íris Melo"].map((name, i) => ({
+      name, ini: name.split(" ").map(x => x[0]).join(""), slot: "lp2-vc-" + (i + 1), ph: name.split(" ")[0] + " com o pedaço na mão",
+      offOp: cam ? 0 : 1, onOp: cam ? 1 : 0, onT: cam ? "scale(1)" : "scale(1.06)", delay: (cam ? [0, 2, 4, 1, 3, 5, 2, 4, 6][i] * 70 : 0) + "ms",
+    }));
+    const rampC = ["#C9A27E", "#B4865F", "#9A6B47", "#7F5236", "#673F29", "#523020", "#3D2318", "#261714"];
+    const rampN = ["1º · o mais suave", "2º", "3º", "4º", "5º", "6º", "7º", "8º · o mais intenso"];
+    const valData = [
+      { tag: "Sintonia", t: "Ele se sintoniza.", d: "Provar a mesma coisa no mesmo instante cria uma conexão que reunião nenhuma cria. É o mesmo arrepio de cantar junto num estádio.", btn: "Yale · 2014", st: "Yale descobriu que o chocolate fica mais gostoso quando é dividido.", sd: "Em 2014, pesquisadores de Yale deram para pessoas o mesmo chocolate 70%, em dois momentos: um provado sozinho, outro provado ao mesmo tempo que outra pessoa. Era exatamente o mesmo chocolate. Mesmo assim, o pedaço provado junto foi avaliado como mais gostoso e mais saboroso. E as pessoas disseram que se sentiram mais em sintonia com quem estava ao lado, sem trocar uma única palavra.", note: "Repare: não foi um estudo sobre comida em geral. Foi um estudo com chocolate amargo. Exatamente o que o seu time vai provar.", ph: "Duas pessoas em telas diferentes provando o mesmo pedaço ao mesmo tempo." },
+      { tag: "Mesa", t: "Ele volta a ter uma mesa.", d: "O lugar onde as pessoas conversam sobre a vida, não sobre o projeto.", btn: "Cornell · 2015", st: "Cornell descobriu que times que comem juntos trabalham melhor juntos.", sd: "Pesquisadores acompanharam mais de 50 quartéis de bombeiros por 15 meses. Os times que mais faziam refeições juntos tiveram as melhores avaliações de desempenho. Os que quase nunca comiam juntos, as piores. A explicação do pesquisador: comer junto é um ato mais íntimo do que trabalhar lado a lado. Essa intimidade volta para o trabalho.", note: "", ph: "Mesa de casa com a caixa aberta, notebook ao fundo, migalhas." },
+      { tag: "Reconhecimento", t: "Ele se reconhece.", d: "No fim, cada pessoa escolhe um colega e diz por que gosta de trabalhar com ele. É o momento que o time lembra no dia seguinte. Daqui a um ano, ninguém vai lembrar da dinâmica de quebra-gelo. Todo mundo vai lembrar do chocolate.", btn: "Gallup · 2024", st: "A Gallup descobriu o que faz as pessoas ficarem.", sd: "Em uma pesquisa de 2024 nos Estados Unidos, colaboradores bem reconhecidos tiveram 45% menos chance de ter deixado a empresa dois anos depois. E só 22% das pessoas dizem receber o reconhecimento na medida certa.", note: "", ph: "Cartão de reconhecimento escrito à mão ao lado de um pedaço de chocolate." },
+    ];
+    const faqData = [
+      ["Vocês emitem nota fiscal para empresa?", "Sim, em todas as contratações, com pagamento por boleto ou PIX."],
+      ["Com quanto tempo de antecedência preciso contratar?", "O suficiente para a caixa chegar em todo mundo antes do evento. Na reserva, confirmamos o prazo para a cidade de cada pessoa."],
+      ["E se alguém tiver restrição alimentar ou não gostar de chocolate amargo?", "Cada pessoa avisa pelo link de endereço, e ajustamos a caixa dela. A sequência já começa por um chocolate mais suave antes dos mais intensos."],
+      ["E se alguém não puder no horário?", "A sessão é gravada. A caixa fica esperando, e a pessoa prova quando puder."],
+      ["Precisa de alguma plataforma especial?", "Não. Usamos a ferramenta de videochamada que o seu time já usa."],
+      ["E se o time não gostar?", "Devolvemos 100% do valor. É simples assim."],
+    ];
+    const a = 1390 + 119 * team;
+    return {
+      wide: w >= 860, navBorder: scrolled ? "#EDE7E3" : "transparent",
+      trust: ["Yale", "Cornell", "Gallup", "8 chocolate makers brasileiros"].slice(0, w < 560 ? 3 : 4),
+      callRef: el => { this.callEl = el; },
+      people, toggleCam: () => this.setState(s => ({ cam: !s.cam })), camAria: cam ? "true" : "false",
+      camBtn: cam ? "Câmeras ligadas" : "Câmeras desligadas", swBg: cam ? "#B3202F" : "#C9BDB8", swX: cam ? "translateX(20px)" : "none",
+      gridBg: cam ? "#EDE7E3" : "#3A2A26", callLabel: cam ? "Quinta, 16h00 · Degustação Sintonia" : "Terça, 10h02 · Reunião de status",
+      values: valData.map((v, i) => ({ ...v, dir: i % 2 ? "row-reverse" : "row", slot: "lp2-val-" + (i + 1), open: val === i, exp: val === i ? "true" : "false", rot: val === i ? "rotate(180deg)" : "none", hasNote: !!v.note, toggle: () => this.setState({ val: val === i ? -1 : i }) })),
+      ramp: rampC.map((c, i) => ({ c, h: ramp === i ? "40px" : "16px", on: ramp === i ? "true" : "false", aria: "Chocolate " + (i + 1), pick: () => this.state.ramp !== i && this.setState({ ramp: i }) })),
+      rampLabel: rampN[ramp],
+      whys: [
+        { t: "Porque inclui todo mundo.", d: "Não depende de beber, de gostar de jogo, de ser extrovertido. Quem não bebe não fica de fora do brinde." },
+        { t: "Porque obriga a estar presente.", d: "Chocolate de verdade derrete na temperatura da boca. Para sentir o sabor, você precisa parar. Ninguém prova chocolate respondendo e-mail." },
+        { t: "Porque provoca reação.", d: "Um 70% surpreende, um 85% divide opiniões, uma origem frutada faz todo mundo provar de novo. Cada reação é uma conversa começando." },
+        { t: "Porque vira memória.", d: "Chocolate é um dos sabores mais ligados a lembranças boas. Você não está organizando um evento. Está criando uma história que o time vai contar." },
+      ],
+      testi: [{ n: "1", q: "“O que o seu time disse no fim da degustação.”" }, { n: "2", q: "“O que mudou na semana seguinte.”" }, { n: "3", q: "“O resultado do Relatório de Conexão.”" }],
+      proof: [{ n: "8", l: "origens brasileiras" }, { n: "45 min", l: "ao vivo, com facilitador" }, { n: "100%", l: "do valor de volta" }],
+      team, teamLabel: team + " pessoas",
+      dec: () => this.setState(s => ({ team: Math.max(2, s.team - 1) })), inc: () => this.setState(s => ({ team: Math.min(200, s.team + 1) })),
+      priceA: team === 10 ? "Para um time de 10: R$ 2.580 no total, ou R$ 258 por pessoa." : `Para um time de ${team}: ${brl(a)} no total, ou ${brl(Math.round(a / team))} por pessoa.`,
+      priceB: team < 10 ? "Disponível a partir de 10 pessoas." : (team === 10 ? "Para um time de 10: R$ 7.050 pelos 4 meses." : `Para um time de ${team}: ${brl(a + 149 * 3 * team)} pelos 4 meses.`),
+      pkgA: [
+        "8 chocolates de 8 origens brasileiras, do grão à barra, numa caixa de degustação para cada pessoa",
+        "Entrega na casa de cada um, em qualquer lugar do Brasil, com frete incluso",
+        "45 minutos de degustação guiada, ao vivo, com um facilitador",
+        "O momento de reconhecimento, em que o time diz em voz alta o que nunca disse numa reunião",
+      ],
+      pkgB: [
+        "Mais 3 caixas, uma por mês, com chocolates novos",
+        "Uma sessão gravada para cada caixa, para o time provar junto sem precisar de facilitador",
+        "O Guia do Líder, para qualquer pessoa do time conduzir o encontro",
+      ],
+      included: [
+        { t: "Relatório de Conexão do Time.", d: "O resultado da pesquisa do fim do evento, pronto para você mostrar à diretoria por que esse investimento valeu." },
+        { t: "Gravação da sessão.", d: "Para quem estava de férias, de licença ou em outro fuso." },
+        { t: "Cartões de reconhecimento.", d: "Um em cada caixa, para cada pessoa escrever a um colega. Muita gente guarda." },
+      ],
+      steps: [
+        { n: "1", t: "Você reserva a data e informa o tamanho do time." },
+        { n: "2", t: "Paga 50% na reserva, com nota fiscal, por boleto ou PIX." },
+        { n: "3", t: "Envia só a lista de nomes e e-mails. Cada pessoa informa o próprio endereço." },
+        { n: "4", t: "As caixas chegam, o time prova junto." },
+        { n: "5", t: "Paga os outros 50% até 15 dias depois do evento." },
+      ],
+      faqs: faqData.map(([q, a2], i) => ({ q, a: a2, expanded: faq === i ? "true" : "false", rows: faq === i ? "1fr" : "0fr", rot: faq === i ? "rotate(45deg)" : "none", toggle: () => this.setState({ faq: faq === i ? -1 : i }) })),
+      dates: Array.from({ length: 10 }, (_, i) => i),
+      fields, sent, notSent: !sent, hasErrors: errorList.length > 0, errorList,
+      errorCount: errorList.length === 1 ? "1 campo" : `${errorList.length} campos`,
+      hasEstimate: tn >= 2, estimate: tn >= 2 ? `Estimativa da Degustação Sintonia para ${tn} pessoas: ${brl(1390 + 119 * tn)}.` : "",
+      submitLabel: sending ? "Enviando…" : "Reservar minha data →",
+      submit: e => { e.preventDefault(); if (this.state.sending) return; const er = this.validate(this.state.form); if (Object.keys(er).length) { this.setState({ errors: er }); return; } this.setState({ errors: {}, sending: true }); fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.state.form) }).then(r => this.setState({ sending: false, sent: r.ok, errors: r.ok ? {} : { email: 'Erro ao enviar. Tente novamente.' } })).catch(() => this.setState({ sending: false, errors: { email: 'Erro de conexão. Tente novamente.' } })); },
+      resetForm: () => this.setState({ form: { ...EMPTY }, errors: {}, touched: {}, sent: false }),
+      showBar: scrolled && w < 760,
+      heroEmail: this.state.heroEmail || "", heroTime: this.state.heroTime ?? 10, heroErr: this.state.heroErr || "",
+      heroEmailOutline: this.state.heroErrK === "email" ? "3px solid #9E2A0B" : "none",
+      heroEstimate: (() => { const n = this.state.heroTime ?? 10; return `${n} pessoas · Degustação Sintonia a partir de ${brl(1390 + 119 * n)}`; })(),
+      heroDec: () => this.setState(s => ({ heroTime: Math.max(2, (s.heroTime ?? 10) - 1) })),
+      heroInc: () => this.setState(s => ({ heroTime: Math.min(200, (s.heroTime ?? 10) + 1) })),
+      onHeroEmail: e => this.setState({ heroEmail: e.target.value, heroErr: "", heroErrK: "" }),
+      progressPct: Math.round(fdef.filter(x => form[x[0]] && !live[x[0]]).length / fdef.length * 100) + "%",
+      progressLabel: fdef.filter(x => form[x[0]] && !live[x[0]]).length + " de " + fdef.length,
+      heroSubmit: e => {
+        e.preventDefault();
+        const em = (this.state.heroEmail || "").trim(), t = String(this.state.heroTime ?? 10);
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return this.setState({ heroErr: em ? "use o formato nome@empresa.com.br" : "escreva seu e-mail de trabalho", heroErrK: "email" });
+        this.setState(s => ({ prefilled: true, sent: false, touched: { ...s.touched, email: true }, form: { ...s.form, email: em, time: t } }), () => {
+          const el = document.getElementById("reservar");
+          if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 72, behavior: "smooth" });
+          setTimeout(() => { const i = [...document.querySelectorAll("#reservar input")].find(x => !x.value); i && i.focus({ preventScroll: true }); }, 700);
+        });
+      },
+      formHint: this.state.prefilled ? "Já guardamos seu e-mail e o tamanho do time. Faltam só 4 campos." : "Seis campos. Pelo WhatsApp a gente confirma a data mais rápido.",
+    };
+  }
+}
+</script>
+</body>
+</html>

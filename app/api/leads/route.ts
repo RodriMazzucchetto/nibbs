@@ -8,7 +8,10 @@ const LeadSchema = z.object({
   email: z.string().email(),
   empresa: z.string().optional(),
   telefone: z.string().optional(),
+  whatsapp: z.string().optional(),
   num_funcionarios: z.string().optional(),
+  time: z.union([z.string(), z.number()]).optional(),
+  data: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -18,7 +21,11 @@ export async function POST(request: NextRequest) {
 
     const supabase = createServerClient();
     const { error } = await supabase.from("leads").insert({
-      ...lead,
+      nome: lead.nome,
+      email: lead.email,
+      empresa: lead.empresa,
+      telefone: lead.whatsapp ?? lead.telefone,
+      num_funcionarios: lead.time != null ? String(lead.time) : lead.num_funcionarios,
       origem: request.headers.get("origin") ?? "business.nibbs.com",
     });
 

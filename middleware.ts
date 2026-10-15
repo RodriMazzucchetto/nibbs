@@ -17,6 +17,24 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  // Sem subdomínio próprio (localhost e *.vercel.app), as landings ficam em /assinatura e /business
+  const semSubdominio =
+    hostname.startsWith("localhost") ||
+    hostname.startsWith("127.0.0.1") ||
+    hostname.endsWith(".vercel.app");
+  if (semSubdominio) {
+    if (url.pathname === "/business" || url.pathname.startsWith("/business/")) {
+      const rest = url.pathname === "/business" ? "" : url.pathname.slice("/business".length);
+      url.pathname = `/routes/business${rest}`;
+      return NextResponse.rewrite(url);
+    }
+    if (url.pathname === "/assinatura" || url.pathname.startsWith("/assinatura/")) {
+      const rest = url.pathname === "/assinatura" ? "" : url.pathname.slice("/assinatura".length);
+      url.pathname = `/routes/assinatura${rest}`;
+      return NextResponse.rewrite(url);
+    }
+  }
+
   return NextResponse.next();
 }
 

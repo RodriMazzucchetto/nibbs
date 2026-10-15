@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nibbs · Mapa de origens</title>
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@1,6..72,400..600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#B3202F;color:#F6F3F1;font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;padding:24px;min-height:100vh}
+@media (max-width:720px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+h3{margin:8px 0 0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(34px,5vw,56px);line-height:.9;text-transform:uppercase}
+#map svg{width:100%;height:auto;display:block}
+.list{display:flex;flex-direction:column;border-top:1px solid #F6F3F1}
+.list button{all:unset;cursor:pointer;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(246,243,241,.45);min-height:44px;font-size:15px}
+.list button:focus-visible{outline:3px solid #F6F3F1;outline-offset:2px}
+.list button[aria-pressed="true"]{background:#F6F3F1;color:#261714;padding-left:8px;padding-right:8px}
+.n{font-weight:900;font-variation-settings:'wdth' 62;font-size:22px}
+.uf{font-size:12px;font-weight:700;letter-spacing:.06em}
+.card{background:#261714;padding:18px;display:flex;flex-direction:column;gap:6px;margin-top:16px}
+.card b{font-weight:900;font-variation-settings:'wdth' 62;font-size:30px;line-height:.95;text-transform:uppercase}
+.card i{font-family:'Newsreader',serif;font-size:19px;line-height:1.3}
+.card span{font-size:13px;line-height:1.5}
+.dot{cursor:pointer}
+.dot:focus{outline:none}
+body.embed .hd,body.embed .ft{display:none}
+body.embed .wrap{min-height:0;padding:0;align-items:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="hd"><span class="eyebrow">Oito origens, um mapa</span><h3>De onde vem cada pedaço</h3></div>
+    <div id="map" role="img" aria-label="Mapa do Brasil com as oito origens dos produtores"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;justify-content:flex-end">
+    <div class="list" id="list"></div>
+    <div class="card" id="card"></div>
+    <span class="ft" style="font-size:11px;margin-top:10px;opacity:.9">Origens e produtores ilustrativos. Geometria: Natural Earth.</span>
+  </div>
+</div>
+<script>
+const O=[
+ {n:'01',c:'Ilhéus',uf:'BA',lat:-14.79,lon:-39.05,b:'Mata Atlântica · cacau cabruca'},
+ {n:'02',c:'Linhares',uf:'ES',lat:-19.39,lon:-40.07,b:'Mata Atlântica · vale do Rio Doce'},
+ {n:'03',c:'Cruzeiro do Sul',uf:'AC',lat:-7.63,lon:-72.67,b:'Amazônia · cacau nativo do Rio Juruá'},
+ {n:'04',c:'Mocajuba',uf:'PA',lat:-2.58,lon:-49.51,b:'Amazônia · várzea do Rio Tocantins'},
+ {n:'05',c:'Tomé-Açu',uf:'PA',lat:-2.42,lon:-48.15,b:'Amazônia · sistema agroflorestal'},
+ {n:'06',c:'Boca do Acre',uf:'AM',lat:-8.75,lon:-67.40,b:'Amazônia · cacau selvagem do Rio Purus'},
+ {n:'07',c:'Medicilândia',uf:'PA',lat:-3.45,lon:-52.89,b:'Amazônia · beira da Transamazônica'},
+ {n:'08',c:'Ji-Paraná',uf:'RO',lat:-10.88,lon:-61.95,b:'Amazônia · vale do Machado'}
+];
+let sel=0;
+if(location.search.includes('embed'))document.body.classList.add('embed');
+const list=document.getElementById('list'),card=document.getElementById('card');
+O.forEach((o,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="n">${o.n}</span><span>${o.c}</span><span class="uf">${o.uf}</span>`;b.onclick=()=>select(i);list.appendChild(b)});
+function select(i){sel=i;[...list.children].forEach((b,j)=>b.setAttribute('aria-pressed',j===i));const o=O[i];
+ card.innerHTML=`<span class="eyebrow">Origem ${o.n} de 08</span><b>${o.c}, ${o.uf}</b><i>${o.b}</i><span>Produtor: nome e foto entram aqui</span>`;
+ d3.selectAll('.dot').each(function(d,j){d3.select(this).select('circle').attr('fill',j===i?'#261714':'#F6F3F1');d3.select(this).select('text').attr('fill',j===i?'#F6F3F1':'#261714')});}
+fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(r=>r.json()).then(t=>{
+ const all=topojson.feature(t,t.objects.countries).features;const br=all.find(f=>f.id==='076');
+ const W=640,H=600;const proj=d3.geoMercator().fitExtent([[16,16],[W-16,H-16]],br);const path=d3.geoPath(proj);
+ const svg=d3.select('#map').append('svg').attr('viewBox',`0 0 ${W} ${H}`);
+ svg.append('g').selectAll('path').data(all.filter(f=>f.id!=='076')).join('path').attr('d',path).attr('fill','#A51C2A').attr('stroke','#B3202F').attr('stroke-width',1);
+ svg.append('path').datum(br).attr('d',path).attr('fill','#6B1220').attr('stroke','#F6F3F1').attr('stroke-width',1.5);
+ const g=svg.append('g').selectAll('g').data(O).join('g').attr('class','dot').attr('tabindex',0)
+  .attr('transform',d=>{const p=proj([d.lon,d.lat]);return `translate(${p[0]},${p[1]})`}).on('click',(e,d)=>select(O.indexOf(d))).on('keydown',(e,d)=>{if(e.key==='Enter')select(O.indexOf(d))});
+ g.append('circle').attr('r',13).attr('stroke','#261714').attr('stroke-width',2);
+ g.append('text').text(d=>d.n.slice(1)).attr('text-anchor','middle').attr('dy','.35em').attr('font-family','Archivo').attr('font-weight',800).attr('font-size',13);
+ select(sel);
+}).catch(()=>{document.getElementById('map').textContent='Não foi possível carregar o mapa.';select(sel)});
+</script>
+</body>
+</html>

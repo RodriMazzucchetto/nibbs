@@ -1,4 +1,8 @@
 node_modules/
+.next/
+*.tsbuildinfo
+.claude/
+public/designs/*/uploads/
 .env
 .env.local
 .vercel/
