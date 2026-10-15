@@ -274,7 +274,7 @@ input,select,button{font-family:inherit}
         <sc-if value="{{ coErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="border:3px solid #9E2A0B;color:#9E2A0B;padding:12px 14px;font-size:15px;font-weight:700">{{ coErr }}</div></sc-if>
 
         <button type="submit" disabled="{{ coEnviando }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:56px;width:100%;padding:0 22px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:space-between;opacity:{{ coBtnOp }}" style-hover="background:#6B1220" style-focus="outline:3px solid #261714;outline-offset:3px">{{ coBtnLabel }} <span>→</span></button>
-        <span style="font-size:13px;line-height:1.5;color:#5E4B46">Pagamento processado pelo Asaas, com conexão criptografada. A Nibbs não guarda os dados do seu cartão.</span>
+        <span style="font-size:13px;line-height:1.5;color:#5E4B46">Pagamento processado pelo Asaas, com conexão criptografada. A Nibbs não guarda os dados do seu cartão. Na fatura e no PIX, a cobrança aparece em nome de <b>Mazzucchetto Treinamentos</b>, empresa responsável pela Nibbs.</span>
       </form>
     </sc-if>
 
@@ -283,6 +283,7 @@ input,select,button{font-family:inherit}
         <b style="font-size:20px">Pague com PIX para concluir</b>
         <img src="{{ coPixImg }}" alt="QR Code do PIX" style="width:220px;height:220px;background:#FFFFFF;padding:8px">
         <span style="font-size:14px;line-height:1.5;color:#4A3430">Abra o app do seu banco, escolha PIX e escaneie o código. Ou copie o código abaixo.</span>
+        <span style="font-size:14px;line-height:1.5;color:#261714;border:2px solid #261714;padding:10px 12px;box-sizing:border-box;width:100%">No app do banco, o recebedor aparece como <b>Mazzucchetto Treinamentos</b>. É a empresa responsável pela Nibbs, pode pagar tranquilo.</span>
         <textarea readOnly="{{ true }}" value="{{ coPixPayload }}" rows="3" aria-label="Código PIX copia e cola" style="width:100%;box-sizing:border-box;font-size:12px;padding:8px;border:2px solid #261714;border-radius:0;resize:none;font-family:monospace;background:#FFFFFF;color:#261714"></textarea>
         <button type="button" onClick="{{ coCopiar }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:48px;padding:0 20px;background:#261714;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center" style-hover="background:#B3202F">{{ coCopiarLabel }}</button>
         <span role="status" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700"><span style="width:8px;height:8px;border-radius:50%;background:#B3202F;animation:nb-pulse 1.8s ease-in-out infinite"></span>Aguardando o pagamento…</span>
