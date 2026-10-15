@@ -1,0 +1,2 @@
+# Arquivos com hash SRI: qualquer conversão de fim de linha invalida o hash.
+public/designs/vendor/** -text
