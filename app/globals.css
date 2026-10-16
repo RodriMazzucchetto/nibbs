@@ -11,6 +11,12 @@ body {
   padding: 2rem;
 }
 
+body:has(.nb-portal) {
+  padding: 0;
+  background: #f6f3f1;
+  color: #261714;
+}
+
 main {
   max-width: 1200px;
   margin: 0 auto;

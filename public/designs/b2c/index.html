@@ -252,6 +252,20 @@ input,select,button{font-family:inherit}
         </div>
 
         <div style="display:flex;flex-direction:column;gap:12px">
+          <b style="font-size:13px;letter-spacing:.08em;text-transform:uppercase">Sua conta Nibbs</b>
+          <span style="font-size:14px;line-height:1.5;color:#4A3430">Com e-mail e senha você entra no portal do assinante para acompanhar caixas e assinatura. Não guardamos dados do cartão.</span>
+          <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px">
+            <sc-for list="{{ coConta }}" as="f" hint-placeholder-count="2">
+              <label style="display:flex;flex-direction:column;gap:6px;min-width:0;grid-column:{{ f.col }}">
+                <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5E4B46">{{ f.label }}</span>
+                <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" autoComplete="{{ f.ac }}" placeholder="{{ f.ph }}" style="box-sizing:border-box;width:100%;height:48px;padding:0 12px;font-size:16px;background:#FFFFFF;color:#261714;border-radius:0;outline:none;border:solid {{ f.border }}" style-focus="outline:3px solid #261714;outline-offset:2px">
+                <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="color:#9E2A0B;font-size:13px;font-weight:700">{{ f.err }}</span></sc-if>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
           <b style="font-size:13px;letter-spacing:.08em;text-transform:uppercase">Pagamento</b>
           <div role="tablist" style="display:flex;border:2px solid #261714">
             <button type="button" role="tab" aria-selected="{{ coCartaoSel }}" onClick="{{ coEscolheCartao }}" style="all:unset;cursor:pointer;flex:1;text-align:center;box-sizing:border-box;height:46px;font-weight:700;font-size:15px;background:{{ coTabCBg }};color:{{ coTabCFg }}">Cartão de crédito</button>
@@ -313,7 +327,7 @@ input,select,button{font-family:inherit}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;diaCorte&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:31,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;regiao&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sul da Bahia&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;mes&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;novembro&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;}}">
-const CO_VAZIO = { nome: "", email: "", cpf: "", celular: "", cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", uf: "", ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "", website: "" };
+const CO_VAZIO = { nome: "", email: "", cpf: "", celular: "", cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", uf: "", senha: "", senha2: "", ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "", website: "" };
 const CO_CARTAO_VAZIO = { ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "" };
 const SLUGS_M = ["entrada", "melhor-valor", "ultimate"];
 const SLUGS_G = ["presente-3m", "presente-6m"];
@@ -336,6 +350,14 @@ class Component extends DCLogic {
   componentDidMount() {
     this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener("resize", this.onR); this._bindSlider();
     this.onKey = e => { if (e.key === "Escape" && this.state.co && !this.state.coEnviando) this.coFechar(); }; window.addEventListener("keydown", this.onKey);
+    try {
+      const q = new URLSearchParams(window.location.search);
+      const slug = q.get("plano");
+      const idx = SLUGS_M.indexOf(slug || "");
+      const open = q.get("checkout") === "1" || q.get("checkout") === "true";
+      if (idx >= 0) this.setState({ mode: "m", plan: idx }, () => { if (open) this.coAbrir(); });
+      else if (open) this.coAbrir();
+    } catch (_) {}
   }
   componentDidUpdate() { this._bindSlider(); }
   _bindSlider() { const el = document.getElementById("nb-rev-slider"); if (el && !el._bound) { el._bound = true; el.addEventListener("scroll", () => { this.setState({ revStart: el.scrollLeft < 8, revEnd: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8 }); }, { passive: true }); } }
@@ -354,6 +376,8 @@ class Component extends DCLogic {
     if (!f.bairro.trim()) e.bairro = "Informe o bairro";
     if (!f.cidade.trim()) e.cidade = "Informe a cidade";
     if (f.uf.trim().length !== 2) e.uf = "UF";
+    if (f.senha.length < 8) e.senha = "Mínimo de 8 caracteres";
+    if (f.senha2 !== f.senha) e.senha2 = "As senhas não batem";
     if (metodo === "cartao") {
       if (!f.ccNome.trim()) e.ccNome = "Nome como está no cartão";
       if (!luhnOk(f.ccNumero)) e.ccNumero = "Número do cartão inválido";
@@ -385,6 +409,7 @@ class Component extends DCLogic {
       plano: mode === "m" ? SLUGS_M[plan] : SLUGS_G[giftIdx], metodo: coMetodo, website: f.website,
       cliente: { nome: f.nome.trim(), email: f.email.trim(), cpf: f.cpf, celular: f.celular },
       endereco: { cep: f.cep, rua: f.rua.trim(), numero: f.numero.trim(), complemento: f.complemento.trim(), bairro: f.bairro.trim(), cidade: f.cidade.trim(), uf: f.uf },
+      senha: f.senha,
       cartao: coMetodo === "cartao" ? { nome: f.ccNome.trim(), numero: f.ccNumero, validade: f.ccValidade, cvv: f.ccCvv } : undefined,
     };
     this.setState({ coEnviando: true, coErr: "", coErrs: {} });
@@ -394,7 +419,8 @@ class Component extends DCLogic {
       ok = r.ok; data = await r.json().catch(() => ({}));
     } catch (_) { data = { error: "Sem conexão. Confira sua internet e tente de novo." }; }
     payload.cartao = undefined;
-    this.setState(s => ({ coEnviando: false, coF: { ...s.coF, ...(ok ? CO_CARTAO_VAZIO : { ccCvv: "" }) } }));
+    payload.senha = "";
+    this.setState(s => ({ coEnviando: false, coF: { ...s.coF, senha: "", senha2: "", ...(ok ? CO_CARTAO_VAZIO : { ccCvv: "" }) } }));
     if (!ok) { this.setState({ coErr: data.error || "Não foi possível concluir o pagamento." }); return; }
     if (data.status === "pago") this.setState({ coStep: "ok" });
     else if (data.status === "analise") this.setState({ coStep: "analise" });
@@ -418,7 +444,7 @@ class Component extends DCLogic {
     const cartao = coMetodo === "cartao";
     const preco = m ? P[plan].price : G[giftIdx].price;
     const okMsg = m
-      ? "Sua assinatura está ativa. Você recebe o comprovante por e-mail e a gente avisa quando a primeira caixa sair pra entrega."
+      ? "Sua assinatura está ativa. Entre em /entrar com o e-mail e a senha que você criou para acompanhar suas caixas."
       : "Seu presente está garantido. Você recebe o comprovante por e-mail e a gente entra em contato pra combinar o bilhete e a entrega.";
     return {
       coVisivel: co,
@@ -442,6 +468,10 @@ class Component extends DCLogic {
         fld("bairro", "Bairro", 3, { ac: "address-level3" }),
         fld("cidade", "Cidade", 2, { ac: "address-level2" }),
         fld("uf", "UF", 1, { ac: "address-level1", ph: "SP" }),
+      ],
+      coConta: [
+        fld("senha", "Senha", 3, { type: "password", ac: "new-password", ph: "Mínimo 8 caracteres" }),
+        fld("senha2", "Confirmar senha", 3, { type: "password", ac: "new-password", ph: "Repita a senha" }),
       ],
       coCartao: [
         fld("ccNumero", "Número do cartão", 6, { ac: "cc-number", im: "numeric", ph: "0000 0000 0000 0000" }),

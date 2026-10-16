@@ -107,8 +107,43 @@ export async function createAsaasSubscription(data: {
   return asaasFetch("/subscriptions", { method: "POST", body: JSON.stringify(data) });
 }
 
-export async function getAsaasSubscription(id: string): Promise<{ externalReference?: string }> {
+export type AsaasSubscription = {
+  id: string;
+  status?: "ACTIVE" | "INACTIVE" | string;
+  value?: number;
+  nextDueDate?: string;
+  cycle?: string;
+  description?: string;
+  externalReference?: string;
+  billingType?: string;
+  creditCard?: { creditCardNumber?: string; creditCardBrand?: string };
+};
+
+export async function getAsaasSubscription(id: string): Promise<AsaasSubscription> {
   return asaasFetch(`/subscriptions/${id}`);
+}
+
+export async function updateAsaasSubscription(
+  id: string,
+  data: {
+    value?: number;
+    nextDueDate?: string;
+    cycle?: "MONTHLY";
+    description?: string;
+    externalReference?: string;
+    status?: "ACTIVE" | "INACTIVE";
+    updatePendingPayments?: boolean;
+  },
+): Promise<AsaasSubscription> {
+  return asaasFetch(`/subscriptions/${id}`, { method: "PUT", body: JSON.stringify(data) });
+}
+
+export async function listAsaasSubscriptionPayments(
+  subscriptionId: string,
+  limit = 12,
+): Promise<Array<{ id: string; status: string; value: number; dueDate: string; invoiceUrl?: string; description?: string }>> {
+  const list = await asaasFetch(`/subscriptions/${subscriptionId}/payments?limit=${limit}`);
+  return list?.data ?? [];
 }
 
 export async function deleteAsaasSubscription(id: string) {

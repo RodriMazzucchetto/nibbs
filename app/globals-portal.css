@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Hedvig+Letters+Serif:opsz@12..24&display=swap");
+
+.nb-portal,
+.nb-portal * {
+  box-sizing: border-box;
+}
+
+.nb-portal {
+  --ink: #261714;
+  --paper: #f6f3f1;
+  --accent: #b3202f;
+  --muted: #5e4b46;
+  --line: #ddd3ce;
+  --ok: #2e6b45;
+  font-family: "Archivo", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+}
+
+.nb-portal body,
+body:has(.nb-portal) {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+}
+
+.nb-portal h1,
+.nb-portal h2,
+.nb-portal .nb-display {
+  font-weight: 900;
+  font-variation-settings: "wdth" 62;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.nb-portal a {
+  color: inherit;
+}
+
+.nb-btn {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 18px;
+  background: var(--accent);
+  color: var(--paper);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.nb-btn:hover {
+  background: #6b1220;
+}
+
+.nb-btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+}
+
+.nb-btn-ghost:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.nb-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 16px;
+  border: 2px solid var(--ink);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 0;
+}
+
+.nb-input:focus {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.nb-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.nb-card-placeholder {
+  border: 2px solid var(--ink);
+  padding: 18px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nb-flash {
+  border: 3px solid var(--ok);
+  color: var(--ok);
+  padding: 12px 14px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.nb-alert {
+  border: 3px solid var(--accent);
+  color: var(--accent);
+  padding: 12px 14px;
+  font-weight: 700;
+  font-size: 15px;
+}

@@ -52,6 +52,11 @@ export async function POST(request: NextRequest) {
 
     const cliente = await getAsaasCustomer(payment.customer);
 
+    const email = (cliente.email ?? "").trim().toLowerCase();
+    const { data: perfil } = email
+      ? await supabase.from("profiles").select("id").eq("email", email).maybeSingle()
+      : { data: null };
+
     const { data: assinatura, error } = await supabase
       .from("assinaturas")
       .insert({
@@ -60,9 +65,11 @@ export async function POST(request: NextRequest) {
         asaas_payment_id: payment.id,
         tipo: plano?.tipo ?? (payment.subscription ? "assinatura" : "presente"),
         plano: plano?.nome ?? slug ?? "desconhecido",
-        email: cliente.email ?? "",
+        plano_slug: plano?.slug ?? slug ?? null,
+        email,
         nome: cliente.name ?? "",
         status: "active",
+        user_id: perfil?.id ?? null,
       })
       .select()
       .single();

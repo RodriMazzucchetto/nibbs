@@ -12,6 +12,7 @@ import {
   type AsaasCartao,
   type AsaasTitular,
 } from "@/lib/asaas";
+import { criarOuAtualizarConta } from "@/lib/conta";
 import { PLANOS } from "@/lib/planos";
 import { excedeuLimite, ipDoCliente } from "@/lib/rate-limit";
 import { cpfValido, hojeSaoPaulo, luhnValido, soDigitos, validadeValida } from "@/lib/validacao";
@@ -47,6 +48,8 @@ const CheckoutSchema = z.object({
       cvv: z.string().regex(/^\d{3,4}$/),
     })
     .optional(),
+  // Conta Nibbs — nunca gravamos cartão; senha vai só para o Auth do Supabase (hash)
+  senha: z.string().min(8).max(72),
   // Campo invisível: só robôs preenchem
   website: z.string().optional(),
 });
@@ -149,13 +152,49 @@ export async function POST(request: NextRequest) {
 
     if (!pagamento) throw new Error("Cobrança não encontrada após a criação");
 
+    // Zera referência local ao cartão o quanto antes (não vai para banco nem log)
+    cartao = undefined;
+    titular = undefined;
+
+    const criarConta = async () => {
+      try {
+        await criarOuAtualizarConta({
+          nome: cliente.nome,
+          email: cliente.email,
+          senha: body.senha,
+          cpf,
+          celular,
+          cep,
+          rua: endereco.rua,
+          numero: endereco.numero,
+          complemento: endereco.complemento,
+          bairro: endereco.bairro,
+          cidade: endereco.cidade,
+          uf: endereco.uf,
+        });
+      } catch (err) {
+        console.error("[checkout] conta", err instanceof Error ? err.message : "erro");
+      }
+    };
+
     if (body.metodo === "pix") {
+      await criarConta();
       const pix = await getAsaasPixQrCode(pagamento.id);
-      return responder({ status: "pix", paymentId: pagamento.id, pix: { img: pix.encodedImage, payload: pix.payload } });
+      return responder({
+        status: "pix",
+        paymentId: pagamento.id,
+        pix: { img: pix.encodedImage, payload: pix.payload },
+      });
     }
 
-    if (PAGO.includes(pagamento.status)) return responder({ status: "pago" });
-    if (EM_ANALISE.includes(pagamento.status)) return responder({ status: "analise", paymentId: pagamento.id });
+    if (PAGO.includes(pagamento.status)) {
+      await criarConta();
+      return responder({ status: "pago" });
+    }
+    if (EM_ANALISE.includes(pagamento.status)) {
+      await criarConta();
+      return responder({ status: "analise", paymentId: pagamento.id });
+    }
 
     if (assinaturaId) await deleteAsaasSubscription(assinaturaId).catch(() => {});
     return responder({ error: "O cartão foi recusado. Confira os dados ou use outro cartão." }, 402);

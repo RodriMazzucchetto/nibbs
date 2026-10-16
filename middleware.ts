@@ -1,12 +1,31 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  let response = NextResponse.next({ request });
+
+  // Renova sessão Auth (cookies) em todas as páginas
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+          response = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
+        },
+      },
+    }
+  );
+  await supabase.auth.getUser();
+
   const hostname = request.headers.get("host") ?? "";
   const url = request.nextUrl.clone();
 
-  // Em produção: roteia por subdomínio
-  // Em dev: roteia por path (/business ou /assinatura)
   if (hostname.startsWith("business.")) {
     url.pathname = `/routes/business${url.pathname === "/" ? "" : url.pathname}`;
     return NextResponse.rewrite(url);
@@ -17,7 +36,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // Sem subdomínio próprio (localhost e *.vercel.app), as landings ficam em /assinatura e /business
   const semSubdominio =
     hostname.startsWith("localhost") ||
     hostname.startsWith("127.0.0.1") ||
@@ -35,9 +53,9 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|designs/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
 };
