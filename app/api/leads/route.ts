@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       empresa: lead.empresa,
       telefone: lead.whatsapp ?? lead.telefone,
       num_funcionarios: lead.time != null ? String(lead.time) : lead.num_funcionarios,
-      origem: request.headers.get("origin") ?? "business.nibbs.com",
+      origem: request.headers.get("origin") ?? "nibbs.com",
     });
 
     if (error) throw error;

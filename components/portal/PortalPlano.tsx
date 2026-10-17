@@ -146,7 +146,7 @@ export function PortalPlano({
             })}
           </div>
           <a
-            href={`/assinatura?plano=${encodeURIComponent(sel.slug)}&checkout=1`}
+            href={`/?plano=${encodeURIComponent(sel.slug)}&checkout=1`}
             style={{
               all: "unset",
               cursor: "pointer",

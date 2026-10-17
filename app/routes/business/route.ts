@@ -1,12 +1,6 @@
-import { NextResponse } from "next/server";
-import { readFileSync } from "fs";
-import { join } from "path";
-import { HEADERS_LANDING } from "@/lib/seguranca";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  let html = readFileSync(join(process.cwd(), "public/designs/b2b/index.html"), "utf-8");
-  html = html.replace("<head>", '<head><base href="/designs/b2b/">');
-  return new NextResponse(html, {
-    headers: { "Content-Type": "text/html; charset=utf-8", ...HEADERS_LANDING },
-  });
+/** B2B arquivado em /archive/b2b — sem acesso público. */
+export async function GET(request: NextRequest) {
+  return NextResponse.redirect(new URL("/", request.url), 308);
 }

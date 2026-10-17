@@ -22,7 +22,7 @@ export default async function EntrarPage() {
     <div className="nb-portal" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
       <nav style={{ width: "100%", maxWidth: 1120, padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <NibbsLogo variant="lockup" size={28} ink="#261714" accent="#B3202F" />
-        <a href="/assinatura" style={{ fontWeight: 700, fontSize: 15 }}>
+        <a href="/#planos" style={{ fontWeight: 700, fontSize: 15 }}>
           Ver planos
         </a>
       </nav>

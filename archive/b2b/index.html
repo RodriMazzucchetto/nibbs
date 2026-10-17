@@ -37,7 +37,7 @@ input,button{font-family:inherit}
         <a href="/assinatura" style="padding:6px 0" style-hover="color:#B3202F">Clube Nibbs</a>
       </div>
     </sc-if>
-    <a href="/business#reservar" style="height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:inline-flex;align-items:center;transition:background .2s,transform .2s" style-hover="background:#6B1220;color:#F6F3F1;transform:translateY(-1px)">Reservar minha data</a>
+    <button type="button" onClick="{{ openModal }}" style="all:unset;cursor:pointer;height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:inline-flex;align-items:center;transition:background .2s,transform .2s" style-hover="background:#6B1220;color:#F6F3F1;transform:translateY(-1px)">Reservar minha data</button>
   </div>
 </nav>
 
@@ -45,44 +45,15 @@ input,button{font-family:inherit}
   <span style="display:inline-flex;align-items:center;gap:10px;font-size:14px;color:#6B1220;border:1px solid #261714;padding:6px 14px 6px 12px;font-weight:700">
     <span style="width:8px;height:8px;border-radius:50%;background:#B3202F;animation:nb-pulse 1.8s ease-in-out infinite"></span>Apenas 10 datas até o fim do ano, com condição de cliente fundador.
   </span>
-  <h1 style="margin:0;max-width:17ch;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(44px,6vw,76px);line-height:.92;text-transform:uppercase;text-wrap:balance">Torne seu time mais forte através da <span style="color:#B3202F">ciência do chocolate!</span></h1>
-  <p style="margin:0;max-width:46ch;font-size:clamp(18px,1.6vw,20px);line-height:1.55;color:#4A3430">O team building mais delicioso e inesquecível da sua vida. Um time mais forte e conectado em 45 minutos ou seu dinheiro de volta!</p>
-  <form onSubmit="{{ heroSubmit }}" noValidate="{{ true }}" aria-label="Reservar minha data" style="width:100%;max-width:720px;margin-top:10px;background:#B3202F;color:#F6F3F1;padding:clamp(20px,3vw,28px);box-sizing:border-box;display:flex;flex-direction:column;gap:16px;text-align:left">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap">
-      <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(28px,3.4vw,38px);line-height:.95;text-transform:uppercase">Garanta a data do seu time</span>
-      <span style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase"><span style="width:8px;height:8px;border-radius:50%;background:#F6F3F1;animation:nb-pulse 1.8s ease-in-out infinite"></span>10 datas abertas</span>
-    </div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px">
-      <label style="flex:2 1 260px;min-width:0;background:#FFFFFF;color:#261714;padding:9px 14px 7px;display:flex;flex-direction:column;gap:2px;cursor:text;outline:{{ heroEmailOutline }};outline-offset:-3px">
-        <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4B46">E-mail de trabalho</span>
-        <input type="email" value="{{ heroEmail }}" onChange="{{ onHeroEmail }}" autoComplete="email" inputMode="email" placeholder="nome@empresa.com.br" style="all:unset;box-sizing:border-box;width:100%;height:30px;font-size:17px;color:#261714">
-      </label>
-      <div style="flex:1 1 170px;background:#FFFFFF;color:#261714;padding:9px 10px 7px 14px;display:flex;flex-direction:column;gap:2px">
-        <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5E4B46">Pessoas no time</span>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:30px">
-          <span style="font-size:17px;font-weight:700;font-variant-numeric:tabular-nums" aria-live="polite">{{ heroTime }}</span>
-          <div style="display:flex;gap:4px">
-            <button type="button" onClick="{{ heroDec }}" aria-label="Menos pessoas" style="all:unset;cursor:pointer;width:30px;height:30px;border:2px solid #261714;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;transition:background .15s,color .15s" style-hover="background:#261714;color:#F6F3F1">–</button>
-            <button type="button" onClick="{{ heroInc }}" aria-label="Mais pessoas" style="all:unset;cursor:pointer;width:30px;height:30px;border:2px solid #261714;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;transition:background .15s,color .15s" style-hover="background:#261714;color:#F6F3F1">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button type="submit" style="all:unset;cursor:pointer;box-sizing:border-box;width:100%;height:60px;padding:0 24px;background:#261714;color:#F6F3F1;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .2s,color .2s,padding .2s" style-hover="background:#F6F3F1;color:#261714;padding:0 18px 0 24px" style-focus="outline:3px solid #F6F3F1;outline-offset:3px">Reservar minha data <span style="font-size:22px">→</span></button>
-    <sc-if value="{{ heroErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="background:#F6F3F1;color:#9E2A0B;font-size:15px;font-weight:700;padding:8px 12px">Erro: {{ heroErr }}</span></sc-if>
-    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;font-size:14px">
-      <span>{{ heroEstimate }}</span>
-      <span>Garantia de 100% do valor</span>
-    </div>
-  </form>
-  <a href="#como-funciona" style="font-size:15px;font-weight:700;padding:6px 0;border-bottom:2px solid #261714" style-hover="color:#B3202F;border-color:#B3202F">Ver como funciona ↓</a>
-  <div style="display:none">
-    <a href="#reservar" style="height:52px;padding:0 24px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:inline-flex;align-items:center;gap:12px;transition:background .2s,transform .2s,gap .2s" style-hover="background:#6B1220;color:#FFFFFF;transform:translateY(-2px);gap:18px">Reservar minha data <span>→</span></a>
-    <a href="#como-funciona" style="height:52px;padding:0 22px;border:2px solid #261714;box-sizing:border-box;font-weight:700;font-size:17px;display:inline-flex;align-items:center;transition:background .2s,color .2s" style-hover="background:#261714;color:#FFFFFF">Ver como funciona</a>
+  <h1 style="margin:0;max-width:18ch;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(40px,5.6vw,72px);line-height:.92;text-transform:uppercase;text-wrap:balance">Seu time, uma caixa de chocolate e <span style="color:#B3202F">45 minutos</span> juntos.</h1>
+  <p style="margin:0;max-width:48ch;font-size:clamp(18px,1.6vw,20px);line-height:1.55;color:#4A3430">Degustação guiada online, com a caixa na casa de cada pessoa. Um time mais forte e conectado ou seu dinheiro de volta!</p>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:8px">
+    <button type="button" onClick="{{ openModal }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:56px;padding:0 28px;background:#B3202F;color:#F6F3F1;font-weight:800;font-size:17px;display:inline-flex;align-items:center;gap:12px;transition:background .2s,transform .2s,gap .2s" style-hover="background:#6B1220;transform:translateY(-2px);gap:18px">Reservar minha data <span>→</span></button>
+    <a href="{{ saibaMaisHref }}" target="_blank" rel="noopener noreferrer" style="box-sizing:border-box;height:56px;padding:0 26px;border:2px solid #261714;font-weight:700;font-size:17px;display:inline-flex;align-items:center;transition:background .2s,color .2s" style-hover="background:#261714;color:#FFFFFF">Saiba Mais</a>
   </div>
   <div data-reveal="" style="width:100%;margin-top:clamp(32px,5vw,56px);position:relative">
-    <div style="position:relative;width:100%;aspect-ratio:16/9;min-height:280px;background:#EDE7E3">
-      <image-slot id="lp2-hero" shape="rect" placeholder="Hero: mãos de várias pessoas quebrando a mesma barra, luz lateral suave. Pode ser vídeo curto." style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+    <div style="position:relative;width:100%;aspect-ratio:16/9;min-height:280px;background:#1a1a1a;overflow:hidden">
+      <img src="/designs/b2b/img/degustacao-especial.png" alt="Time em degustação especial Nibbs ao vivo por videochamada" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
     </div>
     <div style="position:absolute;left:clamp(12px,3vw,32px);bottom:clamp(12px,3vw,32px);background:#FFFFFF;padding:12px 16px;display:flex;align-items:center;gap:12px;text-align:left;pointer-events:none;outline:2px solid #261714;outline-offset:-2px">
       <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:34px;color:#B3202F;line-height:1">45</span>
@@ -149,7 +120,12 @@ input,button{font-family:inherit}
   <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
     <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:32px 64px;align-items:center;flex-direction:{{ v.dir }}">
       <div style="flex:1 1 400px;min-width:0;position:relative;aspect-ratio:5/4;background:#EDE7E3;overflow:hidden">
-        <image-slot id="{{ v.slot }}" shape="rect" placeholder="{{ v.ph }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+        <sc-if value="{{ v.hasImg }}" hint-placeholder-val="{{ false }}">
+          <img src="{{ v.img }}" alt="{{ v.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
+        </sc-if>
+        <sc-if value="{{ v.noImg }}" hint-placeholder-val="{{ true }}">
+          <image-slot id="{{ v.slot }}" shape="rect" placeholder="{{ v.ph }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+        </sc-if>
       </div>
       <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:14px">
         <span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#B3202F">{{ v.tag }}</span>
@@ -208,7 +184,9 @@ input,button{font-family:inherit}
     </sc-for>
   </div>
   <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px 56px;align-items:center;padding-top:24px">
-    <div style="position:relative;aspect-ratio:3/2;background:#EDE7E3"><image-slot id="lp2-origem" shape="rect" placeholder="Produtor abrindo um fruto de cacau na roça." style="position:absolute;inset:0;width:100%;height:100%"></image-slot></div>
+    <div style="position:relative;aspect-ratio:3/2;background:#EDE7E3;overflow:hidden">
+      <img src="/designs/b2c/img/cacau-arvore.webp" alt="Cacaueiro com frutos coloridos na Mata Atlântica" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
+    </div>
     <div style="display:flex;flex-direction:column;gap:12px">
       <h3 style="margin:0;font-weight:700;font-size:clamp(22px,2.2vw,28px);line-height:1.15">E não é qualquer chocolate.</h3>
       <p style="margin:0;color:#4A3430">Cada chocolate da caixa vem de um chocolate maker brasileiro que faz tudo do grão à barra. Cacau da Amazônia, da Bahia, do Espírito Santo. Produtores que conhecem cada árvore. Quando o seu time prova, ele não prova um produto: prova a história de quem fez. E isso também vira conversa.</p>
@@ -412,7 +390,49 @@ input,button{font-family:inherit}
 <sc-if value="{{ showBar }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed;left:0;right:0;bottom:0;z-index:20;background:#FFFFFF;border-top:1px solid #DDD3CE;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px">
     <span style="font-size:13px;line-height:1.3;flex:1;min-width:0;color:#4A3430">Apenas 10 datas até o fim do ano.</span>
-    <a href="#reservar" style="height:48px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;flex:none">Reservar minha data</a>
+    <button type="button" onClick="{{ openModal }}" style="all:unset;cursor:pointer;height:48px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;flex:none">Reservar minha data</button>
+  </div>
+</sc-if>
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-labelledby="modal-reserva-titulo" style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
+    <div onClick="{{ closeModal }}" style="position:absolute;inset:0;background:rgba(38,23,20,.55)"></div>
+    <div style="position:relative;width:100%;max-width:520px;max-height:min(92vh,720px);overflow:auto;background:#FFFFFF;color:#261714;padding:clamp(24px,4vw,36px);box-sizing:border-box;outline:2px solid #261714;outline-offset:-2px">
+      <button type="button" onClick="{{ closeModal }}" aria-label="Fechar" style="all:unset;cursor:pointer;position:absolute;top:14px;right:16px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#5E4B46" style-hover="color:#B3202F">×</button>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex;flex-direction:column;gap:14px;padding-top:8px">
+          <div style="width:52px;height:52px;border-radius:50%;background:#E3EFE6;color:#2E6B45;display:flex;align-items:center;justify-content:center;font-size:26px">✓</div>
+          <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(32px,4vw,40px);line-height:.95;text-transform:uppercase">Proposta a caminho!</span>
+          <p style="margin:0;color:#4A3430">Recebemos seus dados. Em até 1 dia útil entramos em contato com a proposta para o seu time.</p>
+          <button type="button" onClick="{{ closeModal }}" style="all:unset;cursor:pointer;align-self:flex-start;height:48px;padding:0 20px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:16px;display:inline-flex;align-items:center" style-hover="background:#6B1220">Fechar</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitModal }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:8px;padding-right:28px">
+            <span id="modal-reserva-titulo" style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(28px,3.4vw,34px);line-height:.95;text-transform:uppercase">Receber uma proposta</span>
+            <span style="font-size:15px;color:#5E4B46">Conte um pouco sobre o time. Respondemos em até 1 dia útil.</span>
+          </div>
+          <sc-if value="{{ hasModalErrors }}" hint-placeholder-val="{{ false }}">
+            <div role="alert" style="border:3px solid #9E2A0B;color:#9E2A0B;padding:12px 14px;font-size:15px;display:flex;flex-direction:column;gap:2px">
+              <b style="font-weight:700">Erro: confira {{ modalErrorCount }}</b>
+              <sc-for list="{{ modalErrorList }}" as="e" hint-placeholder-count="0"><span style="text-decoration:underline">{{ e }}</span></sc-for>
+            </div>
+          </sc-if>
+          <div style="display:grid;grid-template-columns:1fr;gap:14px">
+            <sc-for list="{{ modalFields }}" as="f" hint-placeholder-count="5">
+              <label style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-weight:600;font-size:15px">{{ f.label }}</span>
+                <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" onBlur="{{ f.onBlur }}" autoComplete="{{ f.ac }}" inputMode="{{ f.im }}" min="{{ f.min }}" placeholder="{{ f.ph }}" style="box-sizing:border-box;width:100%;height:50px;padding:0 14px;font-size:16px;background:#FFFFFF;color:#261714;border-radius:0;outline:none;border:solid {{ f.border }};transition:border-color .2s" style-focus="outline:3px solid #261714;outline-offset:3px">
+                <sc-if value="{{ f.err }}" hint-placeholder-val="{{ false }}"><span style="color:#9E2A0B;font-size:14px;font-weight:700">Erro: {{ f.err }}</span></sc-if>
+              </label>
+            </sc-for>
+          </div>
+          <button type="submit" style="all:unset;cursor:pointer;box-sizing:border-box;height:56px;width:100%;margin-top:4px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,gap .2s" style-hover="background:#6B1220;gap:16px" style-focus="outline:3px solid #261714;outline-offset:3px">{{ modalSubmitLabel }}</button>
+          <span style="font-size:13px;color:#5E4B46;text-align:center">Garantia de 100% do valor. Sem compromisso nesta etapa.</span>
+        </form>
+      </sc-if>
+    </div>
   </div>
 </sc-if>
 
@@ -420,16 +440,19 @@ input,button{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const EMPTY = { empresa: "", nome: "", email: "", whatsapp: "", time: "", data: "" };
+const WA_SAIBA = "https://wa.me/5541988852536?text=" + encodeURIComponent("Oi, gostaria de saber mais sobre a degustação para empresas da Nibbs");
 const maskWa = v => { const d = v.replace(/\D/g, "").slice(0, 11); if (d.length <= 2) return d.length ? "(" + d : ""; if (d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`; if (d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`; return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`; };
 const brl = n => "R$ " + n.toLocaleString("pt-BR");
 class Component extends DCLogic {
-  state = { form: { ...EMPTY }, errors: {}, touched: {}, sent: false, sending: false, faq: 0, val: -1, cam: false, ramp: 0, team: 10, scrolled: false, w: typeof window !== "undefined" ? window.innerWidth : 1280 };
+  state = { form: { ...EMPTY }, errors: {}, touched: {}, sent: false, sending: false, modalOpen: false, faq: 0, val: -1, cam: false, ramp: 0, team: 10, scrolled: false, w: typeof window !== "undefined" ? window.innerWidth : 1280 };
   callEl = null;
   componentDidMount() {
     this.onScroll = () => { const s = window.scrollY > 600; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
     this.onResize = () => this.setState({ w: window.innerWidth });
+    this.onKey = e => { if (e.key === "Escape" && this.state.modalOpen) this.closeModal(); };
     window.addEventListener("scroll", this.onScroll, { passive: true });
     window.addEventListener("resize", this.onResize);
+    window.addEventListener("keydown", this.onKey);
     this.onScroll();
     if ("IntersectionObserver" in window) {
       this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = "1"; e.target.style.transform = "none"; this.io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
@@ -449,10 +472,12 @@ class Component extends DCLogic {
       this.io.observe(el);
     });
   }
-  componentWillUnmount() { window.removeEventListener("scroll", this.onScroll); window.removeEventListener("resize", this.onResize); this.io && this.io.disconnect(); this.camIO && this.camIO.disconnect(); clearTimeout(this.camT); clearTimeout(this.sendT); }
-  validate(f) {
+  openModal = () => { document.body.style.overflow = "hidden"; this.setState({ modalOpen: true, sent: false, errors: {} }); };
+  closeModal = () => { document.body.style.overflow = ""; this.setState({ modalOpen: false }); };
+  componentWillUnmount() { window.removeEventListener("scroll", this.onScroll); window.removeEventListener("resize", this.onResize); window.removeEventListener("keydown", this.onKey); document.body.style.overflow = ""; this.io && this.io.disconnect(); this.camIO && this.camIO.disconnect(); clearTimeout(this.camT); clearTimeout(this.sendT); }
+  validate(f, opts = {}) {
     const e = {};
-    if (!f.empresa.trim()) e.empresa = "Escreva o nome da empresa";
+    if (opts.requireEmpresa !== false && !f.empresa.trim()) e.empresa = "Escreva o nome da empresa";
     if (!f.nome.trim()) e.nome = "Escreva seu nome";
     if (!f.email.trim()) e.email = "Escreva seu e-mail";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) e.email = "Use o formato nome@empresa.com.br";
@@ -462,22 +487,29 @@ class Component extends DCLogic {
     const n = parseInt(f.time, 10);
     if (!f.time) e.time = "Informe quantas pessoas tem o time";
     else if (!(n >= 2)) e.time = "O time precisa ter pelo menos 2 pessoas";
-    if (!f.data) e.data = "Escolha a data desejada";
+    if (!f.data) e.data = "Informe quando pretende fazer";
     return e;
   }
   renderVals() {
-    const { form, errors, touched, sent, sending, faq, val, cam, ramp, team, scrolled, w } = this.state;
+    const { form, errors, touched, sent, sending, modalOpen, faq, val, cam, ramp, team, scrolled, w } = this.state;
     const live = this.validate(form);
-    const set = k => e => { const v = k === "whatsapp" ? maskWa(e.target.value) : e.target.value; this.setState(s => { const nf = { ...s.form, [k]: v }; const ne = { ...s.errors }; if (ne[k] && !this.validate(nf)[k]) delete ne[k]; return { form: nf, errors: ne }; }); };
+    const set = k => e => { const v = k === "whatsapp" ? maskWa(e.target.value) : e.target.value; this.setState(s => { const nf = { ...s.form, [k]: v }; const ne = { ...s.errors }; if (ne[k] && !this.validate(nf, { requireEmpresa: !s.modalOpen })[k]) delete ne[k]; return { form: nf, errors: ne }; }); };
     const blur = k => () => this.setState(s => ({ touched: { ...s.touched, [k]: true } }));
     const d = new Date(); d.setDate(d.getDate() + 7);
     const fdef = [
       ["empresa", "Nome da empresa", "text", "organization", "text", "", ""],
       ["nome", "Seu nome", "text", "name", "text", "", ""],
       ["email", "E-mail", "email", "email", "email", "", "nome@empresa.com.br"],
-      ["whatsapp", "WhatsApp", "tel", "tel", "tel", "", "(11) 98765-4321"],
+      ["whatsapp", "WhatsApp", "tel", "tel", "tel", "", "(41) 98885-2536"],
       ["time", "Tamanho do time", "number", "off", "numeric", "2", "Ex.: 12"],
       ["data", "Data desejada", "date", "off", "none", d.toISOString().slice(0, 10), ""],
+    ];
+    const modalDef = [
+      ["nome", "Nome", "text", "name", "text", "", "Seu nome"],
+      ["email", "E-mail", "email", "email", "email", "", "nome@empresa.com.br"],
+      ["whatsapp", "WhatsApp", "tel", "tel", "tel", "", "(41) 98885-2536"],
+      ["data", "Quando pretende fazer", "date", "off", "none", d.toISOString().slice(0, 10), ""],
+      ["time", "Pessoas no time", "number", "off", "numeric", "2", "Ex.: 12"],
     ];
     const fields = fdef.map(([k, label, type, ac, im, min, ph]) => ({
       col: w < 900 ? "1 / -1" : "auto",
@@ -485,7 +517,12 @@ class Component extends DCLogic {
       okOp: (form[k] && !live[k] && (touched[k] || k === "time" || k === "data")) ? 1 : 0,
       border: errors[k] ? "3px #9E2A0B" : "2px #261714",
     }));
+    const modalFields = modalDef.map(([k, label, type, ac, im, min, ph]) => ({
+      label, type, ac, im, min, ph, value: form[k], onChange: set(k), onBlur: blur(k), err: errors[k] || "",
+      border: errors[k] ? "3px #9E2A0B" : "2px #261714",
+    }));
     const errorList = fdef.map(x => x[0]).filter(k => errors[k]).map(k => errors[k]);
+    const modalErrorList = modalDef.map(x => x[0]).filter(k => errors[k]).map(k => errors[k]);
     const tn = parseInt(form.time, 10);
     const people = ["Ana Lima", "Bruno Sá", "Carla Reis", "Diego Matos", "Elisa Vaz", "Fábio Nunes", "Gabi Rocha", "Hugo Prado", "Íris Melo"].map((name, i) => ({
       name, ini: name.split(" ").map(x => x[0]).join(""), slot: "lp2-vc-" + (i + 1), ph: name.split(" ")[0] + " com o pedaço na mão",
@@ -495,7 +532,7 @@ class Component extends DCLogic {
     const rampN = ["1º · o mais suave", "2º", "3º", "4º", "5º", "6º", "7º", "8º · o mais intenso"];
     const valData = [
       { tag: "Sintonia", t: "Ele se sintoniza.", d: "Provar a mesma coisa no mesmo instante cria uma conexão que reunião nenhuma cria. É o mesmo arrepio de cantar junto num estádio.", btn: "Yale · 2014", st: "Yale descobriu que o chocolate fica mais gostoso quando é dividido.", sd: "Em 2014, pesquisadores de Yale deram para pessoas o mesmo chocolate 70%, em dois momentos: um provado sozinho, outro provado ao mesmo tempo que outra pessoa. Era exatamente o mesmo chocolate. Mesmo assim, o pedaço provado junto foi avaliado como mais gostoso e mais saboroso. E as pessoas disseram que se sentiram mais em sintonia com quem estava ao lado, sem trocar uma única palavra.", note: "Repare: não foi um estudo sobre comida em geral. Foi um estudo com chocolate amargo. Exatamente o que o seu time vai provar.", ph: "Duas pessoas em telas diferentes provando o mesmo pedaço ao mesmo tempo." },
-      { tag: "Mesa", t: "Ele volta a ter uma mesa.", d: "O lugar onde as pessoas conversam sobre a vida, não sobre o projeto.", btn: "Cornell · 2015", st: "Cornell descobriu que times que comem juntos trabalham melhor juntos.", sd: "Pesquisadores acompanharam mais de 50 quartéis de bombeiros por 15 meses. Os times que mais faziam refeições juntos tiveram as melhores avaliações de desempenho. Os que quase nunca comiam juntos, as piores. A explicação do pesquisador: comer junto é um ato mais íntimo do que trabalhar lado a lado. Essa intimidade volta para o trabalho.", note: "", ph: "Mesa de casa com a caixa aberta, notebook ao fundo, migalhas." },
+      { tag: "Mesa", t: "Ele volta a ter uma mesa.", d: "O lugar onde as pessoas conversam sobre a vida, não sobre o projeto.", btn: "Cornell · 2015", st: "Cornell descobriu que times que comem juntos trabalham melhor juntos.", sd: "Pesquisadores acompanharam mais de 50 quartéis de bombeiros por 15 meses. Os times que mais faziam refeições juntos tiveram as melhores avaliações de desempenho. Os que quase nunca comiam juntos, as piores. A explicação do pesquisador: comer junto é um ato mais íntimo do que trabalhar lado a lado. Essa intimidade volta para o trabalho.", note: "", ph: "Mesa de casa com a caixa aberta, notebook ao fundo, migalhas.", img: "/designs/b2b/img/mesa-time.png", alt: "Time compartilhando a caixa Nibbs aberta à mesa" },
       { tag: "Reconhecimento", t: "Ele se reconhece.", d: "No fim, cada pessoa escolhe um colega e diz por que gosta de trabalhar com ele. É o momento que o time lembra no dia seguinte. Daqui a um ano, ninguém vai lembrar da dinâmica de quebra-gelo. Todo mundo vai lembrar do chocolate.", btn: "Gallup · 2024", st: "A Gallup descobriu o que faz as pessoas ficarem.", sd: "Em uma pesquisa de 2024 nos Estados Unidos, colaboradores bem reconhecidos tiveram 45% menos chance de ter deixado a empresa dois anos depois. E só 22% das pessoas dizem receber o reconhecimento na medida certa.", note: "", ph: "Cartão de reconhecimento escrito à mão ao lado de um pedaço de chocolate." },
     ];
     const faqData = [
@@ -514,7 +551,7 @@ class Component extends DCLogic {
       people, toggleCam: () => this.setState(s => ({ cam: !s.cam })), camAria: cam ? "true" : "false",
       camBtn: cam ? "Câmeras ligadas" : "Câmeras desligadas", swBg: cam ? "#B3202F" : "#C9BDB8", swX: cam ? "translateX(20px)" : "none",
       gridBg: cam ? "#EDE7E3" : "#3A2A26", callLabel: cam ? "Quinta, 16h00 · Degustação Sintonia" : "Terça, 10h02 · Reunião de status",
-      values: valData.map((v, i) => ({ ...v, dir: i % 2 ? "row-reverse" : "row", slot: "lp2-val-" + (i + 1), open: val === i, exp: val === i ? "true" : "false", rot: val === i ? "rotate(180deg)" : "none", hasNote: !!v.note, toggle: () => this.setState({ val: val === i ? -1 : i }) })),
+      values: valData.map((v, i) => ({ ...v, dir: i % 2 ? "row-reverse" : "row", slot: "lp2-val-" + (i + 1), open: val === i, exp: val === i ? "true" : "false", rot: val === i ? "rotate(180deg)" : "none", hasNote: !!v.note, hasImg: !!v.img, noImg: !v.img, img: v.img || "", alt: v.alt || "", toggle: () => this.setState({ val: val === i ? -1 : i }) })),
       ramp: rampC.map((c, i) => ({ c, h: ramp === i ? "40px" : "16px", on: ramp === i ? "true" : "false", aria: "Chocolate " + (i + 1), pick: () => this.state.ramp !== i && this.setState({ ramp: i }) })),
       rampLabel: rampN[ramp],
       whys: [
@@ -560,26 +597,29 @@ class Component extends DCLogic {
       submitLabel: sending ? "Enviando…" : "Reservar minha data →",
       submit: e => { e.preventDefault(); if (this.state.sending) return; const er = this.validate(this.state.form); if (Object.keys(er).length) { this.setState({ errors: er }); return; } this.setState({ errors: {}, sending: true }); fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.state.form) }).then(r => this.setState({ sending: false, sent: r.ok, errors: r.ok ? {} : { email: 'Erro ao enviar. Tente novamente.' } })).catch(() => this.setState({ sending: false, errors: { email: 'Erro de conexão. Tente novamente.' } })); },
       resetForm: () => this.setState({ form: { ...EMPTY }, errors: {}, touched: {}, sent: false }),
-      showBar: scrolled && w < 760,
-      heroEmail: this.state.heroEmail || "", heroTime: this.state.heroTime ?? 10, heroErr: this.state.heroErr || "",
-      heroEmailOutline: this.state.heroErrK === "email" ? "3px solid #9E2A0B" : "none",
-      heroEstimate: (() => { const n = this.state.heroTime ?? 10; return `${n} pessoas · Degustação Sintonia a partir de ${brl(1390 + 119 * n)}`; })(),
-      heroDec: () => this.setState(s => ({ heroTime: Math.max(2, (s.heroTime ?? 10) - 1) })),
-      heroInc: () => this.setState(s => ({ heroTime: Math.min(200, (s.heroTime ?? 10) + 1) })),
-      onHeroEmail: e => this.setState({ heroEmail: e.target.value, heroErr: "", heroErrK: "" }),
+      showBar: scrolled && w < 760 && !modalOpen,
+      openModal: this.openModal,
+      closeModal: this.closeModal,
+      modalOpen,
+      modalFields,
+      hasModalErrors: modalErrorList.length > 0,
+      modalErrorList,
+      modalErrorCount: modalErrorList.length === 1 ? "1 campo" : `${modalErrorList.length} campos`,
+      modalSubmitLabel: sending ? "Enviando…" : "Receber uma proposta →",
+      submitModal: e => {
+        e.preventDefault();
+        if (this.state.sending) return;
+        const er = this.validate(this.state.form, { requireEmpresa: false });
+        if (Object.keys(er).length) { this.setState({ errors: er }); return; }
+        this.setState({ errors: {}, sending: true });
+        fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.state.form) })
+          .then(r => this.setState({ sending: false, sent: r.ok, errors: r.ok ? {} : { email: 'Erro ao enviar. Tente novamente.' } }))
+          .catch(() => this.setState({ sending: false, errors: { email: 'Erro de conexão. Tente novamente.' } }));
+      },
+      saibaMaisHref: WA_SAIBA,
       progressPct: Math.round(fdef.filter(x => form[x[0]] && !live[x[0]]).length / fdef.length * 100) + "%",
       progressLabel: fdef.filter(x => form[x[0]] && !live[x[0]]).length + " de " + fdef.length,
-      heroSubmit: e => {
-        e.preventDefault();
-        const em = (this.state.heroEmail || "").trim(), t = String(this.state.heroTime ?? 10);
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return this.setState({ heroErr: em ? "use o formato nome@empresa.com.br" : "escreva seu e-mail de trabalho", heroErrK: "email" });
-        this.setState(s => ({ prefilled: true, sent: false, touched: { ...s.touched, email: true }, form: { ...s.form, email: em, time: t } }), () => {
-          const el = document.getElementById("reservar");
-          if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 72, behavior: "smooth" });
-          setTimeout(() => { const i = [...document.querySelectorAll("#reservar input")].find(x => !x.value); i && i.focus({ preventScroll: true }); }, 700);
-        });
-      },
-      formHint: this.state.prefilled ? "Já guardamos seu e-mail e o tamanho do time. Faltam só 4 campos." : "Seis campos. Pelo WhatsApp a gente confirma a data mais rápido.",
+      formHint: "Cinco campos. Pelo WhatsApp a gente confirma a data mais rápido.",
     };
   }
 }

@@ -50,18 +50,17 @@ input,select,button{font-family:inherit}
 <div style="font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 100;display:flex;flex-direction:column;align-items:center;overflow-x:hidden">
 
 <nav data-screen-label="01 Navegação" style="width:100%;position:sticky;top:0;z-index:30;background:rgba(246,243,241,.96);backdrop-filter:blur(8px);border-bottom:1px solid #EDE7E3;box-sizing:border-box;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px">
-  <a href="/assinatura" aria-label="Nibbs" style="text-decoration:none;flex:none"><dc-import name="NibbsLogo" variant="lockup" size="28" ink="#261714" accent="#B3202F" hint-size="104px,28px"></dc-import></a>
+  <a href="/" aria-label="Nibbs" style="text-decoration:none;flex:none"><dc-import name="NibbsLogo" variant="lockup" size="28" ink="#261714" accent="#B3202F" hint-size="104px,28px"></dc-import></a>
   <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px 28px;font-size:15px">
-      <a href="/assinatura#metodo" onClick="{{ goSec('metodo') }}" style="text-decoration:none" style-hover="color:#B3202F">Produtores</a>
-      <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="text-decoration:none" style-hover="color:#B3202F">Planos</a>
-      <a href="/assinatura#planos" onClick="{{ goGift }}" style="text-decoration:none" style-hover="color:#B3202F">Presente</a>
-      <a href="/assinatura#assinantes" onClick="{{ goSec('assinantes') }}" style="text-decoration:none" style-hover="color:#B3202F">Assinantes</a>
-      <a href="/assinatura#faq" onClick="{{ goSec('faq') }}" style="text-decoration:none" style-hover="color:#B3202F">FAQ</a>
-      <a href="/business" style="text-decoration:none" style-hover="color:#B3202F">Para empresas</a>
+      <a href="/#metodo" onClick="{{ goSec('metodo') }}" style="text-decoration:none" style-hover="color:#B3202F">Produtores</a>
+      <a href="/#planos" onClick="{{ goSec('planos') }}" style="text-decoration:none" style-hover="color:#B3202F">Planos</a>
+      <a href="/#planos" onClick="{{ goGift }}" style="text-decoration:none" style-hover="color:#B3202F">Presente</a>
+      <a href="/#assinantes" onClick="{{ goSec('assinantes') }}" style="text-decoration:none" style-hover="color:#B3202F">Assinantes</a>
+      <a href="/#faq" onClick="{{ goSec('faq') }}" style="text-decoration:none" style-hover="color:#B3202F">FAQ</a>
     </div>
   </sc-if>
-  <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;text-decoration:none;flex:none" style-hover="background:#6B1220;color:#F6F3F1">Assinar</a>
+  <a href="/#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;text-decoration:none;flex:none" style-hover="background:#6B1220;color:#F6F3F1">Assinar</a>
 </nav>
 
 <header data-screen-label="02 Header" style="width:100%;max-width:880px;box-sizing:border-box;padding:72px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">
@@ -69,8 +68,8 @@ input,select,button{font-family:inherit}
   <h1 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(44px,6vw,76px);line-height:.92;text-transform:uppercase;text-wrap:balance">Chocolate bom e saudável na sua gaveta. <span style="display:inline-block;vertical-align:bottom;height:.92em;padding-top:.22em;margin-top:-.22em;overflow:hidden;text-align:left"><span data-reel style="display:flex;flex-direction:column;gap:.3em"><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Hoje.</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Amanhã.</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Sempre!</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Hoje.</span></span></span></h1>
   <p style="margin:0;font-size:clamp(18px,1.6vw,20px);line-height:1.55;color:#4A3430;max-width:46ch">Sem correria no mercado. Sem ficar sem. Só chocolate bom, 70% ou mais, pouco ou nenhum açúcar, sempre disponível.</p>
   <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding-top:4px">
-    <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:52px;padding:0 24px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none" style-hover="background:#6B1220;color:#F6F3F1">Escolher meu plano <span>→</span></a>
-    <a href="/assinatura#planos" onClick="{{ goGift }}" style="box-sizing:border-box;height:52px;padding:0 22px;border:2px solid #261714;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;text-decoration:none" style-hover="background:#261714;color:#F6F3F1">Dar de presente</a>
+    <a href="/#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:52px;padding:0 24px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none" style-hover="background:#6B1220;color:#F6F3F1">Escolher meu plano <span>→</span></a>
+    <a href="/#planos" onClick="{{ goGift }}" style="box-sizing:border-box;height:52px;padding:0 22px;border:2px solid #261714;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;text-decoration:none" style-hover="background:#261714;color:#F6F3F1">Dar de presente</a>
   </div>
   <span style="font-size:15px;line-height:1.4">Ou você ama, ou devolvemos sua grana! Frete incluso.</span>
 </header>
@@ -110,7 +109,7 @@ input,select,button{font-family:inherit}
         <h3 style="margin:0;font-weight:800;font-variation-settings:'wdth' 75;font-size:clamp(30px,3.2vw,44px);line-height:.95;text-transform:uppercase">{{ v.t }}</h3>
         <p style="margin:0;font-size:clamp(17px,1.3vw,18px);line-height:1.6">{{ v.d }}</p>
         <p style="margin:0;font-family:'Newsreader',serif;font-style:italic;font-size:20px;line-height:1.4">{{ v.b }}</p>
-        <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="align-self:flex-start;box-sizing:border-box;height:48px;padding:0 20px;background:#261714;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;text-decoration:none" style-hover="background:#B3202F;color:#F6F3F1">Ver os planos <span>→</span></a>
+        <a href="/#planos" onClick="{{ goSec('planos') }}" style="align-self:flex-start;box-sizing:border-box;height:48px;padding:0 20px;background:#261714;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;text-decoration:none" style-hover="background:#B3202F;color:#F6F3F1">Ver os planos <span>→</span></a>
       </div>
     </div>
   </sc-for>
@@ -122,7 +121,7 @@ input,select,button{font-family:inherit}
       <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(32px,3.6vw,48px);line-height:.92;text-transform:uppercase">Ou você ama, ou devolvemos sua grana!</span>
       <span style="font-size:15px;line-height:1.5">Provou a primeira caixa e não curtiu? Me avisa em até 7 dias que eu devolvo tudo. Não precisa mandar nada de volta, nem explicar.</span>
     </div>
-    <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:52px;padding:0 22px;background:#F6F3F1;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none;flex:none" style-hover="background:#261714;color:#F6F3F1">Assinar sem risco <span>→</span></a>
+    <a href="/#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:52px;padding:0 22px;background:#F6F3F1;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none;flex:none" style-hover="background:#261714;color:#F6F3F1">Assinar sem risco <span>→</span></a>
   </div>
 </section>
 
@@ -647,8 +646,8 @@ class Component extends DCLogic {
         { v: "7 dias", l: "pra pedir sua grana de volta" },
       ],
       footCols: [
-        { t: "Clube", l: [{ t: "Produtores", h: "/assinatura#metodo" }, { t: "Planos", h: "/assinatura#planos" }, { t: "Presente", h: "/assinatura#planos" }, { t: "Para empresas", h: "/business" }] },
-        { t: "Ajuda", l: [{ t: "FAQ", h: "/assinatura#faq" }, { t: "Garantia", h: "/assinatura#faq" }, { t: "Cancelamento", h: "/assinatura#faq" }] },
+        { t: "Clube", l: [{ t: "Produtores", h: "/#metodo" }, { t: "Planos", h: "/#planos" }, { t: "Presente", h: "/#planos" }] },
+        { t: "Ajuda", l: [{ t: "FAQ", h: "/#faq" }, { t: "Garantia", h: "/#faq" }, { t: "Cancelamento", h: "/#faq" }] },
         { t: "Legal", l: [{ t: "Termos de uso", h: "#" }, { t: "Privacidade", h: "#" }] },
       ],
       ...(() => {

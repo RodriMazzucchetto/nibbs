@@ -1,6 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
+function apexRedirect(request: NextRequest, path = "/") {
+  const host = request.headers.get("host") ?? "";
+  // Em local/preview mantém o host; em produção tira subdomínio (business./assine.)
+  const apex = host.replace(/^(business|assine)\./i, "");
+  const url = new URL(path, `${request.nextUrl.protocol}//${apex}`);
+  url.search = request.nextUrl.search;
+  return NextResponse.redirect(url, 308);
+}
+
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
 
@@ -26,31 +35,28 @@ export async function middleware(request: NextRequest) {
   const hostname = request.headers.get("host") ?? "";
   const url = request.nextUrl.clone();
 
+  // B2B arquivado: sem acesso público
   if (hostname.startsWith("business.")) {
-    url.pathname = `/routes/business${url.pathname === "/" ? "" : url.pathname}`;
-    return NextResponse.rewrite(url);
+    return apexRedirect(request, "/");
+  }
+  if (url.pathname === "/business" || url.pathname.startsWith("/business/")) {
+    return NextResponse.redirect(new URL("/", request.url), 308);
   }
 
+  // Subdomínio antigo da assinatura → domínio principal
   if (hostname.startsWith("assine.")) {
-    url.pathname = `/routes/assinatura${url.pathname === "/" ? "" : url.pathname}`;
-    return NextResponse.rewrite(url);
+    const path = url.pathname === "/" ? "/" : url.pathname;
+    return apexRedirect(request, path);
   }
 
-  const semSubdominio =
-    hostname.startsWith("localhost") ||
-    hostname.startsWith("127.0.0.1") ||
-    hostname.endsWith(".vercel.app");
-  if (semSubdominio) {
-    if (url.pathname === "/business" || url.pathname.startsWith("/business/")) {
-      const rest = url.pathname === "/business" ? "" : url.pathname.slice("/business".length);
-      url.pathname = `/routes/business${rest}`;
-      return NextResponse.rewrite(url);
-    }
-    if (url.pathname === "/assinatura" || url.pathname.startsWith("/assinatura/")) {
-      const rest = url.pathname === "/assinatura" ? "" : url.pathname.slice("/assinatura".length);
-      url.pathname = `/routes/assinatura${rest}`;
-      return NextResponse.rewrite(url);
-    }
+  // Domínio / URL principal → landing B2C
+  if (url.pathname === "/" || url.pathname === "/assinatura" || url.pathname.startsWith("/assinatura/")) {
+    const rest =
+      url.pathname === "/" || url.pathname === "/assinatura"
+        ? ""
+        : url.pathname.slice("/assinatura".length);
+    url.pathname = `/routes/assinatura${rest}`;
+    return NextResponse.rewrite(url);
   }
 
   return response;
