@@ -14,7 +14,10 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const Schema = z.discriminatedUnion("acao", [
-  z.object({ acao: z.literal("trocar_plano"), planoSlug: z.enum(["entrada", "melhor-valor", "ultimate"]) }),
+  z.object({
+    acao: z.literal("trocar_plano"),
+    planoSlug: z.enum(["fundador-sempre", "fundador-simples", "entrada", "melhor-valor", "ultimate"]),
+  }),
   z.object({ acao: z.literal("pular") }),
   z.object({ acao: z.literal("pausar") }),
   z.object({ acao: z.literal("reativar") }),

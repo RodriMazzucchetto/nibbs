@@ -27,16 +27,17 @@ input,button{font-family:inherit}
 
 <nav data-screen-label="01 Navegação" style="position:sticky;top:0;z-index:30;background:rgba(246,243,241,.96);backdrop-filter:blur(8px);border-bottom:1px solid {{ navBorder }}">
   <div style="max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px">
-    <a href="#topo" aria-label="Nibbs, início"><dc-import name="NibbsLogo" variant="lockup" size="26" ink="#261714" accent="#B3202F" hint-size="96px,26px"></dc-import></a>
+    <a href="/business" aria-label="Nibbs, início"><dc-import name="NibbsLogo" variant="lockup" size="26" ink="#261714" accent="#B3202F" hint-size="96px,26px"></dc-import></a>
     <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
-      <div style="display:flex;gap:28px;font-size:15px">
-        <a href="#como-funciona" style="padding:6px 0" style-hover="color:#B3202F">Como funciona</a>
-        <a href="#ciencia" style="padding:6px 0" style-hover="color:#B3202F">A ciência</a>
-        <a href="#pacotes" style="padding:6px 0" style-hover="color:#B3202F">Pacotes</a>
-        <a href="#perguntas" style="padding:6px 0" style-hover="color:#B3202F">Perguntas</a>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px 28px;font-size:15px">
+        <a href="/business#como-funciona" style="padding:6px 0" style-hover="color:#B3202F">Como funciona</a>
+        <a href="/business#ciencia" style="padding:6px 0" style-hover="color:#B3202F">A ciência</a>
+        <a href="/business#pacotes" style="padding:6px 0" style-hover="color:#B3202F">Pacotes</a>
+        <a href="/business#perguntas" style="padding:6px 0" style-hover="color:#B3202F">Perguntas</a>
+        <a href="/assinatura" style="padding:6px 0" style-hover="color:#B3202F">Clube Nibbs</a>
       </div>
     </sc-if>
-    <a href="#reservar" style="height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:inline-flex;align-items:center;transition:background .2s,transform .2s" style-hover="background:#6B1220;color:#F6F3F1;transform:translateY(-1px)">Reservar minha data</a>
+    <a href="/business#reservar" style="height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:inline-flex;align-items:center;transition:background .2s,transform .2s" style-hover="background:#6B1220;color:#F6F3F1;transform:translateY(-1px)">Reservar minha data</a>
   </div>
 </nav>
 

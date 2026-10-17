@@ -54,3 +54,22 @@ export async function sendSubscriptionWelcome(customer: {
     `,
   });
 }
+
+export async function sendCupomPresente3m(opts: {
+  nome: string;
+  email: string;
+  codigo: string;
+}) {
+  await resend.emails.send({
+    from: "Nibbs <noreply@nibbs.com>",
+    to: opts.email,
+    subject: "Seu cupom de 10% na Nibbs",
+    html: `
+      <h2>Oi, ${opts.nome}!</h2>
+      <p>Obrigado por presentear 3 meses de Nibbs. Como agradecimento, você ganhou <strong>10% de desconto</strong> pra assinar o seu próprio plano.</p>
+      <p>Seu cupom: <strong style="font-size:20px;letter-spacing:0.06em">${opts.codigo}</strong></p>
+      <p>Use no checkout da assinatura mensal. Vale uma vez.</p>
+      <p>Equipe Nibbs</p>
+    `,
+  });
+}

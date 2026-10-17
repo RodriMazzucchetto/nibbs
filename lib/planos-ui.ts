@@ -1,7 +1,18 @@
 export const PLANOS_UI = [
-  { slug: "entrada", name: "Entrada", price: "R$ 99", what: "2 barras de 80 g por mês." },
-  { slug: "melhor-valor", name: "Melhor valor", price: "R$ 159", what: "3 barras de 80 g por mês." },
-  { slug: "ultimate", name: "Ultimate", price: "R$ 219", what: "3 barras premium, caixa de presente anual e 15% off em avulsas." },
+  {
+    slug: "fundador-sempre",
+    name: "Sempre Chocolate",
+    price: "R$ 159",
+    what: "3 barras de 80 g + cupons exclusivos negociados com os produtores pra você recomprar direto com eles.",
+    best: true,
+  },
+  {
+    slug: "fundador-simples",
+    name: "Fundador simples",
+    price: "R$ 99",
+    what: "2 barras de 80 g todo mês na sua casa.",
+    best: false,
+  },
 ] as const;
 
 export function matchPlanIndex(nomeOrSlug: string | undefined | null) {
@@ -10,9 +21,9 @@ export function matchPlanIndex(nomeOrSlug: string | undefined | null) {
   if (bySlug >= 0) return bySlug;
   const byName = PLANOS_UI.findIndex((p) => p.name.toLowerCase() === s);
   if (byName >= 0) return byName;
-  if (s.includes("entrada")) return 0;
-  if (s.includes("ultimate")) return 2;
-  return 1;
+  if (s.includes("simples") || s.includes("entrada")) return 1;
+  if (s.includes("sempre") || s.includes("melhor") || s.includes("ultimate")) return 0;
+  return 0;
 }
 
 export function formatDateBR(iso: string | null | undefined) {

@@ -13,6 +13,7 @@ import {
   type AsaasTitular,
 } from "@/lib/asaas";
 import { criarOuAtualizarConta } from "@/lib/conta";
+import { aplicarDesconto, marcarCupomUsado, validarCupom } from "@/lib/cupons";
 import { PLANOS } from "@/lib/planos";
 import { excedeuLimite, ipDoCliente } from "@/lib/rate-limit";
 import { cpfValido, hojeSaoPaulo, luhnValido, soDigitos, validadeValida } from "@/lib/validacao";
@@ -50,6 +51,8 @@ const CheckoutSchema = z.object({
     .optional(),
   // Conta Nibbs — nunca gravamos cartão; senha vai só para o Auth do Supabase (hash)
   senha: z.string().min(8).max(72),
+  /** Cupom de 10% (ex.: presente de 3 meses) — só em assinatura */
+  cupom: z.string().trim().max(40).optional(),
   // Campo invisível: só robôs preenchem
   website: z.string().optional(),
 });
@@ -88,8 +91,18 @@ export async function POST(request: NextRequest) {
   const cep = soDigitos(endereco.cep);
   const recorrente = plano.tipo === "assinatura";
   const hoje = hojeSaoPaulo();
+
+  let valor = plano.valor;
+  let cupomUsado: string | null = null;
+  if (recorrente && body.cupom?.trim()) {
+    const cupom = await validarCupom(body.cupom, cliente.email);
+    if (!cupom) return responder({ error: "Cupom inválido ou já usado." }, 400);
+    valor = aplicarDesconto(plano.valor, cupom.desconto_pct);
+    cupomUsado = cupom.codigo;
+  }
+
   const descricao = recorrente
-    ? `Clube de assinatura Nibbs · Plano ${plano.nome}`
+    ? `Clube de assinatura Nibbs · Plano ${plano.nome}${cupomUsado ? ` · cupom ${cupomUsado}` : ""}`
     : `Nibbs · ${plano.nome} (pagamento único, sem renovação)`;
 
   try {
@@ -132,7 +145,7 @@ export async function POST(request: NextRequest) {
     const comum = {
       customer: customer.id,
       billingType,
-      value: plano.valor,
+      value: valor,
       description: descricao,
       externalReference: plano.slug,
       creditCard: cartao,
@@ -177,8 +190,13 @@ export async function POST(request: NextRequest) {
       }
     };
 
-    if (body.metodo === "pix") {
+    const aposSucesso = async () => {
       await criarConta();
+      if (cupomUsado) await marcarCupomUsado(cupomUsado).catch(() => {});
+    };
+
+    if (body.metodo === "pix") {
+      await aposSucesso();
       const pix = await getAsaasPixQrCode(pagamento.id);
       return responder({
         status: "pix",
@@ -188,11 +206,11 @@ export async function POST(request: NextRequest) {
     }
 
     if (PAGO.includes(pagamento.status)) {
-      await criarConta();
+      await aposSucesso();
       return responder({ status: "pago" });
     }
     if (EM_ANALISE.includes(pagamento.status)) {
-      await criarConta();
+      await aposSucesso();
       return responder({ status: "analise", paymentId: pagamento.id });
     }
 

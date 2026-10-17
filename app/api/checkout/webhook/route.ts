@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
 import { createServerClient } from "@/lib/supabase/server";
-import { sendSubscriptionWelcome } from "@/lib/resend";
+import { sendCupomPresente3m, sendSubscriptionWelcome } from "@/lib/resend";
 import { getAsaasCustomer, getAsaasPaymentLink, getAsaasSubscription, redact } from "@/lib/asaas";
+import { emitirCupomPresente3m } from "@/lib/cupons";
 import { PLANOS } from "@/lib/planos";
 
 export const runtime = "nodejs";
@@ -79,13 +80,25 @@ export async function POST(request: NextRequest) {
     // Falha de e-mail não pode devolver erro ao Asaas: o pagamento já foi gravado
     if (assinatura?.email && assinatura?.nome) {
       try {
-        await sendSubscriptionWelcome({
-          nome: assinatura.nome,
-          email: assinatura.email,
-          plano: assinatura.plano,
-        });
+        if (plano?.tipo === "assinatura") {
+          await sendSubscriptionWelcome({
+            nome: assinatura.nome,
+            email: assinatura.email,
+            plano: assinatura.plano,
+          });
+        } else if (plano?.slug === "presente-3m" || plano?.meses === 3) {
+          const codigo = await emitirCupomPresente3m({
+            email: assinatura.email,
+            asaasPaymentId: payment.id,
+          });
+          await sendCupomPresente3m({
+            nome: assinatura.nome,
+            email: assinatura.email,
+            codigo,
+          });
+        }
       } catch (err) {
-        console.error("[webhook asaas] e-mail de boas-vindas", err);
+        console.error("[webhook asaas] e-mail pós-pagamento", err);
       }
     }
 

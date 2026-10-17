@@ -100,7 +100,7 @@ export function PortalPlano({
 
   // Sem assinatura ativa (ou cancelada): mostra os planos e deixa comprar
   if ((!assinatura || cancelled) && cancelStep === 0) {
-    const selIdx = pick ?? 1;
+    const selIdx = pick ?? 0;
     const sel = PLANOS_UI[selIdx];
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
@@ -403,10 +403,10 @@ export function PortalPlano({
           <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#B3202F" }}>Cancelamento · 2 de 2</span>
           {reason === "Está caro para mim agora" && (
             <div style={{ background: "#B3202F", color: "#F6F3F1", padding: 24, display: "flex", flexDirection: "column", gap: 10 }}>
-              <b style={{ fontWeight: 900, fontVariationSettings: "'wdth' 62", fontSize: 36, lineHeight: 0.95, textTransform: "uppercase" }}>Que tal o plano Entrada?</b>
+              <b style={{ fontWeight: 900, fontVariationSettings: "'wdth' 62", fontSize: 36, lineHeight: 0.95, textTransform: "uppercase" }}>Que tal o Fundador simples?</b>
               <span style={{ fontSize: 15, lineHeight: 1.5 }}>2 barras por R$ 99/mês, mantendo o preço de fundador.</span>
-              <button type="button" disabled={saving} onClick={() => acao({ acao: "trocar_plano", planoSlug: "entrada" })} style={{ all: "unset", cursor: "pointer", alignSelf: "flex-start", boxSizing: "border-box", height: 48, padding: "0 20px", marginTop: 6, background: "#F6F3F1", color: "#261714", fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", gap: 8 }}>
-                Trocar para Entrada <span>→</span>
+              <button type="button" disabled={saving} onClick={() => acao({ acao: "trocar_plano", planoSlug: "fundador-simples" })} style={{ all: "unset", cursor: "pointer", alignSelf: "flex-start", boxSizing: "border-box", height: 48, padding: "0 20px", marginTop: 6, background: "#F6F3F1", color: "#261714", fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", gap: 8 }}>
+                Trocar para Fundador simples <span>→</span>
               </button>
             </div>
           )}

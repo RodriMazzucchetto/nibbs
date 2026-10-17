@@ -36,22 +36,32 @@ input,select,button{font-family:inherit}
 .nb-slider-logos::-webkit-scrollbar{display:none}
 .nb-slider-logos{overflow:hidden!important}
 @media(prefers-reduced-motion:reduce){.nb-slider-logos div{animation:none!important}}
+.nb-faq details{border-top:1px solid #DDD3CE}
+.nb-faq details:last-child{border-bottom:1px solid #DDD3CE}
+.nb-faq summary{cursor:pointer;list-style:none;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 0;font-size:clamp(16px,1.2vw,18px);font-weight:700;line-height:1.35}
+.nb-faq summary::-webkit-details-marker{display:none}
+.nb-faq summary::after{content:"+";flex:none;font-weight:700;font-size:22px;line-height:1;color:#B3202F}
+.nb-faq details[open] summary::after{content:"–"}
+.nb-faq summary:hover{color:#B3202F}
+.nb-faq .nb-faq-a{margin:0;padding:0 0 20px;font-size:clamp(15px,1.1vw,17px);line-height:1.6;color:#4A3430;max-width:62ch}
 </style>
 </helmet>
 
 <div style="font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 100;display:flex;flex-direction:column;align-items:center;overflow-x:hidden">
 
 <nav data-screen-label="01 Navegação" style="width:100%;position:sticky;top:0;z-index:30;background:rgba(246,243,241,.96);backdrop-filter:blur(8px);border-bottom:1px solid #EDE7E3;box-sizing:border-box;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px">
-  <dc-import name="NibbsLogo" variant="lockup" size="28" ink="#261714" accent="#B3202F" hint-size="104px,28px"></dc-import>
+  <a href="/assinatura" aria-label="Nibbs" style="text-decoration:none;flex:none"><dc-import name="NibbsLogo" variant="lockup" size="28" ink="#261714" accent="#B3202F" hint-size="104px,28px"></dc-import></a>
   <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
-    <div style="display:flex;gap:28px;font-size:15px">
-      <a href="#metodo" style="text-decoration:none" style-hover="color:#B3202F">Produtores</a>
-      <a href="#planos" style="text-decoration:none" style-hover="color:#B3202F">Planos</a>
-      <a href="#planos" onClick="{{ pickGift }}" style="text-decoration:none" style-hover="color:#B3202F">Presente</a>
-      <a href="#assinantes" style="text-decoration:none" style-hover="color:#B3202F">Assinantes</a>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px 28px;font-size:15px">
+      <a href="/assinatura#metodo" onClick="{{ goSec('metodo') }}" style="text-decoration:none" style-hover="color:#B3202F">Produtores</a>
+      <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="text-decoration:none" style-hover="color:#B3202F">Planos</a>
+      <a href="/assinatura#planos" onClick="{{ goGift }}" style="text-decoration:none" style-hover="color:#B3202F">Presente</a>
+      <a href="/assinatura#assinantes" onClick="{{ goSec('assinantes') }}" style="text-decoration:none" style-hover="color:#B3202F">Assinantes</a>
+      <a href="/assinatura#faq" onClick="{{ goSec('faq') }}" style="text-decoration:none" style-hover="color:#B3202F">FAQ</a>
+      <a href="/business" style="text-decoration:none" style-hover="color:#B3202F">Para empresas</a>
     </div>
   </sc-if>
-  <a href="#planos" style="box-sizing:border-box;height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;text-decoration:none;flex:none" style-hover="background:#6B1220;color:#F6F3F1">Assinar</a>
+  <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:44px;padding:0 18px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;text-decoration:none;flex:none" style-hover="background:#6B1220;color:#F6F3F1">Assinar</a>
 </nav>
 
 <header data-screen-label="02 Header" style="width:100%;max-width:880px;box-sizing:border-box;padding:72px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">
@@ -59,8 +69,8 @@ input,select,button{font-family:inherit}
   <h1 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(44px,6vw,76px);line-height:.92;text-transform:uppercase;text-wrap:balance">Chocolate bom e saudável na sua gaveta. <span style="display:inline-block;vertical-align:bottom;height:.92em;padding-top:.22em;margin-top:-.22em;overflow:hidden;text-align:left"><span data-reel style="display:flex;flex-direction:column;gap:.3em"><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Hoje.</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Amanhã.</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Sempre!</span><span aria-hidden="true" style="display:block;height:.92em;line-height:.92em;color:#B3202F">Hoje.</span></span></span></h1>
   <p style="margin:0;font-size:clamp(18px,1.6vw,20px);line-height:1.55;color:#4A3430;max-width:46ch">Sem correria no mercado. Sem ficar sem. Só chocolate bom, 70% ou mais, pouco ou nenhum açúcar, sempre disponível.</p>
   <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding-top:4px">
-    <a href="#planos" style="box-sizing:border-box;height:52px;padding:0 24px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none" style-hover="background:#6B1220;color:#F6F3F1">Escolher meu plano <span>→</span></a>
-    <a href="#planos" onClick="{{ pickGift }}" style="box-sizing:border-box;height:52px;padding:0 22px;border:2px solid #261714;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;text-decoration:none" style-hover="background:#261714;color:#F6F3F1">Dar de presente</a>
+    <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:52px;padding:0 24px;background:#B3202F;color:#F6F3F1;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none" style-hover="background:#6B1220;color:#F6F3F1">Escolher meu plano <span>→</span></a>
+    <a href="/assinatura#planos" onClick="{{ goGift }}" style="box-sizing:border-box;height:52px;padding:0 22px;border:2px solid #261714;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;text-decoration:none" style-hover="background:#261714;color:#F6F3F1">Dar de presente</a>
   </div>
   <span style="font-size:15px;line-height:1.4">Ou você ama, ou devolvemos sua grana! Frete incluso.</span>
 </header>
@@ -100,7 +110,7 @@ input,select,button{font-family:inherit}
         <h3 style="margin:0;font-weight:800;font-variation-settings:'wdth' 75;font-size:clamp(30px,3.2vw,44px);line-height:.95;text-transform:uppercase">{{ v.t }}</h3>
         <p style="margin:0;font-size:clamp(17px,1.3vw,18px);line-height:1.6">{{ v.d }}</p>
         <p style="margin:0;font-family:'Newsreader',serif;font-style:italic;font-size:20px;line-height:1.4">{{ v.b }}</p>
-        <a href="#planos" style="align-self:flex-start;box-sizing:border-box;height:48px;padding:0 20px;background:#261714;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;text-decoration:none" style-hover="background:#B3202F;color:#F6F3F1">Ver os planos <span>→</span></a>
+        <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="align-self:flex-start;box-sizing:border-box;height:48px;padding:0 20px;background:#261714;color:#F6F3F1;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;text-decoration:none" style-hover="background:#B3202F;color:#F6F3F1">Ver os planos <span>→</span></a>
       </div>
     </div>
   </sc-for>
@@ -112,7 +122,7 @@ input,select,button{font-family:inherit}
       <span style="font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(32px,3.6vw,48px);line-height:.92;text-transform:uppercase">Ou você ama, ou devolvemos sua grana!</span>
       <span style="font-size:15px;line-height:1.5">Provou a primeira caixa e não curtiu? Me avisa em até 7 dias que eu devolvo tudo. Não precisa mandar nada de volta, nem explicar.</span>
     </div>
-    <a href="#planos" style="box-sizing:border-box;height:52px;padding:0 22px;background:#F6F3F1;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none;flex:none" style-hover="background:#261714;color:#F6F3F1">Assinar sem risco <span>→</span></a>
+    <a href="/assinatura#planos" onClick="{{ goSec('planos') }}" style="box-sizing:border-box;height:52px;padding:0 22px;background:#F6F3F1;color:#261714;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;text-decoration:none;flex:none" style-hover="background:#261714;color:#F6F3F1">Assinar sem risco <span>→</span></a>
   </div>
 </section>
 
@@ -151,8 +161,8 @@ input,select,button{font-family:inherit}
 <section id="planos" data-screen-label="09 CTA final e planos" style="width:100%;max-width:960px;box-sizing:border-box;padding:0 20px 96px">
   <div style="background:#EDE7E3;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center">
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;max-width:640px">
-      <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(40px,5vw,68px);line-height:.9;text-transform:uppercase;text-wrap:balance">Por que assinar agora?</h2>
-      <p style="margin:0;font-size:17px;line-height:1.55">Os 100 primeiros assinantes pagam o mesmo preço por 12 meses, mesmo se o chocolate subir. E ele vive subindo. Assine agora e garanta o seu lugar.</p>
+      <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(40px,5vw,68px);line-height:.9;text-transform:uppercase;text-wrap:balance">Planos de fundador</h2>
+      <p style="margin:0;font-size:17px;line-height:1.55">A Nibbs está começando agora. Essas são as primeiras assinaturas de verdade. Quem entra nesta fase é fundador, com preço travado e benefícios que não voltam quando a gente crescer.</p>
     </div>
 
     <div role="tablist" style="display:flex;border:2px solid #261714">
@@ -161,12 +171,12 @@ input,select,button{font-family:inherit}
     </div>
 
     <sc-if value="{{ monthly }}" hint-placeholder-val="{{ true }}">
-      <div style="width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px;text-align:left">
-        <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+      <div style="width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:4px;text-align:left">
+        <sc-for list="{{ plans }}" as="p" hint-placeholder-count="2">
           <button onClick="{{ p.pick }}" aria-pressed="{{ p.pressed }}" style="all:unset;cursor:pointer;box-sizing:border-box;padding:20px;display:flex;flex-direction:column;gap:12px;background:{{ p.bg }};color:{{ p.fg }};outline:2px solid #261714;outline-offset:-2px">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:24px">
-              <span style="font-weight:800;font-variation-settings:'wdth' 75;font-size:24px;text-transform:uppercase;line-height:1">{{ p.name }}</span>
-              <sc-if value="{{ p.best }}" hint-placeholder-val="{{ false }}"><span style="background:#261714;color:#F6F3F1;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;flex:none">Mais escolhido</span></sc-if>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;min-height:24px">
+              <span style="font-weight:800;font-variation-settings:'wdth' 75;font-size:clamp(20px,2.2vw,24px);text-transform:uppercase;line-height:1.05">{{ p.name }}</span>
+              <sc-if value="{{ p.best }}" hint-placeholder-val="{{ false }}"><span style="background:{{ p.badgeBg }};color:{{ p.badgeFg }};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;flex:none">Em destaque</span></sc-if>
             </div>
             <span style="font-size:15px"><b style="font-weight:900;font-variation-settings:'wdth' 62;font-size:48px;line-height:1;font-variant-numeric:tabular-nums">{{ p.price }}</b> /mês</span>
             <span style="font-size:15px;line-height:1.45">{{ p.what }}</span>
@@ -175,12 +185,15 @@ input,select,button{font-family:inherit}
       </div>
     </sc-if>
     <sc-if value="{{ gift }}" hint-placeholder-val="{{ false }}">
-      <div style="width:100%;max-width:640px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:4px;text-align:left">
-        <sc-for list="{{ gifts }}" as="g" hint-placeholder-count="2">
+      <div style="width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:4px;text-align:left">
+        <sc-for list="{{ gifts }}" as="g" hint-placeholder-count="3">
           <button onClick="{{ g.pick }}" aria-pressed="{{ g.pressed }}" style="all:unset;cursor:pointer;box-sizing:border-box;padding:20px;display:flex;flex-direction:column;gap:12px;background:{{ g.bg }};color:{{ g.fg }};outline:2px solid #261714;outline-offset:-2px">
-            <span style="font-weight:800;font-variation-settings:'wdth' 75;font-size:24px;text-transform:uppercase;line-height:1">{{ g.name }}</span>
-            <b style="font-weight:900;font-variation-settings:'wdth' 62;font-size:48px;line-height:1;font-variant-numeric:tabular-nums">{{ g.price }}</b>
-            <span style="font-size:15px;line-height:1.45">Plano Melhor valor, pago de uma vez, sem renovação, com bilhete.</span>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;min-height:24px">
+              <span style="font-weight:800;font-variation-settings:'wdth' 75;font-size:22px;text-transform:uppercase;line-height:1">{{ g.name }}</span>
+              <sc-if value="{{ g.perk }}" hint-placeholder-val="{{ false }}"><span style="background:{{ g.badgeBg }};color:{{ g.badgeFg }};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;flex:none">+10% off</span></sc-if>
+            </div>
+            <b style="font-weight:900;font-variation-settings:'wdth' 62;font-size:40px;line-height:1;font-variant-numeric:tabular-nums">{{ g.price }}</b>
+            <span style="font-size:14px;line-height:1.45">{{ g.what }}</span>
           </button>
         </sc-for>
       </div>
@@ -192,7 +205,27 @@ input,select,button{font-family:inherit}
   </div>
 </section>
 
-<footer data-screen-label="10 Rodapé" style="width:100%;border-top:2px solid #261714">
+<section id="faq" data-screen-label="10 FAQ" class="nb-faq" style="width:100%;max-width:760px;box-sizing:border-box;padding:24px 20px 96px;display:flex;flex-direction:column;align-items:center;gap:28px">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;width:100%">
+    <h2 style="margin:0;font-weight:900;font-variation-settings:'wdth' 62;font-size:clamp(40px,5vw,68px);line-height:.9;text-transform:uppercase;text-wrap:balance">Perguntas frequentes</h2>
+    <p style="margin:0;font-size:17px;line-height:1.55;color:#4A3430;max-width:36ch">Quero saber mais sobre…</p>
+  </div>
+  <div role="tablist" aria-label="Tema da FAQ" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:100%">
+    <sc-for list="{{ faqTabs }}" as="t" hint-placeholder-count="5">
+      <button type="button" role="tab" aria-selected="{{ t.on }}" onClick="{{ t.pick }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:44px;padding:0 16px;font-weight:700;font-size:15px;border:2px solid #261714;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</button>
+    </sc-for>
+  </div>
+  <div style="width:100%;display:flex;flex-direction:column;gap:4px">
+    <sc-for list="{{ faqItems }}" as="item" hint-placeholder-count="4">
+      <details>
+        <summary>{{ item.q }}</summary>
+        <p class="nb-faq-a">{{ item.a }}</p>
+      </details>
+    </sc-for>
+  </div>
+</section>
+
+<footer data-screen-label="11 Rodapé" style="width:100%;border-top:2px solid #261714">
   <div style="max-width:1120px;margin:0 auto;box-sizing:border-box;padding:40px 20px 56px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px">
     <div style="display:flex;flex-direction:column;gap:14px;font-size:14px;line-height:1.5">
       <dc-import name="NibbsLogo" variant="lockup" size="28" ink="#261714" accent="#B3202F" hint-size="104px,28px"></dc-import>
@@ -265,6 +298,16 @@ input,select,button{font-family:inherit}
           </div>
         </div>
 
+        <sc-if value="{{ coShowCupom }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <b style="font-size:13px;letter-spacing:.08em;text-transform:uppercase">Cupom (opcional)</b>
+            <label style="display:flex;flex-direction:column;gap:6px;max-width:280px">
+              <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5E4B46">Código</span>
+              <input type="text" value="{{ coCupom }}" onChange="{{ coCupomSet }}" placeholder="NIBBS10-XXXXXX" autoComplete="off" style="box-sizing:border-box;width:100%;height:48px;padding:0 12px;font-size:16px;background:#FFFFFF;color:#261714;border-radius:0;outline:none;border:2px solid #261714;text-transform:uppercase" style-focus="outline:3px solid #261714;outline-offset:2px">
+            </label>
+          </div>
+        </sc-if>
+
         <div style="display:flex;flex-direction:column;gap:12px">
           <b style="font-size:13px;letter-spacing:.08em;text-transform:uppercase">Pagamento</b>
           <div role="tablist" style="display:flex;border:2px solid #261714">
@@ -327,10 +370,10 @@ input,select,button{font-family:inherit}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;diaCorte&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:31,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;regiao&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sul da Bahia&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;},&quot;mes&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;novembro&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Oferta do mês&quot;}}">
-const CO_VAZIO = { nome: "", email: "", cpf: "", celular: "", cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", uf: "", senha: "", senha2: "", ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "", website: "" };
+const CO_VAZIO = { nome: "", email: "", cpf: "", celular: "", cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", uf: "", senha: "", senha2: "", cupom: "", ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "", website: "" };
 const CO_CARTAO_VAZIO = { ccNome: "", ccNumero: "", ccValidade: "", ccCvv: "" };
-const SLUGS_M = ["entrada", "melhor-valor", "ultimate"];
-const SLUGS_G = ["presente-3m", "presente-6m"];
+const SLUGS_M = ["fundador-sempre", "fundador-simples"];
+const SLUGS_G = ["presente-1m", "presente-2m", "presente-3m"];
 const dig = v => v.replace(/\D/g, "");
 const MASKS = {
   cpf: v => dig(v).slice(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2"),
@@ -345,7 +388,7 @@ const cpfOk = v => { const c = dig(v); if (c.length !== 11 || /^(\d)\1{10}$/.tes
 const luhnOk = v => { const n = dig(v); if (n.length < 13 || n.length > 19) return false; let s = 0; for (let i = 0; i < n.length; i++) { let d = +n[n.length - 1 - i]; if (i % 2) { d *= 2; if (d > 9) d -= 9; } s += d; } return s % 10 === 0; };
 const validadeOk = v => { const m = /^(\d{2})\/(\d{2})$/.exec(v); if (!m) return false; const mm = +m[1], aa = 2000 + +m[2], h = new Date(); return mm >= 1 && mm <= 12 && (aa > h.getFullYear() || (aa === h.getFullYear() && mm >= h.getMonth() + 1)); };
 class Component extends DCLogic {
-  state = { mode: "m", plan: 1, giftIdx: 0, w: typeof window !== "undefined" ? window.innerWidth : 1280, revStart: true, revEnd: false,
+  state = { mode: "m", plan: 0, giftIdx: 0, faqTab: 0, w: typeof window !== "undefined" ? window.innerWidth : 1280, revStart: true, revEnd: false,
     co: false, coStep: "form", coMetodo: "cartao", coF: { ...CO_VAZIO }, coErrs: {}, coEnviando: false, coErr: "", coPix: null, coCopiado: false };
   componentDidMount() {
     this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener("resize", this.onR); this._bindSlider();
@@ -353,7 +396,9 @@ class Component extends DCLogic {
     try {
       const q = new URLSearchParams(window.location.search);
       const slug = q.get("plano");
-      const idx = SLUGS_M.indexOf(slug || "");
+      const alias = { entrada: "fundador-simples", "melhor-valor": "fundador-sempre", ultimate: "fundador-sempre" };
+      const resolved = alias[slug || ""] || slug;
+      const idx = SLUGS_M.indexOf(resolved || "");
       const open = q.get("checkout") === "1" || q.get("checkout") === "true";
       if (idx >= 0) this.setState({ mode: "m", plan: idx }, () => { if (open) this.coAbrir(); });
       else if (open) this.coAbrir();
@@ -410,6 +455,7 @@ class Component extends DCLogic {
       cliente: { nome: f.nome.trim(), email: f.email.trim(), cpf: f.cpf, celular: f.celular },
       endereco: { cep: f.cep, rua: f.rua.trim(), numero: f.numero.trim(), complemento: f.complemento.trim(), bairro: f.bairro.trim(), cidade: f.cidade.trim(), uf: f.uf },
       senha: f.senha,
+      cupom: mode === "m" && f.cupom.trim() ? f.cupom.trim() : undefined,
       cartao: coMetodo === "cartao" ? { nome: f.ccNome.trim(), numero: f.ccNumero, validade: f.ccValidade, cvv: f.ccCvv } : undefined,
     };
     this.setState({ coEnviando: true, coErr: "", coErrs: {} });
@@ -473,6 +519,9 @@ class Component extends DCLogic {
         fld("senha", "Senha", 3, { type: "password", ac: "new-password", ph: "Mínimo 8 caracteres" }),
         fld("senha2", "Confirmar senha", 3, { type: "password", ac: "new-password", ph: "Repita a senha" }),
       ],
+      coShowCupom: m,
+      coCupom: coF.cupom,
+      coCupomSet: this.coSet("cupom"),
       coCartao: [
         fld("ccNumero", "Número do cartão", 6, { ac: "cc-number", im: "numeric", ph: "0000 0000 0000 0000" }),
         fld("ccNome", "Nome impresso no cartão", 6, { ac: "cc-name" }),
@@ -498,16 +547,19 @@ class Component extends DCLogic {
     };
   }
   renderVals() {
-    const { mode, plan, giftIdx, w, revStart, revEnd, co, coStep, coMetodo, coF, coErrs, coEnviando, coErr, coPix, coCopiado } = this.state;
+    const { mode, plan, giftIdx, faqTab, w, revStart, revEnd, co, coStep, coMetodo, coF, coErrs, coEnviando, coErr, coPix, coCopiado } = this.state;
     const corte = this.props.diaCorte ?? 20;
     const regiao = this.props.regiao ?? "Sul da Bahia";
     const mes = this.props.mes ?? "novembro";
     const P = [
-      { name: "Entrada", price: "R$ 99", what: "2 barras de 80 g. Dá um pedaço pequeno por dia." },
-      { name: "Melhor valor", price: "R$ 159", what: "3 barras de 80 g. Um pedaço depois de cada almoço, o mês inteiro. Se você é como eu, é esse." },
-      { name: "Ultimate", price: "R$ 219", what: "3 barras dos melhores produtores que eu encontrar, uma caixa por ano pra dar de presente pra alguém e 15% de desconto em barra avulsa." },
+      { name: "Fundador Sempre Chocolate", price: "R$ 159", what: "3 barras de 80 g + cupons de desconto exclusivos negociados com os produtores, pra você recomprar direto com eles." },
+      { name: "Fundador simples", price: "R$ 99", what: "2 barras de 80 g todo mês na sua casa." },
     ];
-    const G = [{ name: "3 meses", price: "R$ 477" }, { name: "6 meses", price: "R$ 954" }];
+    const G = [
+      { name: "1 mês", price: "R$ 159", what: "Uma caixa Sempre Chocolate, pago de uma vez, com bilhete.", perk: false },
+      { name: "2 meses", price: "R$ 318", what: "Duas caixas Sempre Chocolate, sem renovação, com bilhete.", perk: false },
+      { name: "3 meses", price: "R$ 477", what: "Três caixas + 10% off pra você assinar o seu próprio plano. Cupom no e-mail.", perk: true },
+    ];
     const on = (a) => ({ bg: a ? "#B3202F" : "#F6F3F1", fg: a ? "#F6F3F1" : "#261714", pressed: a ? "true" : "false" });
     const m = mode === "m";
     return {
@@ -517,15 +569,45 @@ class Component extends DCLogic {
       scrollRev: (dir) => () => { const el = document.getElementById("nb-rev-slider"); if (el) { const card = el.querySelector(":scope > *"); if (card) el.scrollBy({ left: dir * (card.offsetWidth + 16), behavior: "smooth" }); } },
       pickMonthly: () => this.setState({ mode: "m" }),
       pickGift: () => this.setState({ mode: "g" }),
+      goSec: (id) => (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      },
+      goGift: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        this.setState({ mode: "g" }, () => {
+          const el = document.getElementById("planos");
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      },
       tabMBg: m ? "#261714" : "transparent", tabMFg: m ? "#F6F3F1" : "#261714",
       tabGBg: m ? "transparent" : "#261714", tabGFg: m ? "#261714" : "#F6F3F1",
-      plans: P.map((p, i) => ({ ...p, best: i === 1, ...on(plan === i), pick: () => this.setState({ plan: i }) })),
-      gifts: G.map((g, i) => ({ ...g, ...on(giftIdx === i), pick: () => this.setState({ giftIdx: i }) })),
-      ctaLabel: m ? `Assinar ${P[plan].name} · ${P[plan].price}/mês` : `Presentear ${G[giftIdx].name} · ${G[giftIdx].price}`,
+      plans: P.map((p, i) => ({
+        ...p,
+        best: i === 0,
+        badgeBg: plan === i ? "#F6F3F1" : "#261714",
+        badgeFg: plan === i ? "#261714" : "#F6F3F1",
+        ...on(plan === i),
+        pick: () => this.setState({ plan: i }),
+      })),
+      gifts: G.map((g, i) => ({
+        ...g,
+        perk: g.perk,
+        badgeBg: giftIdx === i ? "#F6F3F1" : "#261714",
+        badgeFg: giftIdx === i ? "#261714" : "#F6F3F1",
+        ...on(giftIdx === i),
+        pick: () => this.setState({ giftIdx: i }),
+      })),
+      ctaLabel: m ? `Assinar plano fundador · ${P[plan].price}/mês` : `Dar de presente · ${G[giftIdx].price}`,
       subscribe: () => this.coAbrir(),
       ...this.coVals({ m, P, G, plan, giftIdx, w, co, coStep, coMetodo, coF, coErrs, coEnviando, coErr, coPix, coCopiado }),
-      included: "Em toda caixa vem um cartão contando de onde é o chocolate, quem fez e o que tem dentro, mais o vídeo do produtor e um link pra você dar nota nas barras. Frete incluso.",
-      payNote: m ? "Cartão ou PIX, todo mês. Cancela quando quiser, num clique, sem ninguém te ligar pra te convencer a ficar." : "PIX ou cartão, pago de uma vez. Não renova sozinho.",
+      included: "Em toda caixa vem um cartão contando de onde é o chocolate, quem fez e o que tem dentro, mais o vídeo do produtor e um link pra você dar nota nas barras. Frete incluso. Preço de fundador: o que você paga agora fica travado.",
+      payNote: m
+        ? "Cartão ou PIX, todo mês. Cancela quando quiser, num clique, sem ninguém te ligar pra te convencer a ficar."
+        : (giftIdx === 2
+          ? "PIX ou cartão, pago de uma vez. Não renova sozinho. No presente de 3 meses, o cupom de 10% pro seu plano chega no e-mail."
+          : "PIX ou cartão, pago de uma vez. Não renova sozinho."),
       makers: [
         { n: "Baianí", src: "/designs/b2c/logos/baiani.svg" },
         { n: "Kalapa", src: "/designs/b2c/logos/kalapa.png" },
@@ -560,15 +642,76 @@ class Component extends DCLogic {
         { tag: "Presente", t: "Melhor presente que já dei.", q: "Dei de aniversário pra minha esposa sem saber se ela ia gostar. No segundo mês ela já estava me mostrando o cartão da região e explicando de onde vinha cada barra. Agora assinei pra mim também.", n: "Orlando", p: "presente de 3 meses", slot: "clube-rev-4" },
       ],
       proofs: [
-        { v: "100", l: "primeiros pagam o mesmo preço por 12 meses" },
+        { v: "1ª", l: "onda de assinantes — você entra como fundador" },
         { v: "70%+", l: "de cacau em todas as barras. Sempre." },
         { v: "7 dias", l: "pra pedir sua grana de volta" },
       ],
       footCols: [
-        { t: "Clube", l: [{ t: "Produtores", h: "#metodo" }, { t: "Planos", h: "#planos" }, { t: "Presente", h: "#planos" }] },
-        { t: "Ajuda", l: [{ t: "Garantia", h: "#" }, { t: "Cancelamento", h: "#" }, { t: "Contato", h: "#" }] },
+        { t: "Clube", l: [{ t: "Produtores", h: "/assinatura#metodo" }, { t: "Planos", h: "/assinatura#planos" }, { t: "Presente", h: "/assinatura#planos" }, { t: "Para empresas", h: "/business" }] },
+        { t: "Ajuda", l: [{ t: "FAQ", h: "/assinatura#faq" }, { t: "Garantia", h: "/assinatura#faq" }, { t: "Cancelamento", h: "/assinatura#faq" }] },
         { t: "Legal", l: [{ t: "Termos de uso", h: "#" }, { t: "Privacidade", h: "#" }] },
       ],
+      ...(() => {
+        const groups = [
+          {
+            label: "O chocolate",
+            items: [
+              { q: "Que chocolate vem na caixa?", a: "Barra de 80 g de produtores locais, que fazem o chocolate desde o grão. Torram, moem e fazem a barra ali mesmo. Todas com 70% de cacau ou mais." },
+              { q: "Chocolate 70% é saudável?", a: "Mais que o chocolate doce do mercado, isso é certo. Mais cacau, bem menos açúcar. Mas não vou te enganar, continua sendo chocolate. Um pedaço depois da refeição, beleza. A barra inteira vendo série, aí é com você." },
+              { q: "Tem açúcar?", a: "Tem, mas pouco. Num 70%, o que sobra é quase tudo açúcar e manteiga de cacau. Quanto mais cacau, menos açúcar." },
+              { q: "Tem gordura vegetal ou ingrediente estranho?", a: "Não. Viu gordura vegetal ou nome estranho no rótulo, eu tiro da caixa." },
+              { q: "Tenho alergia ou restrição. Como sei o que tem em cada barra?", a: "Cada barra vem com os ingredientes e os avisos de alergia no cartão da caixa. Se tiver dúvida, me chama antes de assinar que eu te falo." },
+              { q: "Por que cada mês vem de uma região diferente?", a: "Porque cacau da Bahia não tem o mesmo gosto do cacau do Pará. Muda a terra, muda o clima, muda o chocolate. E aí um mês nunca é igual ao outro." },
+              { q: "E se eu não gostar de uma barra?", a: "Na hora de assinar você responde três perguntas sobre o que gosta. E toda caixa vem com um link pra dar nota nas barras. Barra que você odiou não volta." },
+            ],
+          },
+          {
+            label: "A assinatura",
+            items: [
+              { q: "Qual a diferença entre os planos?", a: "No Fundador Sempre Chocolate vêm 3 barras por R$ 159, mais cupons de desconto exclusivos negociados com os produtores pra você recomprar direto com eles. É o que eu indico. No Fundador simples vêm 2 barras por R$ 99, todo mês na sua casa." },
+              { q: "Dura o mês todo?", a: "No de 3 barras, dura e sobra. São 240 g no mês." },
+              { q: "Como funciona a cobrança?", a: "Cai no cartão de crédito todo mês, sozinho. Você não precisa fazer nada." },
+              { q: "Posso trocar de plano?", a: "Pode, e vale a partir da próxima caixa." },
+              { q: "Posso cancelar quando quiser?", a: "Pode. Um clique e acabou. Sem multa e sem ninguém te ligando pra implorar pra você ficar." },
+              { q: "O que é o preço de fundador?", a: "A Nibbs está começando agora e essas são as primeiras assinaturas. Quem entra nesta fase paga o preço de fundador — travado. Se o chocolate subir, e ele vive subindo, o seu não sobe." },
+            ],
+          },
+          {
+            label: "Entrega",
+            items: [
+              { q: "O frete é pago à parte?", a: "Não, já tá incluso. Pra qualquer lugar do Brasil." },
+              { q: "Quando minha caixa chega?", a: "Assinou até o dia 20, recebe a caixa daquele mês. Depois do dia 20, entra na do mês seguinte. Quando a caixa sai, o rastreio chega no seu e-mail." },
+              { q: "E se chegar derretido ou danificado?", a: "Mando outra. Sem custo, sem burocracia." },
+            ],
+          },
+          {
+            label: "Garantia",
+            items: [
+              { q: "Como funciona o \"ou você ama, ou devolvemos sua grana\"?", a: "Simples. Provou a primeira caixa e não curtiu, me avisa em até 7 dias que eu devolvo tudo. Não precisa mandar nada de volta e não precisa me explicar nada." },
+              { q: "A garantia vale pra todas as caixas?", a: "Vale pra primeira caixa, uma vez por pessoa, nos planos mensais. Depois disso, se chegar derretido ou estragado, eu mando outra." },
+            ],
+          },
+          {
+            label: "Presente",
+            items: [
+              { q: "Posso dar de presente?", a: "Pode. Escolhe 1, 2 ou 3 meses do Fundador Sempre Chocolate, pagando tudo de uma vez. Acaba sozinho, sem renovar, e a primeira caixa vai com um bilhete seu. No de 3 meses, você ainda ganha 10% de desconto pra assinar o seu próprio plano, com cupom no e-mail." },
+              { q: "Como pago o presente?", a: "No cartão ou no PIX." },
+              { q: "A garantia vale pra presente?", a: "Não, a devolução é só nos planos mensais. Mas se a caixa chegar com problema, eu mando outra." },
+            ],
+          },
+        ];
+        const tab = Math.min(Math.max(faqTab, 0), groups.length - 1);
+        return {
+          faqTabs: groups.map((g, i) => ({
+            label: g.label,
+            on: i === tab ? "true" : "false",
+            bg: i === tab ? "#B3202F" : "#F6F3F1",
+            fg: i === tab ? "#F6F3F1" : "#261714",
+            pick: () => this.setState({ faqTab: i }),
+          })),
+          faqItems: groups[tab].items,
+        };
+      })(),
     };
   }
 }
